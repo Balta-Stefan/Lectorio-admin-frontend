@@ -49,10 +49,10 @@
 		<template id="login_panel">
 			<form id="login_form" action="ovdje staviti URL za podnosenje zahtjeva za prijavu">
 				<label for="username"><b>Korisničko ime</b></label>
-				<input class="login_input" type="text" name="username" required>
+				<input class="login_input" type="text" name="username" required oninvalid="this.setCustomValidity('Unesite vaše korisničko ime')" oninput="setCustomValidity('')">
 				
 				<label for="password"><b>Lozinka</b></label>
-				<input class="login_input" type="password" name="password" required>
+				<input class="login_input" type="password" name="password" required oninvalid="this.setCustomValidity('Unesite lozinku')" oninput="setCustomValidity('')">
 				<a href="#" id="forgotten_password">Zaboravljena lozinka</a>
 				
 				<button class="login_buttons" type="submit" id="login_button">Prijava</button>
