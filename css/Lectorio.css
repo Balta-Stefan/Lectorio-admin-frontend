@@ -171,6 +171,12 @@ button#login_button{
 	margin-top: 25px;
 }
 
+button#send_registration_button{
+	background-color: blue;
+	margin-top: 15px;
+	width: 100%;
+}
+
 .login_buttons{
 	border: none;
 	cursor: pointer;
@@ -181,6 +187,10 @@ button#login_button{
 	opacity: 0.8;
 }
 
+label#registration_response{
+	width: 100%;
+	display: block;
+}
 
 button#register_button{
 	background-color: #f44336;
@@ -190,10 +200,11 @@ button#register_button{
 }
 
 
-form#login_form{
+form{
 	width: 50%;
 	height: 50%;
 }
+
 
 footer{
 	text-align: center;
@@ -219,6 +230,10 @@ footer{
 	
 	a#forgotten_password{
 		font-size: 0.8rem;
+	}
+	
+	.login_input{
+		height: 13%;
 	}
 }
 

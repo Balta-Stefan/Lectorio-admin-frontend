@@ -56,8 +56,26 @@
 				<a href="#" id="forgotten_password">Zaboravljena lozinka</a>
 				
 				<button class="login_buttons" type="submit" id="login_button">Prijava</button>
-				
 				<button class="login_buttons" type="button" id="register_button">Registracija</button>
+			</form>
+		</template>
+		
+		<template id="register_panel">
+			<form id="register_form" action="ovdje staviti URL za registraciju">
+				<label for="username"><b>Korisničko ime</b></label>
+				<input class="login_input" type="text" name="username" required oninvalid="this.setCustomValidity('Unesite vaše korisničko ime')" oninput="setCustomValidity('')">
+			
+				<label for="email"><b>Email</b></label>
+				<input class="login_input" type="text" name="email" required oninvalid="this.setCustomValidity('Unesite vašu email adresu')" oninput="setCustomValidity('')">
+	
+				<label for="password"><b>Lozinka</b></label>
+				<input class="login_input" type="password" name="password" required oninvalid="this.setCustomValidity('Unesite lozinku')" oninput="setCustomValidity('')">
+
+				<label for="password_confirm"><b>Potvrdite lozinku</b></label>
+				<input class="login_input" type="password" name="password_confirm" required oninvalid="this.setCustomValidity('Potvrdite lozinku')" oninput="setCustomValidity('')">
+
+				<button class="login_buttons" type="submit" id="send_registration_button">Registruj se</button>
+				<label id="registration_response"></label>
 			</form>
 		</template>
 
