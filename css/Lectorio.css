@@ -166,7 +166,7 @@ p#side_menu{
 	display: none;
 }
 
-div#sideNav{
+div#supervisor_sidenav_div{
 	height: 100%;
 	width: 0;
 	position: fixed;
@@ -179,7 +179,7 @@ div#sideNav{
 	padding-top: 60px;
 }
 
-div#sideNav a{
+div#supervisor_sidenav_div a{
 	display: block;
 	transition: 0.3s;
 }

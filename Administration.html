@@ -21,19 +21,22 @@
 		<header>
 			<!--<h3>Lectorio</h3>-->
 			<img id="header_logo" src="Resources/new logo.png"></img>
-			<nav>
+			<nav id="navigation">
 				<ul id="navigation_list">
 					<!-- <h3>&#9776;</h3> -->
 				</ul>
-				<p id="side_menu"><a onclick="openNav()">&#9776;</a></p>
 				
-				<div id="sideNav">
-					<a href="javascript:void(0)" id="closebtn" onclick="closeNav()">&times;</a>
-					<a href="#" class="obrada_zahtjeva_btn">Obrada zahtjeva</a>
-					<a href="#" class="pregled_administratora_btn">Pregled administratora</a>
-					<a href="#" class="pregled_citaonica_btn">Pregled čitaonica</a>
-					<a href="#" class="postavke_btn">Postavke</a>
-				</div>
+				
+				<template id="supervisor_sidenav">
+					<p id="side_menu"><a onclick="openNav()">&#9776;</a></p>
+					<div id="supervisor_sidenav_div">
+						<a href="javascript:void(0)" id="closebtn" onclick="closeNav()">&times;</a>
+						<a href="#" class="obrada_zahtjeva_btn">Obrada zahtjeva</a>
+						<a href="#" class="pregled_administratora_btn">Pregled administratora</a>
+						<a href="#" class="pregled_citaonica_btn">Pregled čitaonica</a>
+						<a href="#" class="postavke_btn">Postavke</a>
+					</div>
+				</template>
 			</nav>
 		</header>
 	
@@ -75,8 +78,8 @@
 				<input class="login_input" type="password" name="password" required oninvalid="this.setCustomValidity('Unesite lozinku')" oninput="setCustomValidity('')">
 				<a href="#" id="forgotten_password">Zaboravljena lozinka</a>
 				
-				<button class="login_buttons" type="submit" id="login_button">Prijava</button>
-				<button class="login_buttons" type="button" id="register_button">Registracija</button>
+				<button class="login_buttons" type="submit" id="login_button"><b>Prijava</b></button>
+				<button class="login_buttons" type="button" id="register_button"><b>Registracija</b></button>
 			</form>
 		</template>
 		

@@ -89,7 +89,7 @@ function supervisor_init()
 	
 	var obrada_zahtjeva = document.querySelectorAll(".obrada_zahtjeva_btn");
 	var pregled_administratora = document.querySelectorAll(".pregled_administratora_btn");
-	var pregled_citaonica = document.querySelectorAll(".pregled_administratora_btn");
+	var pregled_citaonica = document.querySelectorAll(".pregled_citaonica_btn");
 	var postavke = document.querySelectorAll(".postavke_btn");
 	
 	addEventToClass(obrada_zahtjeva, supervisor_obrada_zahtjeva_click);
@@ -136,6 +136,7 @@ function init()
 	}
 	else if(user_type === supervisor)
 	{
+		activate_template(document.getElementById("navigation"), "supervisor_sidenav");
 		supervisor_init();
 		document.title = "Supervizorski panel"
 		return;
@@ -152,13 +153,13 @@ function init()
 
 function openNav() 
 {
-  document.getElementById("sideNav").style.width = "250px";
+  document.getElementById("supervisor_sidenav_div").style.width = "250px";
   document.body.style.marginRight = "250px";
 }
 
 function closeNav()
 {
-  document.getElementById("sideNav").style.width = "0";
+  document.getElementById("supervisor_sidenav_div").style.width = "0";
   document.body.style.marginRight= "0";
 }
 
