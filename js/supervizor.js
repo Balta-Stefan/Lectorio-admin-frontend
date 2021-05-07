@@ -5,12 +5,32 @@
 	That's why it must be cloned (there seem to be 2 methods, importNode and cloneNode)
 */
 
+function activate_template(destination, template_id)
+{
+	var template = document.getElementById(template_id);
+	var clone = document.importNode(template.content, true);
+	destination.appendChild(clone);
+}
+
 function remove_panel_elements()
 {
 	while(panel_children.firstChild)
 		panel_children.firstChild.remove();
 }
 
+function admin_requests_panel_activation()
+{
+	remove_panel_elements();
+	activate_template(panel_children, "admin_registration_requests");
+	panel_header_name.innerHTML = "Pregled zahtjeva za registraciju administratora"
+}
+
+function library_activations_panel_activation()
+{
+	remove_panel_elements();
+	panel_header_name.innerHTML = "Aktivacije čitaonica";
+	// to do
+}
 
 function supervisor_obrada_zahtjeva_click()
 {
@@ -18,9 +38,10 @@ function supervisor_obrada_zahtjeva_click()
 	
 	remove_panel_elements();
 	
-	var supervisor_requests_template = document.getElementById("supervisor_requests");
-	requests_panel = document.importNode(supervisor_requests_template.content, true);
-	panel_children.appendChild(requests_panel);
+	activate_template(panel_children, "supervisor_requests");
+	
+	document.getElementById("admin_registration_requests_btn").addEventListener("click", admin_requests_panel_activation);
+	document.getElementById("library_activation_requests_btn").addEventListener("click", library_activations_panel_activation);
 }
 
 function pregled_administratora_click()
@@ -29,9 +50,7 @@ function pregled_administratora_click()
 	remove_panel_elements();
 	
 	// to do
-	var admin_overview = document.getElementById("supervisor_admin_overview");
-	var clone = document.importNode(admin_overview.content, true);
-	panel_children.appendChild(clone);
+	activate_template(panel_children, "supervisor_admin_overview");
 }
 
 function pregled_citaonica_click()
@@ -59,9 +78,7 @@ function login()
 function supervisor_init()
 {
 	// activate templates
-	var supervisor_navigation_template = document.getElementById("supervisor_navigation_list");
-	var clone = document.importNode(supervisor_navigation_template.content, true);
-	navigation_list.appendChild(clone);
+	activate_template(navigation_list, "supervisor_navigation_list");
 	
 	document.getElementById("obrada_zahtjeva_btn").addEventListener("click", supervisor_obrada_zahtjeva_click);
 	document.getElementById("pregled_administratora_btn").addEventListener("click", pregled_administratora_click);
@@ -72,9 +89,8 @@ function supervisor_init()
 function admin_init()
 {
 	// activate templates
-	var admin_navigation_template = document.getElementById("admin_navigation_list");
-	var clone = document.importNode(admin_navigation_template.content, true);
-	navigation_list.appendChild(clone);
+	activate_template(navigation_list, "admin_navigation_list");
+
 	
 	// to do (add callbacks to buttons for admins)
 	
@@ -84,9 +100,7 @@ function registration_loginPanel_click()
 {
 	remove_panel_elements();
 	
-	var registration_panel_template = document.getElementById("register_panel");
-	var clone = document.importNode(registration_panel_template.content, true);
-	panel_children.appendChild(clone);
+	activate_template(panel_children, "register_panel");
 }
 
 function init()
@@ -94,7 +108,7 @@ function init()
 	// check if a valid cookie is present
 	// to do
 	var cookieValid = new Boolean(false);
-	var user_type; // obtain from cookie
+	var user_type="supervisor"; // obtain from cookie
 	
 	
 	if(user_type === admin)
@@ -113,9 +127,8 @@ function init()
 	// show the login panel
 	panel_header_name.innerHTML = "Prijava";
 	document.title = "Prijava na sistem";
-	var login_panel = document.getElementById("login_panel");
-	var clone = document.importNode(login_panel.content, true);
-	panel_children.appendChild(clone);
+	
+	activate_template(panel_children, "login_panel");
 	
 	document.getElementById("register_button").addEventListener("click", registration_loginPanel_click);
 }
@@ -129,7 +142,7 @@ var panel_children = document.getElementById("panel_content");
 var panel_header_name = document.getElementById("panel_header_name");
 
 init();
-
+//activate_template(panel_children, "admin_registration_requests");
 
 //https://www.html5rocks.com/en/tutorials/webcomponents/template/
 //https://www.youtube.com/watch?v=mfN-EOkj13Q

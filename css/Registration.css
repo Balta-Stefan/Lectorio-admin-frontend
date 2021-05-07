@@ -1,0 +1,11 @@
+label#registration_response{
+	width: 100%;
+	display: block;
+}
+
+button#register_button{
+	background-color: #f44336;
+	margin-top: 25px;
+	margin-right: 40%;
+	width: 100%;
+}

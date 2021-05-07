@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Lectorio</title>
+		
+		<link href="css/Lectorio.css" type="text/css" rel="stylesheet" />
+		<link href="css/Login.css" type="text/css" rel="stylesheet" />
+		<link href="css/Registration.css" type="text/css" rel="stylesheet" />
+		<link href="css/Admin registration requests.css" type="text/css" rel="stylesheet" />
+		
+		<script type="text/javascript" src="js/supervizor.js" defer></script>
+		
+		<meta charset="utf-8">
+		<meta name="author" content="Balta Stefan">
+		<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- media queries don't work without this line-->
+	</head>
+	
+	<body>
+		<header>
+			<!--<h3>Lectorio</h3>-->
+			<img id="header_logo" src="Resources/new logo.png"></img>
+			<nav>
+				<ul id="navigation_list">
+
+				</ul>
+			</nav>
+		</header>
+	
+		<div id="content">
+			<div id="panel">
+				<div id="panel_header">
+					<h3 id="panel_header_name"></h3>
+				</div>
+				
+				<div id="panel_content">
+
+				</div>
+			</div>
+		</div>
+		
+		<footer>
+			<p>Najjakija grupa &copy </p>
+		</footer>
+		
+		<!-- Templates for navigation menu -->
+		<template id="supervisor_navigation_list">
+			<li><a href="#" id="obrada_zahtjeva_btn">Obrada zahtjeva</a></li>
+			<li><a href="#" id="pregled_administratora_btn">Pregled administratora</a></li>
+			<li><a href="#" id="pregled_citaonica_btn">Pregled čitaonica</a></li>
+			<li><a href="#" id="postavke_btn">Postavke</a></li>
+		</template>
+		<template id="admin_navigation_list">
+			<li><a href="#">Admin button 1</a></li>
+			<li><a href="#">Admin button 2</a></li>
+		</template>
+		
+		<!-- Templates for the content panel -->
+		<template id="login_panel">
+			<form id="login_form" action="ovdje staviti URL za podnosenje zahtjeva za prijavu">
+				<label for="username"><b>Korisničko ime</b></label>
+				<input class="login_input" type="text" name="username" required oninvalid="this.setCustomValidity('Unesite vaše korisničko ime')" oninput="setCustomValidity('')">
+				
+				<label for="password"><b>Lozinka</b></label>
+				<input class="login_input" type="password" name="password" required oninvalid="this.setCustomValidity('Unesite lozinku')" oninput="setCustomValidity('')">
+				<a href="#" id="forgotten_password">Zaboravljena lozinka</a>
+				
+				<button class="login_buttons" type="submit" id="login_button">Prijava</button>
+				<button class="login_buttons" type="button" id="register_button">Registracija</button>
+			</form>
+		</template>
+		
+		<template id="register_panel">
+			<form id="register_form" action="ovdje staviti URL za registraciju">
+				<label for="username"><b>Korisničko ime</b></label>
+				<input class="login_input" type="text" name="username" required oninvalid="this.setCustomValidity('Unesite vaše korisničko ime')" oninput="setCustomValidity('')">
+			
+				<label for="email"><b>Email</b></label>
+				<input class="login_input" type="text" name="email" required oninvalid="this.setCustomValidity('Unesite vašu email adresu')" oninput="setCustomValidity('')">
+	
+				<label for="password"><b>Lozinka</b></label>
+				<input class="login_input" type="password" name="password" required oninvalid="this.setCustomValidity('Unesite lozinku')" oninput="setCustomValidity('')">
+
+				<label for="password_confirm"><b>Potvrdite lozinku</b></label>
+				<input class="login_input" type="password" name="password_confirm" required oninvalid="this.setCustomValidity('Potvrdite lozinku')" oninput="setCustomValidity('')">
+
+				<button class="login_buttons" type="submit" id="send_registration_button">Registruj se</button>
+				<label id="registration_response"></label>
+			</form>
+		</template>
+
+		<template id="supervisor_requests">
+			<button id="admin_registration_requests_btn" class="button">Registracije administratorskih naloga</button>
+			<button id="library_activation_requests_btn" class="button">Aktivacije čitaonica</button>
+		</template>
+		
+		<template id="supervisor_admin_overview">
+			
+		</template>
+		
+		<template id="admin_registration_requests">
+			<div class="content_panel_container">
+				<div id="select_container">
+					<select id="admin_registration_requests_select" size="5">
+						<!-- <option>First</option>
+						<option>Second</option>
+						<option>Third</option> -->
+					</select>
+				</div>
+				
+				<div id="admin_registration_request_info">
+					<div id="labels_container">
+						<label class="admin_requests_label">Ime</label>
+						<label class="admin_requests_label">Email</label>
+						<label class="admin_requests_label">Datum registracije</label>
+					</div>
+					
+					<div id="inputs_container">
+						<input class="request_input" id="request_name" disabled></input>
+						<input class="request_input" id="request_email" disabled></input>
+						<input class="request_input" id="request_date" disabled></input>
+					</div>
+				</div>
+			</div>
+			<div id="admin_request_buttons">
+				<button class="registration_requests_buttons" id="allow_registration_btn"><b>Odobri</b></button>
+				<button class="registration_requests_buttons" id="reject_administration_btn"><b>Odbij</b></button>
+			</div>
+		</template>
+	</body>
+</html>
+
+
+
+

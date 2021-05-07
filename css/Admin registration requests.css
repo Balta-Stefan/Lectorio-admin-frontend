@@ -1,0 +1,106 @@
+.admin_requests_label{
+	margin-right: 55px;
+	
+}
+
+.content_panel_container{
+	display: flex;
+	height: 60%;
+}
+
+div#admin_request_buttons{
+	height: 40%;
+	width: 100%;
+	
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+button#allow_registration_btn{
+	background-color: blue;
+}
+
+button#reject_administration_btn{
+	background-color: red;
+}
+
+.registration_requests_buttons{
+	border: none;
+	color: white;
+	cursor: pointer;
+	height: 3rem;
+	width: 5rem;
+}
+
+.registration_requests_buttons:hover{
+	opacity: 0.5;
+}
+.registration_requests_buttons:active{
+	opacity: 0.5;
+}
+
+div#select_container{
+	width: 40%;
+}
+
+div#labels_container{
+	width: 40%;
+	
+	display: flex;
+	flex-direction: column;
+}
+
+div#inputs_container{
+	width: 60%;
+	
+	display: flex;
+	flex-direction: column;
+}
+
+select#admin_registration_requests_select{
+	width: 60%;
+	height: 10rem;
+	margin-left: 3rem;
+	margin-top: 3rem;
+}
+
+
+
+div#admin_registration_request_info{
+	padding-top: 5%;
+	
+	width: 50%;
+	height: 40%;
+	
+	display: flex;
+}
+
+.request_input{
+	width: 100%;
+}
+
+@media screen and (max-width: 860px){
+	div#select_container{
+		width: 80%;
+	}
+	select#admin_registration_requests_select{
+		width: 100%;
+	}
+	
+	.content_panel_container{
+		flex-direction: column;
+	}
+	
+	div#admin_registration_request_info{
+		width: 90%;
+	}
+	
+	div#labels_container{
+		width: 60%;
+	}
+	
+	div#inputs_container{
+		width: 40%;
+	}
+}
