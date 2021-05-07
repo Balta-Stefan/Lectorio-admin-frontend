@@ -29,6 +29,7 @@ function library_activations_panel_activation()
 {
 	remove_panel_elements();
 	panel_header_name.innerHTML = "Aktivacije čitaonica";
+	activate_template(panel_children, "library_activations_template");
 	// to do
 }
 
@@ -75,15 +76,31 @@ function login()
 	
 }
 
+function addEventToClass(classElements, callback)
+{
+	for(var i = 0; i < classElements.length; i++)
+		classElements[i].addEventListener("click", callback);
+}
+
 function supervisor_init()
 {
 	// activate templates
 	activate_template(navigation_list, "supervisor_navigation_list");
 	
-	document.getElementById("obrada_zahtjeva_btn").addEventListener("click", supervisor_obrada_zahtjeva_click);
-	document.getElementById("pregled_administratora_btn").addEventListener("click", pregled_administratora_click);
-	document.getElementById("pregled_citaonica_btn").addEventListener("click", pregled_citaonica_click);
-	document.getElementById("postavke_btn").addEventListener("click", postavke_click);
+	var obrada_zahtjeva = document.querySelectorAll(".obrada_zahtjeva_btn");
+	var pregled_administratora = document.querySelectorAll(".pregled_administratora_btn");
+	var pregled_citaonica = document.querySelectorAll(".pregled_administratora_btn");
+	var postavke = document.querySelectorAll(".postavke_btn");
+	
+	addEventToClass(obrada_zahtjeva, supervisor_obrada_zahtjeva_click);
+	addEventToClass(pregled_administratora, pregled_administratora_click);
+	addEventToClass(pregled_citaonica, pregled_citaonica_click);
+	addEventToClass(postavke, postavke_click);
+	
+	/*document.getElementsByClassName("obrada_zahtjeva_btn").addEventListener("click", supervisor_obrada_zahtjeva_click);
+	document.getElementsByClassName("pregled_administratora_btn").addEventListener("click", pregled_administratora_click);
+	document.getElementsByClassName("pregled_citaonica_btn").addEventListener("click", pregled_citaonica_click);
+	document.getElementsByClassName("postavke_btn").addEventListener("click", postavke_click);*/
 }
 
 function admin_init()
@@ -133,6 +150,18 @@ function init()
 	document.getElementById("register_button").addEventListener("click", registration_loginPanel_click);
 }
 
+function openNav() 
+{
+  document.getElementById("sideNav").style.width = "250px";
+  document.body.style.marginRight = "250px";
+}
+
+function closeNav()
+{
+  document.getElementById("sideNav").style.width = "0";
+  document.body.style.marginRight= "0";
+}
+
 var admin = "admin";
 var supervisor = "supervisor";
 
@@ -142,7 +171,7 @@ var panel_children = document.getElementById("panel_content");
 var panel_header_name = document.getElementById("panel_header_name");
 
 init();
-//activate_template(panel_children, "admin_registration_requests");
+//activate_template(panel_children, "library_activations_template");
 
 //https://www.html5rocks.com/en/tutorials/webcomponents/template/
 //https://www.youtube.com/watch?v=mfN-EOkj13Q

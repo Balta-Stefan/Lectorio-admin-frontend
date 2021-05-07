@@ -1,12 +1,29 @@
-.admin_requests_label{
-	margin-right: 55px;
-	
+div#admin_requests_container{
+	display: flex;
+	width: 100%;
+	height: 60%;
+	align-items: center;
 }
 
-.content_panel_container{
-	display: flex;
-	height: 60%;
+select#admin_registration_requests_select{
+	margin-left: 15px;
+	width: 50%;
+	height: 10rem;
 }
+
+div#admin_registration_request_info{
+	padding-top: 0;
+	margin-left: 10px;
+	
+	width: 50%;
+	height: 50%;
+	
+	padding-top: 0;
+	
+	display: flex;
+	flex-direction: column;
+}
+
 
 div#admin_request_buttons{
 	height: 40%;
@@ -29,8 +46,9 @@ button#reject_administration_btn{
 	border: none;
 	color: white;
 	cursor: pointer;
-	height: 3rem;
-	width: 5rem;
+	height: 4rem;
+	width: 7rem;
+	border-radius: 10px;
 }
 
 .registration_requests_buttons:hover{
@@ -40,55 +58,16 @@ button#reject_administration_btn{
 	opacity: 0.5;
 }
 
-div#select_container{
-	width: 40%;
-}
-
-div#labels_container{
-	width: 40%;
-	
-	display: flex;
-	flex-direction: column;
-}
-
-div#inputs_container{
-	width: 60%;
-	
-	display: flex;
-	flex-direction: column;
-}
-
-select#admin_registration_requests_select{
-	width: 60%;
-	height: 10rem;
-	margin-left: 3rem;
-	margin-top: 3rem;
-}
-
-
-
-div#admin_registration_request_info{
-	padding-top: 5%;
-	
-	width: 50%;
-	height: 40%;
-	
-	display: flex;
-}
-
-.request_input{
-	width: 100%;
-}
-
 @media screen and (max-width: 860px){
 	div#select_container{
 		width: 80%;
 	}
 	select#admin_registration_requests_select{
+		margin-left: 0;
 		width: 100%;
 	}
 	
-	.content_panel_container{
+	div#admin_requests_container{
 		flex-direction: column;
 	}
 	
@@ -96,11 +75,8 @@ div#admin_registration_request_info{
 		width: 90%;
 	}
 	
-	div#labels_container{
-		width: 60%;
-	}
-	
-	div#inputs_container{
-		width: 40%;
+	.registration_requests_buttons{
+		height: 3rem;
+		width: 5rem;
 	}
 }

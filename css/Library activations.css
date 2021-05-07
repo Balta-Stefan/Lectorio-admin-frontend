@@ -1,0 +1,56 @@
+div#library_activation_container{
+	display: flex;
+	width: 100%;
+	height: 60%;
+	align-items: center;
+}
+
+select#libraries_to_activate_select{
+	margin-left: 15px;
+	width: 50%;
+	height: 60%;
+}
+
+div#library_to_activate_info{
+	padding-top: 0;
+	margin-left: 10px;
+	
+	width: 50%;
+	height: 50%;
+	
+	padding-top: 0;
+	
+	display: flex;
+	flex-direction: column;
+}
+
+div#library_activation_buttons{
+	height: 40%;
+	width: 100%;
+	
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+button#activate_library{
+	background-color: blue;
+}
+button#reject_library_activation{
+	background-color: red;
+}
+
+
+@media screen and (max-width: 860px){
+	div#library_activation_container{
+		flex-direction: column;
+	}
+	
+	select#libraries_to_activate_select{
+		width: 100%;
+		margin-left: 0;
+	}
+	div#library_to_activate_info{
+		width: 90%;
+	}
+}
