@@ -172,6 +172,7 @@ var panel_children = document.getElementById("panel_content");
 var panel_header_name = document.getElementById("panel_header_name");
 
 init();
+//activate_template(panel_children, "supervisor_admin_overview");
 //activate_template(panel_children, "library_activations_template");
 
 //https://www.html5rocks.com/en/tutorials/webcomponents/template/

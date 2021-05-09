@@ -8,7 +8,7 @@
 		<link href="css/Registration.css" type="text/css" rel="stylesheet" />
 		<link href="css/Admin registration requests.css" type="text/css" rel="stylesheet" />
 		<link href="css/Library activations.css" type="text/css" rel="stylesheet" />
-
+		<link href="css/Admin overview.css" type="text/css" rel="stylesheet" />
 		
 		<script type="text/javascript" src="js/supervizor.js" defer></script>
 		
@@ -97,7 +97,7 @@
 				<label for="password_confirm"><b>Potvrdite lozinku</b></label>
 				<input class="login_input" type="password" name="password_confirm" required oninvalid="this.setCustomValidity('Potvrdite lozinku')" oninput="setCustomValidity('')">
 
-				<button class="login_buttons" type="submit" id="send_registration_button">Registruj se</button>
+				<button class="login_buttons" type="submit" id="send_registration_button"><b>Registruj se</b></button>
 				<label id="registration_response"></label>
 			</form>
 		</template>
@@ -105,10 +105,6 @@
 		<template id="supervisor_requests">
 			<button id="admin_registration_requests_btn" class="button">Registracije administratorskih naloga</button>
 			<button id="library_activation_requests_btn" class="button">Aktivacije čitaonica</button>
-		</template>
-		
-		<template id="supervisor_admin_overview">
-			
 		</template>
 		
 		<template id="admin_registration_requests">
@@ -138,9 +134,7 @@
 		
 		<template id="library_activations_template">
 			<div id="library_activation_container">
-				<select id="libraries_to_activate_select" size="5">
-				
-				</select>
+				<select id="libraries_to_activate_select" size="5"></select>
 				
 				<div id="library_to_activate_info">
 					<label>Podnosilac zahtjeva</label>
@@ -162,6 +156,33 @@
 				<button class="registration_requests_buttons" id="reject_library_activation"><b>Odbij</b></button>
 			</div>
 		</template>
+		
+		<template id="supervisor_admin_overview">
+			<div id="supervisor_admin_overview_container">
+				<select id="supervisor_admin_select" size="5">
+				
+				</select>
+				
+				<div id="supervisor_admin_overview_info">
+					<div id="library_overview_container">
+						<select id="admin_overview_library_list">
+							<option selected style="display:none;">Čitaonice u vlasništvu</option>
+						</select>
+						<button class="admin_overview_buttons" id="admin_overview_examine_library"><b>Pregled čitaonice</b></button>
+					</div>
+					<p>Datum registracije</p>
+					<input id="admin_registration_date" disabled></input>
+					
+					<p>Email</p>
+					<input id="admin_email" disabled></input>
+					
+					<p></p>
+					<button class="admin_overview_buttons" id="deactivate_admin_account"><b>Deaktiviraj nalog</b></button>
+				</div>
+			</div>
+			<div id="admin_overview_emptydiv"></div>
+		</template>
+		
 	</body>
 </html>
 
