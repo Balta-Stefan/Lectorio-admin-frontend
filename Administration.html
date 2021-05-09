@@ -9,6 +9,9 @@
 		<link href="css/Admin registration requests.css" type="text/css" rel="stylesheet" />
 		<link href="css/Library activations.css" type="text/css" rel="stylesheet" />
 		<link href="css/Admin overview.css" type="text/css" rel="stylesheet" />
+		<link href="css/Library overview.css" type="text/css" rel="stylesheet" />
+		<link href="css/Supervisor settings.css" type="text/css" rel="stylesheet" />
+
 		
 		<script type="text/javascript" src="js/supervizor.js" defer></script>
 		
@@ -53,7 +56,7 @@
 		</div>
 		
 		<footer>
-			<p>Najjakija grupa &copy</p>
+			<p>Najjakija grupa &copy; </p>
 		</footer>
 		
 		<!-- Templates for navigation menu -->
@@ -164,7 +167,7 @@
 				</select>
 				
 				<div id="supervisor_admin_overview_info">
-					<div id="library_overview_container">
+					<div id="supervisor_admin_overview_library_container">
 						<select id="admin_overview_library_list">
 							<option selected style="display:none;">Čitaonice u vlasništvu</option>
 						</select>
@@ -183,6 +186,47 @@
 			<div id="admin_overview_emptydiv"></div>
 		</template>
 		
+		<template id="library_overview">
+			<div id="library_overview_container">
+				<select id="list_of_libraries">
+					<option selected style="display:none;">Spisak čitaonica</option>
+				</select>
+				<div id="image_and_info">
+					<img id="library_picture" src="Resources/New logo.png"></img>
+					<div id="library_info">
+						<select id="library_administrators">
+							<option selected style="display:none;">Administratori čitaonice</option>
+						</select>
+						<button id="examine_administrator">Provjera administratora</button>
+						
+						<p>Registrovana</p>
+						<input id="library_registration_date" disabled></input>
+						
+						<p>Broj mjesta</p>
+						<input id="library_total_seats" disabled></input>
+						<br>
+						<button id="deactivate_library_btn"><b>Deaktiviraj</b></button>
+					</div>
+				</div>
+				<img id="library_layout_picture"></div>
+			</div>
+		</template>
+		
+		<template id="supervisor_settings_template">
+			<div id="supervisor_settings_container">
+				<div id="supervisor_settings_info">
+					<p>Ime</p>
+					<p>Email</p>
+					<p>registrovan</p>
+				</div>
+				
+				<div id="supervisor_settings_data">
+					<input id="supervisor_settings_name" disabled></input>
+					<input id="supervisor_settings_email" disabled></input>
+					<input id="supervisor_settings_registered_date" disabled></input>
+				</div>
+			</div>
+		</template>
 	</body>
 </html>
 

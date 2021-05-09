@@ -1,0 +1,83 @@
+div#library_overview_container{
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	display: inline;
+}
+
+select#list_of_libraries{
+	width: 100%;
+	height: 5%;
+	text-align: center;
+	text-align-last: center;
+}
+
+
+div#image_and_info{
+	width: 100%;
+	height: 50%;
+	display: flex;
+}
+
+img#library_picture{
+	width: 30rem;
+	height: 100%;
+}
+
+div#library_info{
+	width: 60%;
+	height: 100%;
+	padding-left: 15px;
+}
+
+div#library_info p{
+	margin: 0;
+}
+
+
+select#library_administrators{
+	width: 10rem;
+}
+
+
+img#library_layout_picture{
+	height: 45%;
+	width: 100%;
+}
+
+button#deactivate_library_btn{
+	background-color: red;
+	border: none;
+	color: white;
+	cursor: pointer;
+	border-radius: 8px;
+	margin-top: 15px;
+	
+	height: 2.3rem;
+	width: 5.5rem;
+}
+
+button#deactivate_library_btn:hover{
+	opacity: 0.5;
+}
+button#deactivate_library_btn:active{
+	opacity: 0.5;
+}
+
+
+@media screen and (max-width: 860px){
+	div#image_and_info{
+		flex-direction: column;
+	}
+	
+	img#library_picture{
+		width: 100%;
+		height: 100%;
+	}
+	
+	select#library_administrators{
+		width: 100%;
+	}
+	
+}

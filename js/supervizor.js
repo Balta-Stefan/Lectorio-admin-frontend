@@ -60,6 +60,7 @@ function pregled_citaonica_click()
 	remove_panel_elements();
 	
 	// to do
+	activate_template(panel_children, "library_overview");
 }
 
 function postavke_click()
@@ -68,6 +69,7 @@ function postavke_click()
 	remove_panel_elements();
 	
 	// to do	
+	activate_template(panel_children, "supervisor_settings_template");
 }
 
 function login()
@@ -172,6 +174,8 @@ var panel_children = document.getElementById("panel_content");
 var panel_header_name = document.getElementById("panel_header_name");
 
 init();
+//activate_template(panel_children, "supervisor_settings_template");
+//activate_template(panel_children, "library_overview");
 //activate_template(panel_children, "supervisor_admin_overview");
 //activate_template(panel_children, "library_activations_template");
 

@@ -33,7 +33,7 @@ div#supervisor_admin_overview_container p{
 	margin: 0;
 }
 
-div#library_overview_container{
+div#supervisor_admin_overview_library_container{
 	width: 100%;
 	height: 10%;
 	display: flex;

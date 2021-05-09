@@ -1,0 +1,22 @@
+div#supervisor_settings_container{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+div#supervisor_settings_container p{
+	margin: 0;
+}
+
+div#supervisor_settings_info{
+	display: flex;
+	flex-direction: column;
+}
+
+div#supervisor_settings_data{
+	display: flex;
+	flex-direction: column;
+	padding-left: 15px;
+}
