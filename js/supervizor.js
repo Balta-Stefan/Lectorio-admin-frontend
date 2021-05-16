@@ -92,6 +92,14 @@ function admin_registracija_citaonica_click()
 	//to do
 }
 
+function supervisor_pregled_citaonica_click()
+{
+	panel_header_name.innerHTML = "Pregled čitaonica";
+	remove_panel_elements();
+	
+	activate_template(panel_children, "supervisor_library_overview");
+}
+
 function admin_pregled_citaonica_click()
 {
 	panel_header_name.innerHTML = "Pregled čitaonica";
@@ -106,7 +114,7 @@ function admin_obavjestenja_click()
 	panel_header_name.innerHTML = "Obavještenja";
 	remove_panel_elements();
 	
-	//to do
+	activate_template(panel_children, "admin_library_notifications_panel");
 }
 
 function supervisor_init()
@@ -122,7 +130,7 @@ function supervisor_init()
 	
 	addEventToClass(obrada_zahtjeva, supervisor_obrada_zahtjeva_click);
 	addEventToClass(pregled_administratora, pregled_administratora_click);
-	addEventToClass(pregled_citaonica, admin_pregled_citaonica_click);
+	addEventToClass(pregled_citaonica, supervisor_pregled_citaonica_click);
 	addEventToClass(postavke, postavke_click);
 	
 	/*document.getElementsByClassName("obrada_zahtjeva_btn").addEventListener("click", supervisor_obrada_zahtjeva_click);

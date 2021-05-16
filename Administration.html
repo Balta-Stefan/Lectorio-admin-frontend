@@ -12,6 +12,7 @@
 		<link href="css/Supervisor settings.css" type="text/css" rel="stylesheet" />
 		<link href="css/Supervisor library overview.css" type="text/css" rel="stylesheet" />
 		<link href="css/Admin library overview.css" type="text/css" rel="stylesheet" />
+		<link href="css/Admin library notifications panel.css" type="text/css" rel="stylesheet" />
 
 		
 		<script type="text/javascript" src="js/supervizor.js" defer></script>
@@ -244,6 +245,12 @@
 						
 						<p>Broj mjesta</p>
 						<input id="admin_library_total_seats" disabled></input>
+						<p>Adresa</p>
+						<input id="admin_library_address" disabled></input>
+						<p>Vrijeme otvaranja</p>
+						<input id="admin_library_opening_time" disabled></input>
+						<p>Vrijeme zatvaranja</p>
+						<input id="admin_library_closing_time" disabled></input>
 						<br>
 						<button id="admin_deactivate_library_btn"><b>Deaktiviraj</b></button>
 					</div>
@@ -274,12 +281,41 @@
 						<input id="admin_library_registration_date" disabled></input>
 						
 						<p>Broj mjesta</p>
-						<input id="admin_library_total_seats" disabled></input>
+						<input id="admin_library_total_seats"></input>
+						<p>Adresa</p>
+						<input id="admin_library_address"></input>
+						<p>Vrijeme otvaranja</p>
+						<input id="admin_library_opening_time"></input>
+						<p>Vrijeme zatvaranja</p>
+						<input id="admin_library_closing_time"></input>
+						<br>
+						<button class="admin_library_overview_button" id="admin_library_change_library_info"><b>Izmijeni informacije</b></button>
 						<br>
 						<button id="admin_deactivate_library_btn"><b>Deaktiviraj</b></button>
+						<br>
+						<label id="admin_library_overview_action_status_label">Status akcije:</label>
 					</div>
 				</div>
 				<div id="admin_library_layout_picture_container"></div>
+			</div>
+		</template>
+		
+		<template id="admin_library_notifications_panel">
+			<div id="library_notifications_panel_wrapper">
+				<select id="admin_notifications_list_of_libraries">
+					<option selected style="display:none;">Spisak čitaonica</option>
+				</select>
+				<textarea id="admin_notification_textarea"></textarea>
+				<div id="notification_data_wrapper">
+					<input type="date"></input>
+					<input type="date"></input>
+					<input placeholder="Od (vrijeme)"></input>
+					<input placeholder="Do (vrijeme)"></input>
+				</div>
+				<div id="notifications_panel_buttons_wrapper">
+					<button id="notificaions_panel_send_notification" class="notifications_button"><b>Pošalji obavijest</b></button>
+					<button id="notification_panel_remove_notification" class="notifications_button"><b>Ukloni obavijest</b></button>
+				</div>
 			</div>
 		</template>
 		

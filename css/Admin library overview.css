@@ -56,8 +56,7 @@ div#admin_library_layout_picture_container{
 	border: solid;
 }
 
-button#admin_deactivate_library_btn{
-	background-color: red;
+.admin_library_overview_button{
 	border: none;
 	color: white;
 	cursor: pointer;
@@ -68,13 +67,20 @@ button#admin_deactivate_library_btn{
 	width: 5.5rem;
 }
 
-button#admin_deactivate_library_btn:hover{
+.admin_library_overview_button:hover{
 	opacity: 0.5;
 }
-button#admin_deactivate_library_btn:active{
+.admin_library_overview_button:active{
 	opacity: 0.5;
 }
 
+button#admin_library_change_library_info{
+	background-color: blue;
+}
+
+button#admin_deactivate_library_btn{
+	background-color: red;
+}
 
 @media screen and (max-width: 860px){
 	div#admin_image_and_info{
