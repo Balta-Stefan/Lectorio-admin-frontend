@@ -6,6 +6,7 @@ div#library_notifications_panel_wrapper{
 select#admin_notifications_list_of_libraries{
 	width: 100%;
 	height: 5%;
+	text-align: center;
 }
 
 textarea#admin_notification_textarea{

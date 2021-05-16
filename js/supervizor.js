@@ -3,6 +3,11 @@
 	When using templates, this means that removing an instance of the template will remove it permanently
 	so that the template will be gone forever.
 	That's why it must be cloned (there seem to be 2 methods, importNode and cloneNode)
+	
+	Canvas:
+	-canvas_context.beginPath(); has to be called before each drawing.The reason for this is that everything that was drawn will be redrawn for each new stroke()
+	 and all the items will keep getting darker because the colors accumulate
+	
 */
 
 function activate_template(destination, template_id)
@@ -107,6 +112,109 @@ function admin_pregled_citaonica_click()
 	
 	activate_template(panel_children, "admin_library_overview");
 	
+	
+	var canvas_area = document.getElementById("admin_library_layout_picture_container");
+	activate_template(canvas_area, "library_layout_drawing_template");
+
+	// draw on the canvas
+	canvas_setup();
+	canvas_draw_lines();
+}
+
+function canvas_entrance_button_clicked()
+{
+	canvas_drawing_color = "black";
+}
+function canvas_standard_seat_button_clicked()
+{
+	canvas_drawing_color = "orange";
+}
+function canvas_socket_seat_button_clicked()
+{
+	canvas_drawing_color = "blue";
+}
+function canvas_table_button_clicked()
+{
+	canvas_drawing_color = "brown";
+}
+function canvas_reset_button_clicked()
+{
+	canvas_drawing_color = "white";
+}
+
+function canvas_click_event(event)
+{
+    const rect = canvas.getBoundingClientRect()
+    const x = event.clientX - rect.left
+    const y = event.clientY - rect.top
+	
+	var selected_cell_x = Math.floor(x / horizontal_step);
+	var selected_cell_y = Math.floor(y / vertical_step);
+	
+	var drawX = selected_cell_x * horizontal_step;
+	var drawY = selected_cell_y * vertical_step;
+	//alert(selected_cell_x);
+	//alert(selected_cell_y);
+	
+	// offsets in fillRect are there because white color will remove borders
+	canvas_context.beginPath();
+	canvas_context.fillStyle = canvas_drawing_color;
+	canvas_context.fillRect(drawX+1, drawY+1, horizontal_step-2, vertical_step-2);
+	canvas_context.stroke();
+}
+
+function canvas_setup()
+{
+	canvas_horizontal_slider = document.getElementById("canvas_num_of_horizontal_lines");
+	canvas_vertical_slider = document.getElementById("canvas_num_of_vertical_lines");
+	
+	var slider_class = document.querySelectorAll(".canvas_slider");
+	addEventToClass(slider_class, canvas_draw_lines);
+	
+	canvas = document.getElementById("drawing_canvas");
+	canvas.addEventListener('click', canvas_click_event);
+	canvas_context = canvas.getContext("2d");
+	canvas_context.lineWidth = 1;
+	
+	canvasW = document.getElementById('drawing_canvas').offsetWidth;
+	canvasH = document.getElementById('drawing_canvas').offsetHeight;
+	
+	// prepare the button events
+	document.getElementById("canvas_entry").onclick = canvas_entrance_button_clicked;
+	document.getElementById("canvas_standard_seat").onclick = canvas_standard_seat_button_clicked;
+	document.getElementById("canvas_socket_seat").onclick = canvas_socket_seat_button_clicked;
+	document.getElementById("canvas_table").onclick = canvas_table_button_clicked;
+	document.getElementById("canvas_remove_elements").onclick = canvas_reset_button_clicked;
+}
+
+function canvas_draw_lines()
+{
+	var num_of_horizontal_lines = canvas_horizontal_slider.value;
+	var num_of_vertical_lines = canvas_vertical_slider.value;
+	
+
+	// canvas HTML element dimensions are separated from the canvas' context dimensions
+	// these context dimensions have to be set to the dimensions of the HTML canvas element
+	canvas_height = canvas_context.canvas.height = canvasH;
+	canvas_width = canvas_context.canvas.width = canvasW;
+	
+	
+	horizontal_step = canvas_width / num_of_horizontal_lines;
+	vertical_step = canvas_height / num_of_vertical_lines;
+		
+	canvas_context.beginPath();
+	for(x = horizontal_step; x <= canvas_width; x += horizontal_step)
+	{
+		canvas_context.moveTo(x, 0);
+		canvas_context.lineTo(x, canvas_height);
+	}
+	for(y = vertical_step; y <= canvas_height; y += vertical_step)
+	{
+		canvas_context.moveTo(0, y);
+		canvas_context.lineTo(canvas_width, y);
+	}
+	
+    canvas_context.stroke();
 }
 
 function admin_obavjestenja_click()
@@ -227,6 +335,19 @@ var navigation_list = document.getElementById("navigation_list");
 var panel = document.getElementById("panel");
 var panel_children = document.getElementById("panel_content");
 var panel_header_name = document.getElementById("panel_header_name");
+
+var canvas = null;
+var canvas_context = null;
+var canvas_horizontal_slider = null;
+var canvas_vertical_slider = null;
+var canvasW = 0;
+var canvasH = 0;
+var canvas_drawing_color = null;
+var canvas_height = null;
+var canvas_width = null;
+var horizontal_step = null;
+var vertical_step = null;
+
 
 init();
 //activate_template(panel_children, "supervisor_settings_template");

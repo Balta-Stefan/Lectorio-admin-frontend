@@ -44,10 +44,9 @@ select#admin_library_administrators{
 }
 
 
-div#admin_library_layout_picture_container{
+div#supervisor_library_layout_picture_container{
 	height: 30rem;
 	width: 100%;
-	border: solid;
 }
 
 button#admin_deactivate_library_btn{

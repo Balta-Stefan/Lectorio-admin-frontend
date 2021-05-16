@@ -1,0 +1,74 @@
+div#library_layout_wrapper{
+	width: 100%;
+	height: 100%;
+	display: flex;
+}
+
+div#layout_drawing_canvas_wrapper{
+	width: 70%;
+}
+div#canvas_drawing_tools{
+	width: 30%;
+	height: 100%;
+	margin-left: 15px;
+	display: flex;
+	flex-direction: column;
+	border: solid;
+}
+
+canvas#drawing_canvas{
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	border: solid;
+}
+
+div#canvas_buttons_wrapper{
+	display: flex;
+}
+
+
+.canvas_button{
+	width: 100%;
+	color: white;
+}
+.canvas_button:hover{
+	opacity: 0.5;
+}
+
+.canvas_slider{
+	width: 100%;
+	height: 25px;
+	background: #d3d3d3;
+	outline: none;
+	opacity: 0.7;
+	transition: opacity .2s;
+}
+.canvas_slider:hover {
+  opacity: 1;
+}
+
+button#canvas_entry{
+	background-color: black;
+}
+button#canvas_standard_seat{
+	background-color: orange;
+}
+button#canvas_socket_seat{
+	background-color: blue;
+}
+button#canvas_table{
+	background-color: brown;
+}
+button#canvas_remove_elements{
+	background-color: grey;
+}
+
+/*
+Potrebne boje:
+	-za ulaz
+	-za obicno mjesto
+	-za mjesto sa uticnicom
+	-za sto
+	-brisanje mjesta
+*/

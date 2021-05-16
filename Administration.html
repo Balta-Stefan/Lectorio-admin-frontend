@@ -13,11 +13,11 @@
 		<link href="css/Supervisor library overview.css" type="text/css" rel="stylesheet" />
 		<link href="css/Admin library overview.css" type="text/css" rel="stylesheet" />
 		<link href="css/Admin library notifications panel.css" type="text/css" rel="stylesheet" />
-
+		<link href="css/Canvas.css" type="text/css" rel="stylesheet" />
 		
 		<script type="text/javascript" src="js/supervizor.js" defer></script>
 		
-		<meta charset="utf-8">
+		<meta charset="UTF-8">
 		<meta name="author" content="Balta Stefan">
 		<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- media queries don't work without this line-->
 	</head>
@@ -255,7 +255,7 @@
 						<button id="admin_deactivate_library_btn"><b>Deaktiviraj</b></button>
 					</div>
 				</div>
-				<div id="admin_library_layout_picture_container"></div>
+				<div id="supervisor_library_layout_picture_container"></div>
 			</div>
 		</template>
 		
@@ -296,7 +296,9 @@
 						<label id="admin_library_overview_action_status_label">Status akcije:</label>
 					</div>
 				</div>
-				<div id="admin_library_layout_picture_container"></div>
+				<div id="admin_library_layout_picture_container">
+					
+				</div>
 			</div>
 		</template>
 		
@@ -334,6 +336,29 @@
 				</div>
 			</div>
 		</template>
+		
+		<template id="library_layout_drawing_template">
+			<div id="library_layout_wrapper">
+				<div id="layout_drawing_canvas_wrapper">
+					<canvas id="drawing_canvas"></canvas>
+				</div>
+				<div id="canvas_drawing_tools">
+					<p>Broj vertikalnih linija</p>
+					<input class="canvas_slider" id="canvas_num_of_vertical_lines" type="range" min="10" max="100"></input>
+					<p>Broj horizontalnih linija</p>
+					<input class="canvas_slider" id="canvas_num_of_horizontal_lines" type="range" min="10" max="100"></input>
+					
+					<div id="canvas_buttons_wrapper">
+						<button class="canvas_button" id="canvas_entry"><b>Ulaz</b></button>
+						<button class="canvas_button" id="canvas_standard_seat"><b>Standardno mjesto</b></button>
+						<button class="canvas_button" id="canvas_socket_seat"><b>Mjesto sa utičnicom</b></button>
+						<button class="canvas_button" id="canvas_table"><b>Sto</b></button>
+						<button class="canvas_button" id="canvas_remove_elements"><b>Brisanje elemenata</b></button>
+					</div>
+				</div>
+			</div>
+		</template>
+		
 	</body>
 </html>
 
