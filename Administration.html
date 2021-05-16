@@ -14,6 +14,7 @@
 		<link href="css/Admin library overview.css" type="text/css" rel="stylesheet" />
 		<link href="css/Admin library notifications panel.css" type="text/css" rel="stylesheet" />
 		<link href="css/Canvas.css" type="text/css" rel="stylesheet" />
+		<link href="css/Admin library registration.css" type="text/css" rel="stylesheet" />
 		
 		<script type="text/javascript" src="js/supervizor.js" defer></script>
 		
@@ -355,6 +356,29 @@
 						<button class="canvas_button" id="canvas_table"><b>Sto</b></button>
 						<button class="canvas_button" id="canvas_remove_elements"><b>Brisanje elemenata</b></button>
 					</div>
+				</div>
+			</div>
+		</template>
+		
+		<template id="admin_library_registration">
+			<div id="admin_library_registration_wrapper">
+				<form id="library_registration_form">
+				  <label for="name">Naziv</label><br>
+				  <input id="library_registration_name" type="text" name="name"><br>
+				  <label for="address">Adresa</label><br>
+				  <input id="library_registration_address" type="text" name="address"><br>
+				  <label for="number_of_seats">Broj mjesta</label><br>
+				  <input id="library_registration_num_of_seats" name="number_of_seats"><br>
+				  <label for="opening_time">Vrijeme otvaranja</label><br>
+				  <input id="library_registration_opening_time" name="opening_time"><br>
+				  <label for="closing_time">Vrijeme zatvaranja</label><br>
+				  <input id="library_registration_closing_time" name="closing_time"><br>
+				  <label for="library_picture">Slika</label><br>
+				  <input id="library_registration_picture" type="file" name="library_picture">
+				  <button id="library_registration_submit_button" type="submit" form="library_registration_form"><b>Registruj</b></button>
+				</form>
+				<div id="admin_library_registration_canvas_wrapper">
+					
 				</div>
 			</div>
 		</template>

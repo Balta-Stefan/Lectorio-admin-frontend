@@ -8,6 +8,7 @@
 	-canvas_context.beginPath(); has to be called before each drawing.The reason for this is that everything that was drawn will be redrawn for each new stroke()
 	 and all the items will keep getting darker because the colors accumulate
 	
+	//https://developer.mozilla.org/en-US/docs/Learn/Forms/Sending_forms_through_JavaScript
 */
 
 function activate_template(destination, template_id)
@@ -94,7 +95,13 @@ function admin_registracija_citaonica_click()
 	panel_header_name.innerHTML = "Registracija čitaonica";
 	remove_panel_elements();
 	
-	//to do
+	activate_template(panel_children, "admin_library_registration");
+	
+	var canvas_area = document.getElementById("admin_library_registration_canvas_wrapper");
+	activate_template(canvas_area, "library_layout_drawing_template");
+	
+	canvas_setup();
+	canvas_draw_lines();
 }
 
 function supervisor_pregled_citaonica_click()
@@ -348,6 +355,7 @@ var canvas_width = null;
 var horizontal_step = null;
 var vertical_step = null;
 
+//https://developer.mozilla.org/en-US/docs/Learn/Forms/Sending_forms_through_JavaScript
 
 init();
 //activate_template(panel_children, "supervisor_settings_template");
