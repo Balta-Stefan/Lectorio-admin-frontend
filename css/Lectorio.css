@@ -83,8 +83,10 @@ div#content{
 }
 
 div#panel{
-	width: 60%;
-	height: 80%;
+	/*width: 60%;
+	height: 80%;*/
+	width: 100%;
+	height: 100%;
 	
 	/*margin-left: auto;
 	margin-right: auto;
@@ -126,6 +128,7 @@ div#panel_content{
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	overflow-y: auto; /* VERY IMPORTANT LINE!!! */
 }
 
 .request_input{
@@ -149,8 +152,10 @@ div#panel_content{
 	
 	/*height: 16%;
 	width: 35%;*/
-	width: 50%;
-	height: 16%;
+	/*width: 50%;
+	height: 16%;*/
+	width: 35%;
+	height: 15%;
 	
 	padding: 3%;
 	margin: 1%;
@@ -162,11 +167,12 @@ div#panel_content{
 	background-color: orange;
 }
 
-p#side_menu{
+p.side_menu_burger{
 	display: none;
 }
 
-div#supervisor_sidenav_div{
+
+.side_navigation{
 	height: 100%;
 	width: 0;
 	position: fixed;
@@ -179,7 +185,7 @@ div#supervisor_sidenav_div{
 	padding-top: 60px;
 }
 
-div#supervisor_sidenav_div a{
+.side_navigation a{
 	display: block;
 	transition: 0.3s;
 }
@@ -251,7 +257,9 @@ button#register_button{
 	}
 	
 	.button{
-		height: 20%;
+		/*height: 20%;*/
+		width: 70%;
+		height: 15%;
 	}
 	
 	a#forgotten_password{
@@ -263,8 +271,9 @@ button#register_button{
 	}
 	
 
-	p#side_menu{
-		display: inline;
+	p.side_menu_burger{
+		display: block;
+		margin-left: auto;
 		cursor: pointer;
 	}
 }

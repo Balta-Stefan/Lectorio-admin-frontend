@@ -84,9 +84,35 @@ function addEventToClass(classElements, callback)
 		classElements[i].addEventListener("click", callback);
 }
 
+function admin_registracija_citaonica_click()
+{
+	panel_header_name.innerHTML = "Registracija čitaonica";
+	remove_panel_elements();
+	
+	//to do
+}
+
+function admin_pregled_citaonica_click()
+{
+	panel_header_name.innerHTML = "Pregled čitaonica";
+	remove_panel_elements();
+	
+	activate_template(panel_children, "admin_library_overview");
+	
+}
+
+function admin_obavjestenja_click()
+{
+	panel_header_name.innerHTML = "Obavještenja";
+	remove_panel_elements();
+	
+	//to do
+}
+
 function supervisor_init()
 {
 	// activate templates
+	activate_template(document.getElementById("navigation"), "supervisor_sidenav");
 	activate_template(navigation_list, "supervisor_navigation_list");
 	
 	var obrada_zahtjeva = document.querySelectorAll(".obrada_zahtjeva_btn");
@@ -96,7 +122,7 @@ function supervisor_init()
 	
 	addEventToClass(obrada_zahtjeva, supervisor_obrada_zahtjeva_click);
 	addEventToClass(pregled_administratora, pregled_administratora_click);
-	addEventToClass(pregled_citaonica, pregled_citaonica_click);
+	addEventToClass(pregled_citaonica, admin_pregled_citaonica_click);
 	addEventToClass(postavke, postavke_click);
 	
 	/*document.getElementsByClassName("obrada_zahtjeva_btn").addEventListener("click", supervisor_obrada_zahtjeva_click);
@@ -108,11 +134,20 @@ function supervisor_init()
 function admin_init()
 {
 	// activate templates
+	activate_template(document.getElementById("navigation"), "admin_sidenav");
 	activate_template(navigation_list, "admin_navigation_list");
 
 	
 	// to do (add callbacks to buttons for admins)
+	var registracija_citaonice = document.querySelectorAll(".registracija_citaonice");
+	var pregled_citaonica = document.querySelectorAll(".admin_pregled_citaonica");
+	var admin_obavjestenja = document.querySelectorAll(".admin_obavjestenja");
+	var postavke = document.querySelectorAll(".admin_postavke_btn");
 	
+	addEventToClass(registracija_citaonice, admin_registracija_citaonica_click);
+	addEventToClass(pregled_citaonica, admin_pregled_citaonica_click);
+	addEventToClass(admin_obavjestenja, admin_obavjestenja_click);
+	addEventToClass(postavke, postavke_click);
 }
 
 function registration_loginPanel_click()
@@ -127,7 +162,7 @@ function init()
 	// check if a valid cookie is present
 	// to do
 	var cookieValid = new Boolean(false);
-	var user_type="supervisor"; // obtain from cookie
+	var user_type="admin"; // obtain from cookie
 	
 	
 	if(user_type === admin)
@@ -138,7 +173,6 @@ function init()
 	}
 	else if(user_type === supervisor)
 	{
-		activate_template(document.getElementById("navigation"), "supervisor_sidenav");
 		supervisor_init();
 		document.title = "Supervizorski panel"
 		return;
@@ -153,16 +187,29 @@ function init()
 	document.getElementById("register_button").addEventListener("click", registration_loginPanel_click);
 }
 
-function openNav() 
+function openNavSupervisor() 
 {
   document.getElementById("supervisor_sidenav_div").style.width = "250px";
   document.body.style.marginRight = "250px";
 }
 
-function closeNav()
+function closeNavSupervisor()
 {
-  document.getElementById("supervisor_sidenav_div").style.width = "0";
-  document.body.style.marginRight= "0";
+	document.getElementById("supervisor_sidenav_div").style.width = "0";
+	document.body.style.marginRight= "0";
+}
+
+function openNavAdmin()
+{
+  document.getElementById("admin_sidenav_div").style.width = "250px";
+  document.body.style.marginRight = "250px";
+}
+
+function closeNavAdmin()
+{
+	document.getElementById("admin_sidenav_div").style.width = "0";
+	document.body.style.marginRight= "0";
+	
 }
 
 var admin = "admin";
