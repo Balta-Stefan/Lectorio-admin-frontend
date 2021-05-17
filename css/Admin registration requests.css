@@ -21,7 +21,9 @@ div#admin_registration_request_info{
 	display: flex;
 	flex-direction: column;
 }
-
+div#admin_registration_request_info input{
+	width: 15rem;
+}
 
 div#admin_request_buttons{
 	height: 40%;

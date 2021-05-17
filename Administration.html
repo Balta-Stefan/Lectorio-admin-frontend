@@ -3,6 +3,11 @@
 	<head>
 		<title>Lectorio</title>
 		
+		<meta charset="UTF-8">
+		<meta name="author" content="Balta Stefan">
+		<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- media queries don't work without this line-->
+
+		
 		<link href="css/Lectorio.css" type="text/css" rel="stylesheet" />
 		<link href="css/Login.css" type="text/css" rel="stylesheet" />
 		<link href="css/Registration.css" type="text/css" rel="stylesheet" />
@@ -18,9 +23,6 @@
 		
 		<script type="text/javascript" src="js/supervizor.js" defer></script>
 		
-		<meta charset="UTF-8">
-		<meta name="author" content="Balta Stefan">
-		<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- media queries don't work without this line-->
 	</head>
 	
 	<body>
@@ -344,10 +346,10 @@
 					<canvas id="drawing_canvas"></canvas>
 				</div>
 				<div id="canvas_drawing_tools">
-					<p>Broj vertikalnih linija</p>
-					<input class="canvas_slider" id="canvas_num_of_vertical_lines" type="range" min="10" max="100"></input>
 					<p>Broj horizontalnih linija</p>
 					<input class="canvas_slider" id="canvas_num_of_horizontal_lines" type="range" min="10" max="100"></input>
+					<p>Broj vertikalnih linija</p>
+					<input class="canvas_slider" id="canvas_num_of_verticall_lines" type="range" min="10" max="100"></input>
 					
 					<div id="canvas_buttons_wrapper">
 						<button class="canvas_button" id="canvas_entry"><b>Ulaz</b></button>

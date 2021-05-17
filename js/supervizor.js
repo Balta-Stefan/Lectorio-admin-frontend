@@ -172,8 +172,8 @@ function canvas_click_event(event)
 
 function canvas_setup()
 {
-	canvas_horizontal_slider = document.getElementById("canvas_num_of_horizontal_lines");
-	canvas_vertical_slider = document.getElementById("canvas_num_of_vertical_lines");
+	canvas_horizontal_slider = document.getElementById("canvas_num_of_verticall_lines");
+	canvas_vertical_slider = document.getElementById("canvas_num_of_horizontal_lines");
 	
 	var slider_class = document.querySelectorAll(".canvas_slider");
 	addEventToClass(slider_class, canvas_draw_lines);
