@@ -69,10 +69,14 @@ button#reject_administration_btn{
 	
 	div#admin_requests_container{
 		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 	}
 	
 	div#admin_registration_request_info{
 		width: 90%;
+		justify-content: center;
+		align-items: center;
 	}
 	
 	.registration_requests_buttons{

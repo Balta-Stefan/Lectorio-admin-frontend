@@ -5,13 +5,22 @@ div#admin_library_overview_container{
 	overflow: auto;
 }
 
+form#library_overview_form{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: auto;
+}
+form#library_overview_form input{
+	width: 15rem;
+}
+
 div#admin_add_new_admin_wrapper{
 	display: flex;
 	width: 100%;
 }
 
 canvas#admin_library_overview_layout_canvas{
-	border: dotted;
 	background-color: white;
 	width: 100%;
 	height: 100%;
@@ -27,19 +36,20 @@ select#admin_list_of_libraries{
 
 div#admin_image_and_info{
 	width: 100%;
-	height: 25rem;
+	/*height: 25rem;*/
+	height: auto;
 	display: flex;
 	margin-bottom: 5px;
 }
 
 img#admin_library_picture{
 	width: 30%;
-	height: 100%;
+	height: auto;
 }
 
 div#admin_library_info{
 	width: 70%;
-	height: 100%;
+	height: auto;
 	padding-left: 15px;
 }
 

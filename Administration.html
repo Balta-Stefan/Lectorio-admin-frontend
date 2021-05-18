@@ -280,6 +280,29 @@
 							<label id="admin_library_overview_admin_added_status">Status:</label>
 						</div>
 						
+						<form id="library_overview_form">
+							<label for="registered">Registrovana</label>
+							<input name="registered">
+							<label for="number_of_seats">Broj mjesta</label>
+							<input name="number_of_seats">
+							<label for="address">Adresa</label>
+							<input name="address">
+							<label for="opening_time">Vrijeme otvaranja</label>
+							<input name="opening_time">
+							<label for="closing_time">Vrijeme zatvaranja</label>
+							<input name="closing_time">
+							<label for="library_picture">Slika</label><br>
+							<input id="library_registration_picture" type="file" name="library_picture">
+							<label>Lokaciju odaberite na Google maps servisu i uzmite 2 broja od te lokacije (primjer: 44.779997, 17.199400)</label>
+							<label for="latitude">Prvi broj (geografska širina)</label>
+							<input name="latitude">
+							<label for="longitude">Drugi broj (geografska širina)</label>
+							<input name="longitude">
+							<button type="submit" form="library_overview_form" class="admin_library_overview_button" id="admin_library_change_library_info"><b>Izmijeni informacije</b></button>
+							<button id="admin_deactivate_library_btn"><b>Deaktiviraj</b></button>
+						</form>
+						
+						<!--
 						<p>Registrovana</p>
 						<input id="admin_library_registration_date" disabled></input>
 						
@@ -295,7 +318,7 @@
 						<button class="admin_library_overview_button" id="admin_library_change_library_info"><b>Izmijeni informacije</b></button>
 						<br>
 						<button id="admin_deactivate_library_btn"><b>Deaktiviraj</b></button>
-						<br>
+						<br> -->
 						<label id="admin_library_overview_action_status_label">Status akcije:</label>
 					</div>
 				</div>
@@ -310,17 +333,19 @@
 				<select id="admin_notifications_list_of_libraries">
 					<option selected style="display:none;">Spisak čitaonica</option>
 				</select>
-				<textarea id="admin_notification_textarea"></textarea>
-				<div id="notification_data_wrapper">
-					<input type="date"></input>
-					<input type="date"></input>
-					<input placeholder="Od (vrijeme)"></input>
-					<input placeholder="Do (vrijeme)"></input>
-				</div>
-				<div id="notifications_panel_buttons_wrapper">
-					<button id="notificaions_panel_send_notification" class="notifications_button"><b>Pošalji obavijest</b></button>
-					<button id="notification_panel_remove_notification" class="notifications_button"><b>Ukloni obavijest</b></button>
-				</div>
+				<form id="library_notifications_form">
+					<textarea name="notification" id="admin_notification_textarea"></textarea>
+					<div id="notification_data_wrapper">
+						<input name="notification_from_date" type="date"></input>
+						<input name="notification_to_date" type="date"></input>
+						<input name="notification_from_time" placeholder="Od (vrijeme)"></input>
+						<input name="notification_to_time" placeholder="Do (vrijeme)"></input>
+					</div>
+					<div id="notifications_panel_buttons_wrapper">
+						<button type="submit" form="library_notifications_form" id="notificaions_panel_send_notification" class="notifications_button"><b>Pošalji obavijest</b></button>
+						<button id="notification_panel_remove_notification" class="notifications_button"><b>Ukloni obavijest</b></button>
+					</div>
+				</form>
 			</div>
 		</template>
 		
@@ -365,19 +390,24 @@
 		<template id="admin_library_registration">
 			<div id="admin_library_registration_wrapper">
 				<form id="library_registration_form">
-				  <label for="name">Naziv</label><br>
-				  <input id="library_registration_name" type="text" name="name"><br>
-				  <label for="address">Adresa</label><br>
-				  <input id="library_registration_address" type="text" name="address"><br>
-				  <label for="number_of_seats">Broj mjesta</label><br>
-				  <input id="library_registration_num_of_seats" name="number_of_seats"><br>
-				  <label for="opening_time">Vrijeme otvaranja</label><br>
-				  <input id="library_registration_opening_time" name="opening_time"><br>
-				  <label for="closing_time">Vrijeme zatvaranja</label><br>
-				  <input id="library_registration_closing_time" name="closing_time"><br>
-				  <label for="library_picture">Slika</label><br>
-				  <input id="library_registration_picture" type="file" name="library_picture">
-				  <button id="library_registration_submit_button" type="submit" form="library_registration_form"><b>Registruj</b></button>
+					<label for="name">Naziv</label><br>
+					<input id="library_registration_name" type="text" name="name"><br>
+					<label for="address">Adresa</label><br>
+					<input id="library_registration_address" type="text" name="address"><br>
+					<label for="number_of_seats">Broj mjesta</label><br>
+					<input id="library_registration_num_of_seats" name="number_of_seats"><br>
+					<label for="opening_time">Vrijeme otvaranja</label><br>
+					<input id="library_registration_opening_time" name="opening_time"><br>
+					<label for="closing_time">Vrijeme zatvaranja</label><br>
+					<input id="library_registration_closing_time" name="closing_time"><br>
+					<label for="library_picture">Slika</label><br>
+					<input id="library_registration_picture" type="file" name="library_picture">
+					<p>Lokaciju odaberite na Google maps servisu i uzmite 2 broja od te lokacije (primjer: 44.779997, 17.199400)</p>
+					<label for="latitude">Prvi broj (geografska širina)</label>
+					<input name="latitude">
+					<label for="longitude">Drugi broj (geografska širina)</label>
+					<input name="longitude">
+					<button id="library_registration_submit_button" type="submit" form="library_registration_form"><b>Registruj</b></button>
 				</form>
 				<div id="admin_library_registration_canvas_wrapper">
 					

@@ -126,6 +126,9 @@ function admin_pregled_citaonica_click()
 	// draw on the canvas
 	canvas_setup();
 	canvas_draw_lines();
+	
+	// register the submit button event
+	//document.getElementById("library_registration_submit_button").onclick = register_library;
 }
 
 function canvas_entrance_button_clicked()
@@ -157,6 +160,8 @@ function canvas_click_event(event)
 	
 	var selected_cell_x = Math.floor(x / horizontal_step);
 	var selected_cell_y = Math.floor(y / vertical_step);
+	
+	canvas_drawn_cells_array[selected_cell_y][selected_cell_x] = (canvas_drawing_color.charAt(0)).toUpperCase();
 	
 	var drawX = selected_cell_x * horizontal_step;
 	var drawY = selected_cell_y * vertical_step;
@@ -199,6 +204,16 @@ function canvas_draw_lines()
 	var num_of_horizontal_lines = canvas_horizontal_slider.value;
 	var num_of_vertical_lines = canvas_vertical_slider.value;
 	
+	// allocate a 2D array that will hold cell values
+	canvas_drawn_cells_array = new Array(num_of_horizontal_lines);
+	
+	for(var i = 0; i < num_of_horizontal_lines; i++)
+	{
+		canvas_drawn_cells_array[i] = new Array(num_of_vertical_lines);
+		for(var j = 0; j < num_of_vertical_lines; j++)
+			canvas_drawn_cells_array[i][j] = '-';
+	}
+	
 
 	// canvas HTML element dimensions are separated from the canvas' context dimensions
 	// these context dimensions have to be set to the dimensions of the HTML canvas element
@@ -222,6 +237,31 @@ function canvas_draw_lines()
 	}
 	
     canvas_context.stroke();
+}
+
+// callback to register button on the library registration panel
+function register_library()
+{
+	var form_element = document.getElementById("library_registration_form");
+	var form_data = new FormData(form_element);
+	
+	/*
+	    "name": "Čitaonica elektrotehničkog fakulteta u Banjoj Luci",
+		"address": "Banja Luka, Patre 5",
+		"active": "true",
+		"latitude": "44.76669385601328",
+		"longitude": "17.18698250432791",
+		"xSize": "3",
+		"ySize": "3",
+		"insideAppearance": "AAATTTAAA"
+	
+	
+	*/
+	/*for(var key of form_data.keys())
+		console.log(key);
+	
+	for(var value of form_data.values())
+		console.log(value);*/
 }
 
 function admin_obavjestenja_click()
@@ -285,7 +325,7 @@ function init()
 	// check if a valid cookie is present
 	// to do
 	var cookieValid = new Boolean(false);
-	var user_type="admin"; // obtain from cookie
+	var user_type="supervisor"; // obtain from cookie
 	
 	
 	if(user_type === admin)
@@ -349,11 +389,12 @@ var canvas_horizontal_slider = null;
 var canvas_vertical_slider = null;
 var canvasW = 0;
 var canvasH = 0;
-var canvas_drawing_color = null;
+var canvas_drawing_color = "black";
 var canvas_height = null;
 var canvas_width = null;
 var horizontal_step = null;
 var vertical_step = null;
+var canvas_drawn_cells_array = null;
 
 //https://developer.mozilla.org/en-US/docs/Learn/Forms/Sending_forms_through_JavaScript
 
