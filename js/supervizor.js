@@ -9,6 +9,18 @@
 	 and all the items will keep getting darker because the colors accumulate
 	
 	//https://developer.mozilla.org/en-US/docs/Learn/Forms/Sending_forms_through_JavaScript
+	
+	
+	
+	Library layout color character meanings:
+		canvas_string_representation_character - stores obe of the chars below
+		
+		D - vrata (door)
+		T - sto (table)
+		_ - prazno
+		P - mjesto s uticnicom
+		S - standardno mjesto
+	
 */
 
 function activate_template(destination, template_id)
@@ -131,25 +143,31 @@ function admin_pregled_citaonica_click()
 	//document.getElementById("library_registration_submit_button").onclick = register_library;
 }
 
+
 function canvas_entrance_button_clicked()
 {
 	canvas_drawing_color = "black";
+	canvas_string_representation_character = 'D';
 }
 function canvas_standard_seat_button_clicked()
 {
 	canvas_drawing_color = "orange";
+	canvas_string_representation_character = 'S';
 }
 function canvas_socket_seat_button_clicked()
 {
 	canvas_drawing_color = "blue";
+	canvas_string_representation_character = 'P';
 }
 function canvas_table_button_clicked()
 {
 	canvas_drawing_color = "brown";
+	canvas_string_representation_character = 'T';
 }
 function canvas_reset_button_clicked()
 {
 	canvas_drawing_color = "white";
+	canvas_string_representation_character = '_';
 }
 
 function canvas_click_event(event)
@@ -161,7 +179,7 @@ function canvas_click_event(event)
 	var selected_cell_x = Math.floor(x / horizontal_step);
 	var selected_cell_y = Math.floor(y / vertical_step);
 	
-	canvas_drawn_cells_array[selected_cell_y][selected_cell_x] = (canvas_drawing_color.charAt(0)).toUpperCase();
+	canvas_drawn_cells_array[selected_cell_y][selected_cell_x] = canvas_string_representation_character;
 	
 	var drawX = selected_cell_x * horizontal_step;
 	var drawY = selected_cell_y * vertical_step;
@@ -395,6 +413,7 @@ var canvas_width = null;
 var horizontal_step = null;
 var vertical_step = null;
 var canvas_drawn_cells_array = null;
+var canvas_string_representation_character = null;
 
 //https://developer.mozilla.org/en-US/docs/Learn/Forms/Sending_forms_through_JavaScript
 
