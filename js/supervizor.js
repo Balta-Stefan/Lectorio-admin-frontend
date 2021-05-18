@@ -343,7 +343,7 @@ function init()
 	// check if a valid cookie is present
 	// to do
 	var cookieValid = new Boolean(false);
-	var user_type="supervisor"; // obtain from cookie
+	var user_type="admin"; // obtain from cookie
 	
 	
 	if(user_type === admin)

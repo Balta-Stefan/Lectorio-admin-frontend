@@ -8,7 +8,7 @@ div#admin_requests_container{
 select#admin_registration_requests_select{
 	margin-left: 15px;
 	width: 50%;
-	height: 10rem;
+	height: 100%;
 }
 
 div#admin_registration_request_info{
@@ -16,7 +16,7 @@ div#admin_registration_request_info{
 	margin-left: 10px;
 	
 	width: 50%;
-	height: 50%;
+	height: 100%;
 	
 	display: flex;
 	flex-direction: column;
