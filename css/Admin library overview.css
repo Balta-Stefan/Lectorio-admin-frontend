@@ -3,6 +3,7 @@ div#admin_library_overview_container{
 	padding: 0;
 	margin: 0;
 	overflow: auto;
+	overflow-x: hidden;
 }
 
 form#library_overview_form{

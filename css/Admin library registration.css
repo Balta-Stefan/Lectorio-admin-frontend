@@ -2,6 +2,7 @@ div#admin_library_registration_wrapper{
 	width: 100%;
 	overflow: auto;
 	display: block;
+	overflow-x: hidden;
 }
 
 
