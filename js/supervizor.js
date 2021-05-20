@@ -147,27 +147,27 @@ function admin_pregled_citaonica_click()
 function canvas_entrance_button_clicked()
 {
 	canvas_drawing_color = "black";
-	canvas_string_representation_character = 'D';
+	canvas_string_representation_character = door;
 }
 function canvas_standard_seat_button_clicked()
 {
 	canvas_drawing_color = "orange";
-	canvas_string_representation_character = 'S';
+	canvas_string_representation_character = standard_seat;
 }
 function canvas_socket_seat_button_clicked()
 {
 	canvas_drawing_color = "blue";
-	canvas_string_representation_character = 'P';
+	canvas_string_representation_character = socket_seat;
 }
 function canvas_table_button_clicked()
 {
 	canvas_drawing_color = "brown";
-	canvas_string_representation_character = 'T';
+	canvas_string_representation_character = table;
 }
 function canvas_reset_button_clicked()
 {
 	canvas_drawing_color = "white";
-	canvas_string_representation_character = '_';
+	canvas_string_representation_character = empty_cell;
 }
 
 function canvas_click_event(event)
@@ -229,7 +229,7 @@ function canvas_draw_lines()
 	{
 		canvas_drawn_cells_array[i] = new Array(num_of_vertical_lines);
 		for(var j = 0; j < num_of_vertical_lines; j++)
-			canvas_drawn_cells_array[i][j] = '-';
+			canvas_drawn_cells_array[i][j] = empty_cell;
 	}
 	
 
@@ -414,6 +414,12 @@ var horizontal_step = null;
 var vertical_step = null;
 var canvas_drawn_cells_array = null;
 var canvas_string_representation_character = null;
+
+var empty_cell = "_";
+var standard_seat = "S";
+var socket_seat = "P";
+var table = "T";
+var door = "D";
 
 //https://developer.mozilla.org/en-US/docs/Learn/Forms/Sending_forms_through_JavaScript
 
