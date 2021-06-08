@@ -91,7 +91,7 @@
 		
 		<!-- Templates for the content panel -->
 		<template id="login_panel">
-			<form id="login_form" action="ovdje staviti URL za podnosenje zahtjeva za prijavu">
+			<form id="login_form" enctype="application/x-www-form-urlencoded">
 				<label for="username"><b>Korisničko ime</b></label>
 				<input class="login_input" type="text" name="username" required oninvalid="this.setCustomValidity('Unesite vaše korisničko ime')" oninput="setCustomValidity('')">
 				
@@ -105,7 +105,7 @@
 		</template>
 		
 		<template id="register_panel">
-			<form id="register_form" action="ovdje staviti URL za registraciju">
+			<form id="register_form" enctype="application/x-www-form-urlencoded">
 				<label for="username"><b>Korisničko ime</b></label>
 				<input class="login_input" type="text" name="username" required oninvalid="this.setCustomValidity('Unesite vaše korisničko ime')" oninput="setCustomValidity('')">
 			
@@ -159,13 +159,13 @@
 				
 				<div id="library_to_activate_info">
 					<label>Podnosilac zahtjeva</label>
-					<input class="request_input" id="a" disabled></input>
+					<input class="request_input" id="activation_library_request_sender" disabled></input>
 					
 					<label>Lokacija čitaonice</label>
-					<input class="request_input" id="b" disabled></input>
+					<input class="request_input" id="activation_library_location" disabled></input>
 					
 					<label>Naziv čitaonice</label>
-					<input class="request_input" id="c" disabled></input>
+					<input class="request_input" id="activation_library_name" disabled></input>
 					
 					<label>Aktivacija ili registracija</label>
 					<input class="request_input" id="d" disabled></input>
@@ -196,6 +196,9 @@
 					
 					<p>Email</p>
 					<input id="admin_email" disabled></input>
+					
+					<p>Aktiviran</p>
+					<input id="admin_is_activated" disabled></input>
 					
 					<p></p>
 					<button class="admin_overview_buttons" id="deactivate_admin_account"><b>Deaktiviraj nalog</b></button>
@@ -241,7 +244,7 @@
 						<select id="admin_library_administrators">
 							<option selected style="display:none;">Administratori čitaonice</option>
 						</select>
-						<button id="admin_examine_administrator">Provjera administratora</button>
+						<!--<button id="admin_examine_administrator">Provjera administratora</button>-->
 						
 						<p>Registrovana</p>
 						<input id="admin_library_registration_date" disabled></input>
@@ -334,6 +337,7 @@
 					<option selected style="display:none;">Spisak čitaonica</option>
 				</select>
 				<form id="library_notifications_form">
+					<input id="announcement_title_input" name="announcement_title" placeholder="Naslov obavještenja"></input>
 					<textarea name="notification" id="admin_notification_textarea"></textarea>
 					<div id="notification_data_wrapper">
 						<input name="notification_from_date" type="date"></input>
@@ -372,9 +376,9 @@
 				</div>
 				<div id="canvas_drawing_tools">
 					<p>Broj horizontalnih linija</p>
-					<input class="canvas_slider" id="canvas_num_of_horizontal_lines" type="range" min="10" max="100"></input>
+					<input class="canvas_slider" id="canvas_num_of_horizontal_lines" type="range" min="10" max="50"></input>
 					<p>Broj vertikalnih linija</p>
-					<input class="canvas_slider" id="canvas_num_of_verticall_lines" type="range" min="10" max="100"></input>
+					<input class="canvas_slider" id="canvas_num_of_verticall_lines" type="range" min="10" max="50"></input>
 					
 					<div id="canvas_buttons_wrapper">
 						<button class="canvas_button" id="canvas_entry"><b>Ulaz</b></button>
@@ -389,19 +393,30 @@
 		
 		<template id="admin_library_registration">
 			<div id="admin_library_registration_wrapper">
-				<form id="library_registration_form">
+				<form id="library_registration_form" enctype="application/x-www-form-urlencoded">
 					<label for="name">Naziv</label><br>
 					<input id="library_registration_name" type="text" name="name"><br>
+					
 					<label for="address">Adresa</label><br>
 					<input id="library_registration_address" type="text" name="address"><br>
+					<!--
 					<label for="number_of_seats">Broj mjesta</label><br>
 					<input id="library_registration_num_of_seats" name="number_of_seats"><br>
+					
 					<label for="opening_time">Vrijeme otvaranja</label><br>
 					<input id="library_registration_opening_time" name="opening_time"><br>
+					
 					<label for="closing_time">Vrijeme zatvaranja</label><br>
 					<input id="library_registration_closing_time" name="closing_time"><br>
-					<label for="library_picture">Slika</label><br>
-					<input id="library_registration_picture" type="file" name="library_picture">
+					-->
+					<label for="readingRoomType">Tip čitaonice:</label>
+
+					<select name="readingRoomType" id="type_of_reading_room">
+					  <option value="Tiha">Tiha</option>
+					  <option value="Grupna">Grupna</option>
+					</select> 
+					<!-- <label for="library_picture">Slika</label><br>
+					<input id="library_registration_picture" type="file" name="library_picture"> -->
 					<p>Lokaciju odaberite na Google maps servisu i uzmite 2 broja od te lokacije (primjer: 44.779997, 17.199400)</p>
 					<label for="latitude">Prvi broj (geografska širina)</label>
 					<input name="latitude">
