@@ -280,7 +280,6 @@
 						<div id="admin_add_new_admin_wrapper">
 							<input id="admin_library_overview_add_new_admin_input" placeholder="Dodaj administratora"></input>
 							<button id="admin_library_overview_add_new_admin_button">Dodaj</button>
-							<label id="admin_library_overview_admin_added_status">Status:</label>
 						</div>
 						
 						<form id="library_overview_form">
@@ -289,7 +288,7 @@
 							<label for="number_of_seats">Broj mjesta</label>
 							<input name="number_of_seats">
 							<label for="address">Adresa</label>
-							<input name="address">
+							<input id="address_input" name="address">
 							<label for="opening_time">Vrijeme otvaranja</label>
 							<input name="opening_time">
 							<label for="closing_time">Vrijeme zatvaranja</label>
@@ -298,9 +297,9 @@
 							<input id="library_registration_picture" type="file" name="library_picture">
 							<label>Lokaciju odaberite na Google maps servisu i uzmite 2 broja od te lokacije (primjer: 44.779997, 17.199400)</label>
 							<label for="latitude">Prvi broj (geografska širina)</label>
-							<input name="latitude">
+							<input id="latitude_input" name="latitude">
 							<label for="longitude">Drugi broj (geografska širina)</label>
-							<input name="longitude">
+							<input id="longitude_input" name="longitude">
 							<button type="submit" form="library_overview_form" class="admin_library_overview_button" id="admin_library_change_library_info"><b>Izmijeni informacije</b></button>
 							<button id="admin_deactivate_library_btn"><b>Deaktiviraj</b></button>
 						</form>
@@ -322,7 +321,7 @@
 						<br>
 						<button id="admin_deactivate_library_btn"><b>Deaktiviraj</b></button>
 						<br> -->
-						<label id="admin_library_overview_action_status_label">Status akcije:</label>
+						<!--<label id="admin_library_overview_action_status_label">Status akcije:</label>-->
 					</div>
 				</div>
 				<div id="admin_library_layout_picture_container">
@@ -337,6 +336,9 @@
 					<option selected style="display:none;">Spisak čitaonica</option>
 				</select>
 				<form id="library_notifications_form">
+					<select id="admin_notifications_select">
+						<option selected style="display:none;">Spisak obavještenja</option>
+					</select>
 					<input id="announcement_title_input" name="announcement_title" placeholder="Naslov obavještenja"></input>
 					<textarea name="notification" id="admin_notification_textarea"></textarea>
 					<div id="notification_data_wrapper">
@@ -345,11 +347,11 @@
 						<input name="notification_from_time" placeholder="Od (vrijeme)"></input>
 						<input name="notification_to_time" placeholder="Do (vrijeme)"></input>
 					</div>
-					<div id="notifications_panel_buttons_wrapper">
-						<button type="submit" form="library_notifications_form" id="notificaions_panel_send_notification" class="notifications_button"><b>Pošalji obavijest</b></button>
-						<button id="notification_panel_remove_notification" class="notifications_button"><b>Ukloni obavijest</b></button>
-					</div>
 				</form>
+				<div id="notifications_panel_buttons_wrapper">
+					<button id="notifications_panel_send_notification" class="notifications_button"><b>Pošalji obavijest</b></button>
+					<button id="notification_panel_remove_notification" class="notifications_button"><b>Ukloni obavijest</b></button>
+				</div>
 			</div>
 		</template>
 		
