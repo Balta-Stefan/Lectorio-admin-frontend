@@ -14,6 +14,11 @@ select#admin_notifications_list_of_libraries{
 	text-align: center;
 }
 
+select#admin_notifications_select{
+	width: 100%;
+	text-align: center;
+	height: 5%;
+}
 
 textarea#admin_notification_textarea{
 	width: 100%;
@@ -57,7 +62,7 @@ div#notification_data_wrapper input{
 	opacity: 0.5;
 }
 
-button#notificaions_panel_send_notification{
+button#notifications_panel_send_notification{
 	background-color: blue;
 }
 button#notification_panel_remove_notification{
