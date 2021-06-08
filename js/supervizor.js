@@ -36,19 +36,173 @@ function remove_panel_elements()
 		panel_children.firstChild.remove();
 }
 
-function admin_requests_panel_activation()
+async function updateRequest(requestJSONobject)
+{
+	var URL = "http://localhost:8080/api/v1/requests/" + requestJSONobject.id;
+	
+	var response = await make_request(URL, "PUT", JSON_headers, JSON.stringify(requestJSONobject));
+	//const json_response = await response.json();
+}
+
+async function getAdmin(adminID)
+{
+	var answer = await make_request("http://localhost:8080/api/v1/administrators/" + adminID, "GET", JSON_headers, null);
+	var answer_JSON = await answer.json();
+	return answer_JSON;
+}
+
+async function admin_requests_panel_activation()
 {
 	remove_panel_elements();
 	activate_template(panel_children, "admin_registration_requests");
 	panel_header_name.innerHTML = "Pregled zahtjeva za registraciju administratora"
+	
+	// get all requests
+	//make_request(URL, method, headers, body_content)
+	const answer = await make_request("http://localhost:8080/api/v1/requests", "GET", JSON_headers, null);
+	const answer_JSON = await answer.json();
+	globalTempVariable = answer_JSON;
+	
+	// populate the select element
+	var selectElement = document.getElementById("admin_registration_requests_select");
+	for(var i = 0; i < answer_JSON.length; i++)
+	{
+		if(answer_JSON[i].readingRoomId != null) // skip reading room requests
+			continue
+		selectElement.innerHTML = selectElement.innerHTML + '<option value="' + answer_JSON[i].id + '">' + "ID zahtjeva: " + answer_JSON[i].id + '</option>';
+	}
+	
+	selectElement.addEventListener("change", async function(event)
+	{
+		var selectedID = event.target.value;
+		var selectedRequest = globalTempVariable.find(toFind => toFind.id == selectedID);
+		globalTempVariable2 = selectedRequest;
+		
+		const URL = "http://localhost:8080/api/v1/administrators/" + selectedRequest.administratorId;
+		const method = "GET";
+		var response = await make_request(URL, method, JSON_headers, null);
+		var json_response = await response.json();
+		
+		if(!response.ok)
+			return;
+		// populate admin data
+		var adminNameInput = document.getElementById("request_name");
+		var adminEmailInput = document.getElementById("request_email");
+		
+		adminNameInput.value = json_response.username;
+		adminEmailInput.value = json_response.email;
+	});
+	
+	var allowRegistrationButton = document.getElementById("allow_registration_btn");
+	var denyAdminRegistrationButton = document.getElementById("reject_administration_btn");
+	
+	allowRegistrationButton.addEventListener("click", async function()
+	{
+		globalTempVariable2.approved = true;
+		console.log(globalTempVariable2);
+		await updateRequest(globalTempVariable2);
+		
+		// activate the admin once again
+		var adminJSON = await getAdmin(globalTempVariable2.administratorId);
+		adminJSON.activated = true;
+		console.log("adminJSON");
+		console.log(adminJSON);
+		
+		var URL = "http://localhost:8080/api/v1/administrators/" + adminJSON.id;
+		var response = await make_request(URL, "PUT", JSON_headers, JSON.stringify(adminJSON));
+	});
+	
+	denyAdminRegistrationButton.addEventListener("click", async function()
+	{
+		globalTempVariable2.approved = false;
+		console.log(globalTempVariable2);
+		updateRequest(globalTempVariable2);
+		
+		// activate the admin once again
+		var adminJSON = await getAdmin(globalTempVariable2.administratorId);
+		adminJSON.activated = false;
+		console.log("adminJSON");
+		console.log(adminJSON);
+		
+		var URL = "http://localhost:8080/api/v1/administrators/" + adminJSON.id;
+		var response = await make_request(URL, "PUT", JSON_headers, JSON.stringify(adminJSON));
+	});
 }
 
-function library_activations_panel_activation()
+async function library_activations_panel_activation()
 {
 	remove_panel_elements();
 	panel_header_name.innerHTML = "Aktivacije čitaonica";
 	activate_template(panel_children, "library_activations_template");
-	// to do
+	
+	// get all requests
+	//make_request(URL, method, headers, body_content)
+	const answer = await make_request("http://localhost:8080/api/v1/requests", "GET", JSON_headers, null);
+	const answer_JSON = await answer.json();
+	globalTempVariable = answer_JSON;
+	
+	// populate the select element
+	var selectElement = document.getElementById("libraries_to_activate_select");
+	for(var i = 0; i < answer_JSON.length; i++)
+	{
+		if(answer_JSON[i].readingRoomId == null) // skip reading room requests
+			continue
+		selectElement.innerHTML = selectElement.innerHTML + '<option value="' + answer_JSON[i].id + '">' + "ID zahtjeva: " + answer_JSON[i].id + '</option>';
+	}
+	
+	selectElement.addEventListener("change", async function(event)
+	{
+		var selectedID = event.target.value;
+		var selectedRequest = globalTempVariable.find(toFind => toFind.id == selectedID);
+		globalTempVariable2 = selectedRequest;
+		
+		const URL = "http://localhost:8080/api/v1/reading-rooms/" + selectedRequest.readingRoomId;
+		const response = await make_request(URL, "GET", JSON_headers, null);
+		const json_response = await response.json();
+		
+		if(!response.ok)
+			return;
+		// populate admin data
+		var locationInput = document.getElementById("activation_library_location");
+		var libraryNameInput = document.getElementById("activation_library_name");
+		var requestSenderInput = document.getElementById("activation_library_request_sender");
+		
+		locationInput.value = json_response.address;
+		libraryNameInput.value = json_response.name;
+		
+		// get the request sender
+		var senderAdminID = selectedRequest.administratorId;
+		const URL2 = "http://localhost:8080/api/v1/administrators/" + senderAdminID;
+		const response2 = await make_request(URL2, "GET", JSON_headers, null);
+		const json_response2 = await response2.json();
+		requestSenderInput.value = "ID: "+ json_response2.id + ", username: " + json_response2.username;
+	});
+	
+	var allowRegistrationButton = document.getElementById("activate_library");
+	var denyAdminRegistrationButton = document.getElementById("reject_library_activation");
+	
+	allowRegistrationButton.addEventListener("click", function()
+	{
+		// updateRequest(requestJSONobject)
+		globalTempVariable2.approved = true;
+		updateRequest(globalTempVariable2);
+		
+		
+	});
+	
+	denyAdminRegistrationButton.addEventListener("click", async function()
+	{
+		// updateRequest(requestJSONobject)
+		globalTempVariable2.approved = false;
+		updateRequest(globalTempVariable2);
+		
+		// delete the request
+		const URL = "http://localhost:8080/api/v1/requests/" + globalTempVariable2.id;
+		const method = "DELETE";
+		
+		const response = await make_request(URL, method, JSON_headers, JSON.stringify(globalTempVariable2));
+	});
+
 }
 
 function supervisor_obrada_zahtjeva_click()
@@ -63,23 +217,63 @@ function supervisor_obrada_zahtjeva_click()
 	document.getElementById("library_activation_requests_btn").addEventListener("click", library_activations_panel_activation);
 }
 
-function pregled_administratora_click()
+async function pregled_administratora_click()
 {
 	panel_header_name.innerHTML = "Pregled administratora";
 	remove_panel_elements();
 	
-	// to do
 	activate_template(panel_children, "supervisor_admin_overview");
+	
+	// populate the select with admins
+	const answer = await make_request("http://localhost:8080/api/v1/administrators", "GET", JSON_headers, null);
+	const answer_JSON = await answer.json();
+	globalTempVariable = answer_JSON;
+	var selectElement = document.getElementById("supervisor_admin_select");
+	for(var i = 0; i < answer_JSON.length; i++)
+		selectElement.innerHTML = selectElement.innerHTML + '<option value="' + answer_JSON[i].id + '">' + "ID: " + answer_JSON[i].id + ", Ime: " + answer_JSON[i].username + '</option>';
+	
+	
+	selectElement.addEventListener("change", async function(event)
+	{
+		var selectedID = event.target.value;
+		var selectedAdmin = globalTempVariable.find(toFind => toFind.id == selectedID);
+		globalTempVariable2 = selectedAdmin;
+		
+		// get his reading rooms
+		var URL = "http://localhost:8080/api/v1/administrators/" + globalTempVariable2.id + "/reading-rooms";
+		var response = await make_request(URL, "GET", JSON_headers, null);
+		globalTempVariable3 = await response.json();
+		
+		// populate the listview of reading rooms
+		var selectElement = document.getElementById("admin_overview_library_list");
+		for(var i = 0; i < globalTempVariable3.length; i++)
+			selectElement.innerHTML = selectElement.innerHTML + "<option>" + "ID: " + globalTempVariable3.id + ", Ime: "+ globalTempVariable3.name + "</option>";
+		
+		// fill the input elements with the selected admin's data
+		var adminEmailInput = document.getElementById("admin_email");
+		var adminActivatedInput = document.getElementById("admin_is_activated");
+		
+		adminEmailInput.value = selectedAdmin.email;
+		if(selectedAdmin.activated == true)
+			adminActivatedInput.value = "Da";
+		else
+			adminActivatedInput.value = "Ne";
+	});
+	
+	var deactivateButton = document.getElementById("deactivate_admin_account");
+	
+	deactivateButton.addEventListener("click", async function()
+	{
+		// deactivate the administrator
+		var adminDeactivationURL = "http://localhost:8080/api/v1/administrators/" + globalTempVariable2.id;
+		globalTempVariable2.activated = false;
+		console.log(globalTempVariable2);
+		var response = await make_request(adminDeactivationURL, "PUT", JSON_headers, JSON.stringify(globalTempVariable2));
+		console.log(response);
+	});
 }
 
-function pregled_citaonica_click()
-{
-	panel_header_name.innerHTML = "Pregled čitaonica";
-	remove_panel_elements();
-	
-	// to do
-	activate_template(panel_children, "library_overview");
-}
+
 
 function postavke_click()
 {
@@ -90,11 +284,6 @@ function postavke_click()
 	activate_template(panel_children, "supervisor_settings_template");
 }
 
-function login()
-{
-	
-	
-}
 
 function addEventToClass(classElements, callback)
 {
@@ -114,17 +303,107 @@ function admin_registracija_citaonica_click()
 	
 	canvas_setup();
 	canvas_draw_lines();
+	
+	var library_registration_form = document.getElementById("library_registration_form");
+	
+	library_registration_form.addEventListener("submit", async function(event)
+	{
+		event.preventDefault();
+		
+		const formData = new FormData(this);
+		const formData_JSON_string = FormData_to_JSON(formData);
+		
+		const formData_JSON = JSON.parse(formData_JSON_string);
+		var libraryHeight = canvas_horizontal_slider.value;
+		var libraryWidth = canvas_vertical_slider.value;
+		formData_JSON.xSize = libraryWidth;
+		formData_JSON.ySize = libraryHeight;
+		
+		// convert array to a string
+		var tmpString = canvas_drawn_cells_array.join("");
+		console.log(tmpString);
+		formData_JSON.insideAppearance = tmpString;
+		//formData_JSON.active = "true";
+		
+		console.log(formData_JSON);
+		
+		const URL = "http://localhost:8080/api/v1/reading-rooms";
+		const method = "POST";
+		const response = await make_request(URL, method, JSON_headers, JSON.stringify(formData_JSON));
+		const json_response = await response.json();
+		
+		if(!response.ok)
+		{
+			alert("Registracija čitaonice neuspješna");
+			return;
+		}
+		
+		// make a registration request...
+		const newRequestURL = "http://localhost:8080/api/v1/requests";
+		const requestJSON = make_activation_request("readingRoomActivationRequest", json_response.id);
+		requestJSON.administratorId = ownID
+		console.log(requestJSON);
+		const response2 = await make_request(newRequestURL, method, JSON_headers, JSON.stringify(requestJSON));
+		
+		if(!response2.ok)
+		{
+			alert("Registracija čitaonice neuspješna");
+			return;
+		}
+		
+		alert("Registracija čitaonice uspješna");
+		
+	});
 }
 
-function supervisor_pregled_citaonica_click()
+async function supervisor_pregled_citaonica_click()
 {
+	// globalTempVariable holds all the reading rooms (as JSON array)
+	// globalTempVariable2 holds the selected reading room
+	
 	panel_header_name.innerHTML = "Pregled čitaonica";
 	remove_panel_elements();
 	
 	activate_template(panel_children, "supervisor_library_overview");
+	
+	globalTempVariable = await make_request("http://localhost:8080/api/v1/reading-rooms", "GET", JSON_headers, null);
+	globalTempVariable = await globalTempVariable.json();
+	
+	// populate the reading room select
+	var selectElement = document.getElementById("admin_list_of_libraries");
+	for(var i = 0; i < globalTempVariable.length; i++)
+		selectElement.innerHTML = selectElement.innerHTML + '<option value="' + globalTempVariable[i].id + '">' + "ID čitaonice: " + globalTempVariable[i].id + ", Ime: " + globalTempVariable[i].name + '</option>';
+		
+	selectElement.addEventListener("change", async function(event)
+	{
+		var selectedReadingroomID = event.target.value;
+		globalTempVariable2 = globalTempVariable.find(toFind => toFind.id == selectedReadingroomID);
+		
+		// populate the administrators list
+		var addressInput = document.getElementById("admin_library_address");
+		var URL = "http://localhost:8080/api/v1/reading-rooms/" + globalTempVariable2.id + "/administrators";
+		var listOfAdmins = await make_request(URL, "GET", JSON_headers, null);
+		var adminsSelect = document.getElementById("admin_library_administrators");
+		
+		
+		for(var i = 0; i < listOfAdmins.length; i++)
+		{
+			adminsSelect.innerHTML += "<option>" + "ID: " + listOfAdmins[i].id + ", Ime: " + listOfAdmins[i].username + "</option>"
+		}
+		addressInput.value = globalTempVariable2.address;
+		
+	}); 
+	
+	var deactivateButton = document.getElementById("admin_deactivate_library_btn");
+	deactivateButton.addEventListener("click", async function()
+	{
+		var URL = "http://localhost:8080/api/v1/reading-rooms/" + globalTempVariable2.id;
+		globalTempVariable2.active = false;
+		await make_request(URL, "PUT", JSON_headers, JSON.stringify(globalTempVariable2));
+	});
 }
 
-function admin_pregled_citaonica_click()
+async function admin_pregled_citaonica_click()
 {
 	panel_header_name.innerHTML = "Pregled čitaonica";
 	remove_panel_elements();
@@ -141,6 +420,20 @@ function admin_pregled_citaonica_click()
 	
 	// register the submit button event
 	//document.getElementById("library_registration_submit_button").onclick = register_library;
+	
+	
+	// get the list of all reading rooms
+	
+	const URL = "http://localhost:8080/api/v1/reading-rooms";
+	const method = "GET";
+	const response = await make_request(URL, method, JSON_headers, null);
+	const json_response = await response.json();
+	
+	for(var i = 0; i < json_response.length; i++)
+	{
+		var obj = json_response[i];
+		console.log(obj);
+	}
 }
 
 
@@ -179,7 +472,10 @@ function canvas_click_event(event)
 	var selected_cell_x = Math.floor(x / horizontal_step);
 	var selected_cell_y = Math.floor(y / vertical_step);
 	
-	canvas_drawn_cells_array[selected_cell_y][selected_cell_x] = canvas_string_representation_character;
+	var libraryHeight = canvas_horizontal_slider.value;
+	var libraryWidth = canvas_vertical_slider.value;
+	canvas_drawn_cells_array[selected_cell_y*libraryWidth + selected_cell_x] = canvas_string_representation_character;
+	//canvas_drawn_cells_array[selected_cell_y][selected_cell_x] = canvas_string_representation_character;
 	
 	var drawX = selected_cell_x * horizontal_step;
 	var drawY = selected_cell_y * vertical_step;
@@ -197,6 +493,7 @@ function canvas_setup()
 {
 	canvas_horizontal_slider = document.getElementById("canvas_num_of_verticall_lines");
 	canvas_vertical_slider = document.getElementById("canvas_num_of_horizontal_lines");
+	canvas_entrance_button_clicked();
 	
 	var slider_class = document.querySelectorAll(".canvas_slider");
 	addEventToClass(slider_class, canvas_draw_lines);
@@ -223,14 +520,15 @@ function canvas_draw_lines()
 	var num_of_vertical_lines = canvas_vertical_slider.value;
 	
 	// allocate a 2D array that will hold cell values
-	canvas_drawn_cells_array = new Array(num_of_horizontal_lines);
-	
-	for(var i = 0; i < num_of_horizontal_lines; i++)
+	canvas_drawn_cells_array = new Array(num_of_horizontal_lines*num_of_vertical_lines);
+	for(var i = 0; i < num_of_horizontal_lines*num_of_vertical_lines; i++)
+		canvas_drawn_cells_array[i] = empty_cell;
+	/*for(var i = 0; i < num_of_horizontal_lines; i++)
 	{
 		canvas_drawn_cells_array[i] = new Array(num_of_vertical_lines);
 		for(var j = 0; j < num_of_vertical_lines; j++)
 			canvas_drawn_cells_array[i][j] = empty_cell;
-	}
+	}*/
 	
 
 	// canvas HTML element dimensions are separated from the canvas' context dimensions
@@ -257,30 +555,6 @@ function canvas_draw_lines()
     canvas_context.stroke();
 }
 
-// callback to register button on the library registration panel
-function register_library()
-{
-	var form_element = document.getElementById("library_registration_form");
-	var form_data = new FormData(form_element);
-	
-	/*
-	    "name": "Čitaonica elektrotehničkog fakulteta u Banjoj Luci",
-		"address": "Banja Luka, Patre 5",
-		"active": "true",
-		"latitude": "44.76669385601328",
-		"longitude": "17.18698250432791",
-		"xSize": "3",
-		"ySize": "3",
-		"insideAppearance": "AAATTTAAA"
-	
-	
-	*/
-	/*for(var key of form_data.keys())
-		console.log(key);
-	
-	for(var value of form_data.values())
-		console.log(value);*/
-}
 
 function admin_obavjestenja_click()
 {
@@ -331,42 +605,66 @@ function admin_init()
 	addEventToClass(postavke, postavke_click);
 }
 
+function make_activation_request(requestType, readingRoomID)
+{
+	var date = new Date();
+	
+	var request = {requestType: requestType,
+				   supervisorId: "1",
+				   readingRoomId: readingRoomID,
+				   administratorId: ownID,
+				   creationDateTime: date.toISOString()
+				  };
+	return request;
+}
+
 function registration_loginPanel_click()
 {
 	remove_panel_elements();
 	
 	activate_template(panel_children, "register_panel");
+	
+	const registerForm = document.getElementById("register_form");
+	registerForm.addEventListener("submit", async function(event)
+	{
+		event.preventDefault();
+		
+		const formData = new FormData(this);
+		const formData_JSON = FormData_to_JSON(formData);
+		
+		const tmp = JSON.parse(formData_JSON);
+		if(tmp.password != tmp.password_confirm)
+		{
+			alert("Lozinke se ne podudaraju");
+			return;
+		}
+		
+		//make_request(URL, method, headers, body_content)
+		const URL = "http://localhost:8080/api/v1/administrators";
+		const method = "POST";
+		const response = await make_request(URL, method, JSON_headers, formData_JSON);
+		const json_response = await response.json();
+		
+		if(!response.ok)
+		{
+			alert("Registracija neuspješna");
+			return;
+		}
+		
+		// make another request for whatever reason...
+		
+		alert("Registracija uspješna");
+		
+		const assignedID = json_response.id;
+		
+		const newRequestURL = "http://localhost:8080/api/v1/requests";
+		const requestJSON = make_activation_request("administratorRegistrationRequest", null);
+		requestJSON.administratorId = assignedID
+		const response2 = await make_request(newRequestURL, method, JSON_headers, JSON.stringify(requestJSON));
+		console.log(response2);
+	});
 }
 
-function init()
-{
-	// check if a valid cookie is present
-	// to do
-	var cookieValid = new Boolean(false);
-	var user_type="admin"; // obtain from cookie
-	
-	
-	if(user_type === admin)
-	{
-		admin_init();
-		document.title = "Administratorski panel"
-		return;
-	}
-	else if(user_type === supervisor)
-	{
-		supervisor_init();
-		document.title = "Supervizorski panel"
-		return;
-	}
-	
-	// show the login panel
-	panel_header_name.innerHTML = "Prijava";
-	document.title = "Prijava na sistem";
-	
-	activate_template(panel_children, "login_panel");
-	
-	document.getElementById("register_button").addEventListener("click", registration_loginPanel_click);
-}
 
 function openNavSupervisor() 
 {
@@ -393,6 +691,186 @@ function closeNavAdmin()
 	
 }
 
+function FormData_to_JSON(formData_object)
+{
+	const plainFormData = Object.fromEntries(formData_object.entries());
+	const formDataJSON = JSON.stringify(plainFormData);
+	return formDataJSON;
+}
+
+// returns response as an object that should be converted to JSON
+async function make_request(URL, method, headers, body_content)
+{
+	var response = await fetch(URL,
+	{
+		method: method,
+		headers: headers,
+		body: body_content
+	});
+	
+	//const json_response = await response.json();
+	return response;
+}
+
+async function user_login(response_object)
+{	
+	// check if a valid cookie is present
+	// to do
+	//var cookieValid = new Boolean(false);
+	//var user_type; // obtain from cookie
+	
+	
+	/*
+		email: "your email"
+		id: your_ID_as_integer
+		isAdministrator: boolean
+		isSupervisor: boolean
+		password: "your password"
+		username: "your username"
+	*/
+	
+	if(!response_object.ok)
+	{
+		alert("Prijava neuspješna");
+		return;
+	}
+	
+	const json_response = await response_object.json();
+	console.log(json_response);
+	
+	remove_panel_elements();
+	panel_header_name.innerHTML = "";
+	
+	ownID = json_response.id;
+	
+	if(json_response.isAdministrator == true)
+	{
+		admin_init();
+		document.title = "Administratorski panel"
+		return;
+	}
+	else if(json_response.isSupervisor == true)
+	{
+		supervisor_init();
+		document.title = "Supervizorski panel"
+		return;
+	}
+	
+	/*
+	// show the login panel
+	panel_header_name.innerHTML = "Prijava";
+	document.title = "Prijava na sistem";
+	
+	activate_template(panel_children, "login_panel");
+	
+	document.getElementById("register_button").addEventListener("click", registration_loginPanel_click);*/
+}
+
+
+
+function login_screen()
+{
+	// show the login panel
+	panel_header_name.innerHTML = "Prijava";
+	document.title = "Prijava na sistem";
+	
+	activate_template(panel_children, "login_panel");
+	
+	document.getElementById("register_button").addEventListener("click", registration_loginPanel_click);
+	
+	// register the login button event
+	const loginForm = document.getElementById("login_form");
+	loginForm.addEventListener("submit", async function(event)
+	{
+		event.preventDefault();
+		
+		const formData = new FormData(this);
+		const formData_JSON = FormData_to_JSON(formData);
+		
+		//make_request(URL, method, headers, body_content)
+		const URL = "http://localhost:8080/api/v1/administrative-users/login";
+		const method = "POST";
+		const response = await make_request(URL, method, JSON_headers, formData_JSON);
+		//const json_response = await response.json();
+		user_login(response);
+		
+		/*const request = async() =>
+		{
+			const response = await fetch("http://localhost:8080/api/v1/administrative-users/login",
+			{
+				method: "POST",
+				headers: 
+				{
+					"Content-Type": "application/json",
+					"Accept": "application/json"
+				},
+				body: formData_JSON
+			});
+			const json_response = await response.json();
+			//console.log(json_response);
+			//const objectResponse = JSON.parse(json_response);
+			user_login(json_response);
+		}
+		request();*/
+		
+		/*fetch("http://localhost:8080/api/v1/administrative-users/login",
+		{
+			method: "POST",
+			headers: 
+			{
+				"Content-Type": "application/json",
+				"Accept": "application/json"
+			},
+			body: formData_JSON
+		}).then(function(response)
+		{
+			if(!response.ok)
+			{
+				alert("Prijava neuspjesna");
+				return;
+			}
+			console.log("in then response");
+			const response_JSON = response.json();
+			console.log("odgovor je: " + response_JSON);
+		}).catch(function(error)
+		{
+			console.error("catch: " + error);
+		});*/
+		
+		/*
+				const fetchOptions =
+				{
+					method: "post",
+					headers: 
+					{
+						"Content-Type": "application/json",
+						"Accept": "application/json"
+					},
+					body: JSON_data
+				}
+				
+				const response = await fetch("http://localhost:8080/api/v1/administrative-users/login", fetchOptions);
+				if(!response.ok)
+				{
+					const errorMessage = await response.text();
+					console.log(errorMessage);
+					return;
+				}
+				
+				const response_JSON = response.json();
+		
+		
+		*/
+	});
+	
+}
+
+var globalTempVariable = null;
+var globalTempVariable2 = null;
+var globalTempVariable3 = null;
+
+var ownID = null;
+
 var admin = "admin";
 var supervisor = "supervisor";
 
@@ -415,15 +893,25 @@ var vertical_step = null;
 var canvas_drawn_cells_array = null;
 var canvas_string_representation_character = null;
 
+
 var empty_cell = "_";
 var standard_seat = "S";
 var socket_seat = "P";
 var table = "T";
 var door = "D";
 
+
+const JSON_headers = 
+{
+	"Content-Type": "application/json",
+	"Accept": "application/json"
+};
+
+//https://stackoverflow.com/questions/42270928/cors-header-access-control-allow-origin-missing-when-making-a-request-to-diffe
+
 //https://developer.mozilla.org/en-US/docs/Learn/Forms/Sending_forms_through_JavaScript
 
-init();
+login_screen();
 //activate_template(panel_children, "supervisor_settings_template");
 //activate_template(panel_children, "library_overview");
 //activate_template(panel_children, "supervisor_admin_overview");
