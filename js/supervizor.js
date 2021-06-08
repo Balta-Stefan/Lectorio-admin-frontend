@@ -321,12 +321,11 @@ function admin_registracija_citaonica_click()
 		
 		// convert array to a string
 		var tmpString = canvas_drawn_cells_array.join("");
-		console.log(tmpString);
 		formData_JSON.insideAppearance = tmpString;
 		//formData_JSON.active = "true";
 		
-		console.log(formData_JSON);
 		
+		// create a reading room
 		const URL = "http://localhost:8080/api/v1/reading-rooms";
 		const method = "POST";
 		const response = await make_request(URL, method, JSON_headers, JSON.stringify(formData_JSON));
@@ -338,19 +337,38 @@ function admin_registracija_citaonica_click()
 			return;
 		}
 		
-		// make a registration request...
+		// make a reading room registration request...
 		const newRequestURL = "http://localhost:8080/api/v1/requests";
 		const requestJSON = make_activation_request("readingRoomActivationRequest", json_response.id);
 		requestJSON.administratorId = ownID
+		console.log("requestJSON");
 		console.log(requestJSON);
-		const response2 = await make_request(newRequestURL, method, JSON_headers, JSON.stringify(requestJSON));
-		
+		var response2 = await make_request(newRequestURL, method, JSON_headers, JSON.stringify(requestJSON));
+
 		if(!response2.ok)
 		{
 			alert("Registracija čitaonice neuspješna");
 			return;
 		}
 		
+		response2 = await response2.json();
+		console.log("response2");
+		console.log(response2);
+		
+		
+		// assign the reading room to the administrator...
+		var URL2 = "http://localhost:8080/api/v1/administrators/" + ownID + "/reading-rooms";
+		console.log(URL2);
+		var reqBody = {"id" : response2.readingRoomId}
+		console.log(reqBody);
+		var response3 = await make_request(URL2, "POST", JSON_headers, JSON.stringify(reqBody));
+		
+		if(!response3.ok)
+		{
+			alert("Registracija čitaonice neuspješna");
+			return;
+		}		
+
 		alert("Registracija čitaonice uspješna");
 		
 	});
@@ -405,6 +423,9 @@ async function supervisor_pregled_citaonica_click()
 
 async function admin_pregled_citaonica_click()
 {
+	// globalTempVariable holds all the libraries of the administrator
+	// globalTempVariable2 holds all the admins of a library
+	
 	panel_header_name.innerHTML = "Pregled čitaonica";
 	remove_panel_elements();
 	
@@ -422,18 +443,46 @@ async function admin_pregled_citaonica_click()
 	//document.getElementById("library_registration_submit_button").onclick = register_library;
 	
 	
-	// get the list of all reading rooms
+	// get the list of own all reading rooms
 	
-	const URL = "http://localhost:8080/api/v1/reading-rooms";
+	const URL = "http://localhost:8080/api/v1/administrators/" + ownID + "/reading-rooms";
 	const method = "GET";
 	const response = await make_request(URL, method, JSON_headers, null);
-	const json_response = await response.json();
+	globalTempVariable = await response.json();
 	
-	for(var i = 0; i < json_response.length; i++)
+	var librariesSelect = document.getElementById("admin_list_of_libraries");
+	
+	for(var i = 0; i < globalTempVariable.length; i++)
+		librariesSelect.innerHTML += '<option value="' + globalTempVariable[i].id + '">' + "ID: " + globalTempVariable[i].id + ", Ime: " + globalTempVariable[i].name + '</option>';
+	
+	
+	librariesSelect.addEventListener("change", async function(event)
 	{
-		var obj = json_response[i];
-		console.log(obj);
-	}
+		var selectedID = event.target.value;
+		var selectedLibrary = globalTempVariable.find(toFind => toFind.id == selectedID);
+		
+		var latitude_input = document.getElementById("latitude_input");
+		var longitude_input = document.getElementById("longitude_input");
+		var address_input = document.getElementById("address_input");
+		
+		latitude_input.value = selectedLibrary.latitude;
+		longitude_input.value = selectedLibrary.longitude;
+		address_input.value = selectedLibrary.address;
+		
+		// get the administrators of the reading room
+		var tmpURL = "http://localhost:8080/api/v1/reading-rooms/" + selectedLibrary.id + "/administrators";
+		var allAdmins = await make_request(tmpURL, "GET", JSON_headers, null);
+		allAdmins = await allAdmins.json();
+		
+		var adminSelect = document.getElementById("admin_library_administrators");
+		adminSelect.innerHTML = "";
+		for(var i = 0; i < allAdmins.length; i++)
+		{
+			adminSelect.innerHTML += '<option value="' + allAdmins[i].id + '">' + "ID: " + allAdmins[i].id + ", Ime: " + allAdmins[i].username + '</option>';
+		}
+	});
+	
+	
 }
 
 
@@ -556,12 +605,122 @@ function canvas_draw_lines()
 }
 
 
-function admin_obavjestenja_click()
+async function admin_obavjestenja_click()
 {
+	// globalTempVariable holds all the reading rooms of the administrator
+	// globalTempVariable2 holds all the announcements of a library
+	// globalTempVariable3 holds the currently selected library
+	// globalTempVariable4 holds the currently selected announcement
+	
+	globalTempVariable3 = null;
+	globalTempVariable4 = null;
+	
 	panel_header_name.innerHTML = "Obavještenja";
 	remove_panel_elements();
 	
 	activate_template(panel_children, "admin_library_notifications_panel");
+	
+	// get the list of own all reading rooms
+	
+	const URL = "http://localhost:8080/api/v1/administrators/" + ownID + "/reading-rooms";
+	const method = "GET";
+	const response = await make_request(URL, method, JSON_headers, null);
+	globalTempVariable = await response.json();
+	
+	var librariesSelect = document.getElementById("admin_notifications_list_of_libraries");
+	
+	for(var i = 0; i < globalTempVariable.length; i++)
+		librariesSelect.innerHTML += '<option value="' + globalTempVariable[i].id + '">' + "ID: " + globalTempVariable[i].id + ", Ime: " + globalTempVariable[i].name + '</option>';
+
+	var announcementsSelect = document.getElementById("admin_notifications_select");
+
+	librariesSelect.addEventListener("change", async function(event)
+	{
+		var selectedLibraryID = event.target.value;
+		globalTempVariable3 = globalTempVariable.find(toFind => toFind.id == selectedLibraryID);
+		
+		// get all the notifications
+		var tmpURL = "http://localhost:8080/api/v1/reading-rooms/" + selectedLibraryID + "/announcements";
+		globalTempVariable2 = await make_request(tmpURL, "GET", JSON_headers, null);
+		if(!globalTempVariable2.ok)
+			return;
+		globalTempVariable2 = await globalTempVariable2.json();
+		
+		announcementsSelect.innerHTML = "";
+		announcementsSelect.innerHTML += '<option selected style="display:none;">' + "Spisak obavještenja" + '</option>';
+		//<option selected style="display:none;">Spisak obavještenja</option>
+		for(var i = 0; i < globalTempVariable2.length; i++)
+		{
+			announcementsSelect.innerHTML += '<option value="' + globalTempVariable2[i].id + '">' + "ID: " + globalTempVariable2[i].id + ", Naslov: " + globalTempVariable2[i].title + '</option>';
+		}
+	});
+	
+	announcementsSelect.addEventListener("change", async function(event)
+	{
+		if(globalTempVariable3 == null) return;
+		var selectedAnnouncementID = event.target.value;
+		globalTempVariable4 = globalTempVariable2.find(toFind => toFind.id == selectedAnnouncementID);
+		
+		var textarea = document.getElementById("admin_notification_textarea");
+		var title = document.getElementById("announcement_title_input");
+		textarea.value = globalTempVariable4.content;
+		title.value = globalTempVariable4.title;
+	});
+	
+	//http://localhost:8080/api/v1/announcements
+	var sendAnnouncementButton = document.getElementById("notifications_panel_send_notification");
+	sendAnnouncementButton.addEventListener("click", async function()
+	{
+		if(globalTempVariable3 == null)
+		{
+			alert("Prvo odaberite čitaonicu.");
+			return;
+		}
+		var title = document.getElementById("announcement_title_input").value;
+		var content = document.getElementById("admin_notification_textarea").value;
+		var body = {"title": title, "content": content, "administratorId": ownID, "readingRoomId": globalTempVariable3.id}
+		var date = new Date();
+		body.creationDateTime = date.toISOString();
+		var tmpUrl = "http://localhost:8080/api/v1/announcements";
+		var method = null;
+		
+		
+		if(globalTempVariable4 != null)
+		{
+			body.id = globalTempVariable4.id;
+			tmpUrl += "/" + globalTempVariable4.id;
+			method = "PUT";
+		}
+		else
+		{
+			method = "POST";
+		}
+		var req = await make_request(tmpUrl, method, JSON_headers, JSON.stringify(body));
+		if(req.ok == false)
+		{
+			console.log(await req.json());
+			alert("Dodavanje neuspješno");
+			return;
+		}
+		alert("Dodavanje uspješno");
+	});
+	
+	var removeAnnouncementButton = document.getElementById("notification_panel_remove_notification");
+	removeAnnouncementButton.addEventListener("click", async function()
+	{
+		if(globalTempVariable4 == null)
+		{
+			alert("Prvo odaberite obavještenje");
+			return;
+		}
+		var tmpURL = "http://localhost:8080/api/v1/announcements/" + globalTempVariable4.id;
+		var response = await make_request(tmpURL, "DELETE", JSON_headers, null);
+		if(response.ok == false)
+			alert("Brisanje neuspješno");
+		else 
+			alert("Brisanje uspješno");
+		
+	});
 }
 
 function supervisor_init()
@@ -868,6 +1027,7 @@ function login_screen()
 var globalTempVariable = null;
 var globalTempVariable2 = null;
 var globalTempVariable3 = null;
+var globalTempVariable4 = null;
 
 var ownID = null;
 
