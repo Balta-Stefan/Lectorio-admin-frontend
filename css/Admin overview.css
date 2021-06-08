@@ -57,6 +57,7 @@ button#admin_overview_examine_library{
 	background-color: blue;
 	margin-left: 15px;
 	height: 100%;
+	display: none;
 }
 
 button#deactivate_admin_account{

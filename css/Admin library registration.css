@@ -20,6 +20,10 @@ form#library_registration_form input{
 	width: 15rem;
 }
 
+select#type_of_reading_room{
+	width: 15rem;
+}
+
 button#library_registration_submit_button{
 	background-color: red;
 	color: white;
@@ -36,3 +40,5 @@ div#admin_library_registration_canvas_wrapper{
 	height: 30rem;
 	margin-top: 30px;
 }
+
+

@@ -14,12 +14,20 @@ select#admin_notifications_list_of_libraries{
 	text-align: center;
 }
 
+
 textarea#admin_notification_textarea{
 	width: 100%;
 	height: 50%;
 	font-size: 1rem;
 	resize: none;
 }
+
+input#announcement_title_input{
+	width: 100%;
+	height: 1rem;
+	text-align: center;
+}
+
 
 div#notification_data_wrapper{
 	display: flex;
