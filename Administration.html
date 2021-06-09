@@ -62,6 +62,7 @@
 				<a href="#" class="pregled_administratora_btn">Pregled administratora</a>
 				<a href="#" class="pregled_citaonica_btn">Pregled čitaonica</a>
 				<a href="#" class="postavke_btn">Postavke</a>
+				<a href="#" class="logout_btn">Odjava</a>
 			</div>
 		</template>
 		
@@ -73,6 +74,7 @@
 				<a href="#" class="admin_pregled_citaonica">Pregled čitaonica</a>
 				<a href="#" class="admin_obavjestenja">Obavještenja</a>
 				<a href="#" class="admin_postavke_btn">Postavke</a>
+				<a href="#" class="logout_btn">Odjava</a>
 			</div>
 		</template>
 		
@@ -81,12 +83,14 @@
 			<li><a href="#" class="pregled_administratora_btn">Pregled administratora</a></li>
 			<li><a href="#" class="pregled_citaonica_btn">Pregled čitaonica</a></li>
 			<li><a href="#" class="postavke_btn">Postavke</a></li>
+			<a href="#" class="logout_btn">Odjava</a>
 		</template>
 		<template id="admin_navigation_list">
 			<li><a href="#" class="registracija_citaonice">Registracija čitaonice</a></li>
 			<li><a href="#" class="admin_pregled_citaonica">Pregled čitaonica</a></li>
 			<li><a href="#" class="admin_obavjestenja">Obavještenja</a></li>
 			<li><a href="#" class="admin_postavke_btn">Postavke</a></li>
+			<a href="#" class="logout_btn">Odjava</a>
 		</template>
 		
 		<!-- Templates for the content panel -->
@@ -202,6 +206,7 @@
 					
 					<p></p>
 					<button class="admin_overview_buttons" id="deactivate_admin_account"><b>Deaktiviraj nalog</b></button>
+					<button class="admin_overview_buttons" id="activate_admin_account"><b>Aktiviraj nalog</b></button>
 				</div>
 			</div>
 			<div id="admin_overview_emptydiv"></div>
@@ -285,25 +290,41 @@
 						<form id="library_overview_form">
 							<label for="registered">Registrovana</label>
 							<input name="registered">
+							
+							<label for="name">Ime</label>
+							<input id="name_input" name="name">
+							
+							<label for="readingRoomType">Tip čitaonice:</label>
+							<select name="readingRoomType" id="type_of_reading_room">
+							  <option value="Tiha">Tiha</option>
+							  <option value="Grupna">Grupna</option>
+							</select> 
+							
 							<label for="number_of_seats">Broj mjesta</label>
 							<input name="number_of_seats">
+							
 							<label for="address">Adresa</label>
 							<input id="address_input" name="address">
+							
 							<label for="opening_time">Vrijeme otvaranja</label>
 							<input name="opening_time">
+							
 							<label for="closing_time">Vrijeme zatvaranja</label>
 							<input name="closing_time">
-							<label for="library_picture">Slika</label><br>
-							<input id="library_registration_picture" type="file" name="library_picture">
+							
+							<!--<label for="library_picture">Slika</label><br>
+							<input id="library_registration_picture" type="file" name="library_picture">-->
+							
 							<label>Lokaciju odaberite na Google maps servisu i uzmite 2 broja od te lokacije (primjer: 44.779997, 17.199400)</label>
 							<label for="latitude">Prvi broj (geografska širina)</label>
+							
 							<input id="latitude_input" name="latitude">
 							<label for="longitude">Drugi broj (geografska širina)</label>
+							
 							<input id="longitude_input" name="longitude">
-							<button type="submit" form="library_overview_form" class="admin_library_overview_button" id="admin_library_change_library_info"><b>Izmijeni informacije</b></button>
-							<button id="admin_deactivate_library_btn"><b>Deaktiviraj</b></button>
+							<button type="submit" form="library_overview_form" class="admin_library_overview_button" id="admin_library_change_library_info"><b>Izmijeni informacije</b></button>		
 						</form>
-						
+						<button id="admin_deactivate_library_btn"><b>Deaktiviraj</b></button>
 						<!--
 						<p>Registrovana</p>
 						<input id="admin_library_registration_date" disabled></input>
