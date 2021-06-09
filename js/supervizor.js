@@ -53,6 +53,9 @@ async function getAdmin(adminID)
 
 async function admin_requests_panel_activation()
 {
+	// globalTempVariable holds all the requests
+	// globalTempVariable2 holds the selected request
+	
 	remove_panel_elements();
 	activate_template(panel_children, "admin_registration_requests");
 	panel_header_name.innerHTML = "Pregled zahtjeva za registraciju administratora"
@@ -71,6 +74,8 @@ async function admin_requests_panel_activation()
 			continue
 		selectElement.innerHTML = selectElement.innerHTML + '<option value="' + answer_JSON[i].id + '">' + "ID zahtjeva: " + answer_JSON[i].id + '</option>';
 	}
+	var adminNameInput = document.getElementById("request_name");
+	var adminEmailInput = document.getElementById("request_email");
 	
 	selectElement.addEventListener("change", async function(event)
 	{
@@ -85,10 +90,7 @@ async function admin_requests_panel_activation()
 		
 		if(!response.ok)
 			return;
-		// populate admin data
-		var adminNameInput = document.getElementById("request_name");
-		var adminEmailInput = document.getElementById("request_email");
-		
+		// populate admin data		
 		adminNameInput.value = json_response.username;
 		adminEmailInput.value = json_response.email;
 	});
@@ -96,9 +98,48 @@ async function admin_requests_panel_activation()
 	var allowRegistrationButton = document.getElementById("allow_registration_btn");
 	var denyAdminRegistrationButton = document.getElementById("reject_administration_btn");
 	
+	async function processRequest(allow)
+	{
+		// set the request to allowed...
+		globalTempVariable2.approved = allow;
+		var URL = "http://localhost:8080/api/v1/requests/" + globalTempVariable2.id;
+		var response = await make_request(URL, "PUT", JSON_headers, JSON.stringify(globalTempVariable2));
+		if(response.ok == false)
+		{
+			alert("Greška");
+			return;
+		}
+		// now actually activate the admin...
+		var adminJSON = await getAdmin(globalTempVariable2.administratorId);
+		adminJSON.activated = allow;
+		var URL = "http://localhost:8080/api/v1/administrators/" + adminJSON.id;
+		var response = await make_request(URL, "PUT", JSON_headers, JSON.stringify(adminJSON));
+		if(response.ok == false)
+		{
+			alert("Greška");
+			return;
+		}
+		// delete the request
+		var tempURL = "http://localhost:8080/api/v1/requests/" + globalTempVariable2.id;
+		await make_request(tempURL, "DELETE", JSON_headers, null);
+		// remove the element from the select
+		var options = selectElement.options;
+		for (var i = 0; i < options.length; i++)
+		{
+			if (options[i].value == globalTempVariable2.id)
+			{
+				adminNameInput.value = "";
+				adminEmailInput.value = "";
+				selectElement.removeChild(options[i]);
+				break; 
+			}
+		}
+	}
+	
 	allowRegistrationButton.addEventListener("click", async function()
 	{
-		globalTempVariable2.approved = true;
+		processRequest(true);
+		/*globalTempVariable2.approved = true;
 		console.log(globalTempVariable2);
 		await updateRequest(globalTempVariable2);
 		
@@ -109,12 +150,13 @@ async function admin_requests_panel_activation()
 		console.log(adminJSON);
 		
 		var URL = "http://localhost:8080/api/v1/administrators/" + adminJSON.id;
-		var response = await make_request(URL, "PUT", JSON_headers, JSON.stringify(adminJSON));
+		var response = await make_request(URL, "PUT", JSON_headers, JSON.stringify(adminJSON));*/
 	});
 	
 	denyAdminRegistrationButton.addEventListener("click", async function()
 	{
-		globalTempVariable2.approved = false;
+		processRequest(false);
+		/*globalTempVariable2.approved = false;
 		console.log(globalTempVariable2);
 		updateRequest(globalTempVariable2);
 		
@@ -125,7 +167,7 @@ async function admin_requests_panel_activation()
 		console.log(adminJSON);
 		
 		var URL = "http://localhost:8080/api/v1/administrators/" + adminJSON.id;
-		var response = await make_request(URL, "PUT", JSON_headers, JSON.stringify(adminJSON));
+		var response = await make_request(URL, "PUT", JSON_headers, JSON.stringify(adminJSON));*/
 	});
 }
 
@@ -150,6 +192,10 @@ async function library_activations_panel_activation()
 		selectElement.innerHTML = selectElement.innerHTML + '<option value="' + answer_JSON[i].id + '">' + "ID zahtjeva: " + answer_JSON[i].id + '</option>';
 	}
 	
+	var locationInput = document.getElementById("activation_library_location");
+	var libraryNameInput = document.getElementById("activation_library_name");
+	var requestSenderInput = document.getElementById("activation_library_request_sender");
+	
 	selectElement.addEventListener("change", async function(event)
 	{
 		var selectedID = event.target.value;
@@ -163,10 +209,6 @@ async function library_activations_panel_activation()
 		if(!response.ok)
 			return;
 		// populate admin data
-		var locationInput = document.getElementById("activation_library_location");
-		var libraryNameInput = document.getElementById("activation_library_name");
-		var requestSenderInput = document.getElementById("activation_library_request_sender");
-		
 		locationInput.value = json_response.address;
 		libraryNameInput.value = json_response.name;
 		
@@ -179,28 +221,48 @@ async function library_activations_panel_activation()
 	});
 	
 	var allowRegistrationButton = document.getElementById("activate_library");
-	var denyAdminRegistrationButton = document.getElementById("reject_library_activation");
+	var denyLibraryRegistrationButton = document.getElementById("reject_library_activation");
+	
+	async function processRequest(allow)
+	{	
+		// delete the request
+		var tempURL = "http://localhost:8080/api/v1/requests/" + globalTempVariable2.id;
+		await make_request(tempURL, "DELETE", JSON_headers, null);
+		// remove the element from the select
+		var options = selectElement.options;
+		for (var i = 0; i < options.length; i++)
+		{
+			if (options[i].value == globalTempVariable2.id)
+			{
+				locationInput.value = "";
+				libraryNameInput.value = "";
+				requestSenderInput.value = "";
+				selectElement.removeChild(options[i]);
+				break; 
+			}
+		}		
+	}
 	
 	allowRegistrationButton.addEventListener("click", function()
 	{
+		processRequest(true);
 		// updateRequest(requestJSONobject)
-		globalTempVariable2.approved = true;
-		updateRequest(globalTempVariable2);
-		
-		
+		//globalTempVariable2.approved = true;
+		//updateRequest(globalTempVariable2);
 	});
 	
-	denyAdminRegistrationButton.addEventListener("click", async function()
+	denyLibraryRegistrationButton.addEventListener("click", async function()
 	{
+		processRequest(false);
 		// updateRequest(requestJSONobject)
-		globalTempVariable2.approved = false;
-		updateRequest(globalTempVariable2);
+		//globalTempVariable2.approved = false;
+		//updateRequest(globalTempVariable2);
 		
 		// delete the request
-		const URL = "http://localhost:8080/api/v1/requests/" + globalTempVariable2.id;
-		const method = "DELETE";
+		//const URL = "http://localhost:8080/api/v1/requests/" + globalTempVariable2.id;
+		//const method = "DELETE";
 		
-		const response = await make_request(URL, method, JSON_headers, JSON.stringify(globalTempVariable2));
+		//const response = await make_request(URL, method, JSON_headers, JSON.stringify(globalTempVariable2));
 	});
 
 }
@@ -232,6 +294,7 @@ async function pregled_administratora_click()
 	for(var i = 0; i < answer_JSON.length; i++)
 		selectElement.innerHTML = selectElement.innerHTML + '<option value="' + answer_JSON[i].id + '">' + "ID: " + answer_JSON[i].id + ", Ime: " + answer_JSON[i].username + '</option>';
 	
+	var adminActivatedInput = document.getElementById("admin_is_activated");
 	
 	selectElement.addEventListener("change", async function(event)
 	{
@@ -246,12 +309,14 @@ async function pregled_administratora_click()
 		
 		// populate the listview of reading rooms
 		var selectElement = document.getElementById("admin_overview_library_list");
+		selectElement.innerHTML = "";
+		selectElement.innerHTML += '<option selected style="display:none;">' + "Spisak čitaonica" + '</option>';
 		for(var i = 0; i < globalTempVariable3.length; i++)
-			selectElement.innerHTML = selectElement.innerHTML + "<option>" + "ID: " + globalTempVariable3.id + ", Ime: "+ globalTempVariable3.name + "</option>";
+			selectElement.innerHTML = selectElement.innerHTML + "<option>" + "ID: " + globalTempVariable3[i].id + ", Ime: "+ globalTempVariable3[i].name + "</option>";
 		
 		// fill the input elements with the selected admin's data
 		var adminEmailInput = document.getElementById("admin_email");
-		var adminActivatedInput = document.getElementById("admin_is_activated");
+		
 		
 		adminEmailInput.value = selectedAdmin.email;
 		if(selectedAdmin.activated == true)
@@ -261,15 +326,53 @@ async function pregled_administratora_click()
 	});
 	
 	var deactivateButton = document.getElementById("deactivate_admin_account");
+	var activateButton = document.getElementById("activate_admin_account");
+	
+	async function changeActivationStatus(activate)
+	{
+		var adminDeactivationURL = "http://localhost:8080/api/v1/administrators/" + globalTempVariable2.id;
+		globalTempVariable2.activated = activate;
+		
+		var response = await make_request(adminDeactivationURL, "PUT", JSON_headers, JSON.stringify(globalTempVariable2));
+		
+		return response;
+	}
 	
 	deactivateButton.addEventListener("click", async function()
 	{
 		// deactivate the administrator
-		var adminDeactivationURL = "http://localhost:8080/api/v1/administrators/" + globalTempVariable2.id;
-		globalTempVariable2.activated = false;
-		console.log(globalTempVariable2);
-		var response = await make_request(adminDeactivationURL, "PUT", JSON_headers, JSON.stringify(globalTempVariable2));
-		console.log(response);
+		if(globalTempVariable2.activated == false)
+		{
+			alert("Odabrani nalog je već deaktiviran.");
+			return;
+		}
+		var response = changeActivationStatus(false);
+		
+		if(response.ok == false)
+		{
+			alert("Deaktivacija neuspješna");
+			return;
+		}
+		adminActivatedInput.value = "Ne";
+	});
+	
+	activateButton.addEventListener("click", async function()
+	{
+		// activate the administrator
+		if(globalTempVariable2.activated == true)
+		{
+			alert("Odabrani nalog je već aktiviran.");
+			return;
+		}	
+		var response = changeActivationStatus(true);
+		
+		if(response.ok == false)
+		{
+			alert("Aktivacija neuspješna");
+			return;
+		}
+		
+		adminActivatedInput.value = "Da";
 	});
 }
 
@@ -425,6 +528,7 @@ async function admin_pregled_citaonica_click()
 {
 	// globalTempVariable holds all the libraries of the administrator
 	// globalTempVariable2 holds all the admins of a library
+	// globalTempVariable3 holds the selected library
 	
 	panel_header_name.innerHTML = "Pregled čitaonica";
 	remove_panel_elements();
@@ -459,18 +563,20 @@ async function admin_pregled_citaonica_click()
 	librariesSelect.addEventListener("change", async function(event)
 	{
 		var selectedID = event.target.value;
-		var selectedLibrary = globalTempVariable.find(toFind => toFind.id == selectedID);
+		globalTempVariable3 = globalTempVariable.find(toFind => toFind.id == selectedID);
 		
 		var latitude_input = document.getElementById("latitude_input");
 		var longitude_input = document.getElementById("longitude_input");
 		var address_input = document.getElementById("address_input");
+		var name_input = document.getElementById("name_input");
 		
-		latitude_input.value = selectedLibrary.latitude;
-		longitude_input.value = selectedLibrary.longitude;
-		address_input.value = selectedLibrary.address;
+		latitude_input.value = globalTempVariable3.latitude;
+		longitude_input.value = globalTempVariable3.longitude;
+		address_input.value = globalTempVariable3.address;
+		name_input.value = globalTempVariable3.name;
 		
 		// get the administrators of the reading room
-		var tmpURL = "http://localhost:8080/api/v1/reading-rooms/" + selectedLibrary.id + "/administrators";
+		var tmpURL = "http://localhost:8080/api/v1/reading-rooms/" + globalTempVariable3.id + "/administrators";
 		var allAdmins = await make_request(tmpURL, "GET", JSON_headers, null);
 		allAdmins = await allAdmins.json();
 		
@@ -482,7 +588,44 @@ async function admin_pregled_citaonica_click()
 		}
 	});
 	
+	var deactivateButton = document.getElementById("admin_deactivate_library_btn");
+	deactivateButton.addEventListener("click", async function()
+	{
+		var URL = "http://localhost:8080/api/v1/reading-rooms/" + globalTempVariable3.id;
+		globalTempVariable3.active = false;
+		var response = await make_request(URL, "PUT", JSON_headers, JSON.stringify(globalTempVariable3));
+		if(response.ok == false)
+		{
+			alert("Deaktivacija neuspješna");
+			return;
+		}
+		alert("Deaktivacija uspješna");
+	});
 	
+	var overviewForm = document.getElementById("library_overview_form");
+	overviewForm.addEventListener("submit", async function(event)
+	{
+		event.preventDefault();
+		var formData = new FormData(this);
+		var formData_JSON_string = FormData_to_JSON(formData);
+		var formData_JSON = JSON.parse(formData_JSON_string);
+		
+		formData_JSON.id = globalTempVariable3.id;
+		formData_JSON.active = globalTempVariable3.active;
+		formData_JSON.insideAppearance = globalTempVariable3.insideAppearance;
+		formData_JSON.xSize = globalTempVariable3.xSize;
+		formData_JSON.ySize = globalTempVariable3.ySize;
+		
+		var tmpURL = "http://localhost:8080/api/v1/reading-rooms/" + globalTempVariable3.id;
+		var response = await make_request(tmpURL, "PUT", JSON_headers, JSON.stringify(formData_JSON));
+		
+		if(!response.ok)
+		{
+			alert("Izmjena informacija neuspješna");
+			return;
+		}
+		alert("Izmjena informacija uspješna");
+	});
 }
 
 
@@ -723,6 +866,20 @@ async function admin_obavjestenja_click()
 	});
 }
 
+function logout()
+{
+	ownID = null;
+	panel_header_name.innerHTML = "";
+	remove_panel_elements();
+	
+	// remove the navigation bar
+	//navigation_list var
+	while(navigation_list.firstChild)
+		navigation_list.removeChild(navigation_list.lastChild);
+	
+	login_screen();
+}
+
 function supervisor_init()
 {
 	// activate templates
@@ -733,17 +890,21 @@ function supervisor_init()
 	var pregled_administratora = document.querySelectorAll(".pregled_administratora_btn");
 	var pregled_citaonica = document.querySelectorAll(".pregled_citaonica_btn");
 	var postavke = document.querySelectorAll(".postavke_btn");
+	var odjava = document.querySelectorAll(".logout_btn");
 	
 	addEventToClass(obrada_zahtjeva, supervisor_obrada_zahtjeva_click);
 	addEventToClass(pregled_administratora, pregled_administratora_click);
 	addEventToClass(pregled_citaonica, supervisor_pregled_citaonica_click);
 	addEventToClass(postavke, postavke_click);
+	addEventToClass(odjava, logout);
 	
 	/*document.getElementsByClassName("obrada_zahtjeva_btn").addEventListener("click", supervisor_obrada_zahtjeva_click);
 	document.getElementsByClassName("pregled_administratora_btn").addEventListener("click", pregled_administratora_click);
 	document.getElementsByClassName("pregled_citaonica_btn").addEventListener("click", pregled_citaonica_click);
 	document.getElementsByClassName("postavke_btn").addEventListener("click", postavke_click);*/
 }
+
+
 
 function admin_init()
 {
@@ -757,11 +918,13 @@ function admin_init()
 	var pregled_citaonica = document.querySelectorAll(".admin_pregled_citaonica");
 	var admin_obavjestenja = document.querySelectorAll(".admin_obavjestenja");
 	var postavke = document.querySelectorAll(".admin_postavke_btn");
+	var odjava = document.querySelectorAll(".logout_btn");
 	
 	addEventToClass(registracija_citaonice, admin_registracija_citaonica_click);
 	addEventToClass(pregled_citaonica, admin_pregled_citaonica_click);
 	addEventToClass(admin_obavjestenja, admin_obavjestenja_click);
 	addEventToClass(postavke, postavke_click);
+	addEventToClass(odjava, logout);
 }
 
 function make_activation_request(requestType, readingRoomID)
