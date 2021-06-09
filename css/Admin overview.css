@@ -40,10 +40,20 @@ div#supervisor_admin_overview_library_container{
 	align-items: flex-end;
 }
 
+button#admin_overview_examine_library{
+	background-color: blue;
+	margin-left: 15px;
+	height: 100%;
+	display: none;
+}
+
 .admin_overview_buttons{
 	border: none;
 	color: white;
 	cursor: pointer;
+	height: 15%;
+	width: 25%;
+	margin-top: 15px;
 }
 .admin_overview_buttons:hover{
 	opacity: 0.5;
@@ -53,18 +63,14 @@ div#supervisor_admin_overview_library_container{
 	opacity: 0.5;
 }
 
-button#admin_overview_examine_library{
-	background-color: blue;
-	margin-left: 15px;
-	height: 100%;
-	display: none;
-}
+
 
 button#deactivate_admin_account{
-	margin-top: 15px;
 	background-color: red;
-	height: 15%;
-	width: 25%;
+}
+
+button#activate_admin_account{
+	background-color: blue;
 }
 
 
