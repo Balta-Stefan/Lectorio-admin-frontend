@@ -460,10 +460,12 @@ function admin_registracija_citaonica_click()
 		
 		
 		// assign the reading room to the administrator...
-		var URL2 = "http://localhost:8080/api/v1/administrators/" + ownID + "/reading-rooms";
+		var URL2 = "http://localhost:8080/api/v1/reading-rooms/" + json_response.id + "/administrators";
+		var reqBody = {"username" : ownUsername};
+		/*var URL2 = "http://localhost:8080/api/v1/administrators/" + ownID + "/reading-rooms";
 		console.log(URL2);
 		var reqBody = {"id" : response2.readingRoomId}
-		console.log(reqBody);
+		console.log(reqBody);*/
 		var response3 = await make_request(URL2, "POST", JSON_headers, JSON.stringify(reqBody));
 		
 		if(!response3.ok)
@@ -488,6 +490,11 @@ async function supervisor_pregled_citaonica_click()
 	activate_template(panel_children, "supervisor_library_overview");
 	
 	globalTempVariable = await make_request("http://localhost:8080/api/v1/reading-rooms", "GET", JSON_headers, null);
+	if(!globalTempVariable.ok)
+	{
+		alert("Greška");
+		return;
+	}
 	globalTempVariable = await globalTempVariable.json();
 	
 	// populate the reading room select
@@ -522,6 +529,60 @@ async function supervisor_pregled_citaonica_click()
 		globalTempVariable2.active = false;
 		await make_request(URL, "PUT", JSON_headers, JSON.stringify(globalTempVariable2));
 	});
+}
+
+function drawLibrary(canvasContext, num_of_horizontal_lines, num_of_vertical_lines, layoutString)
+{
+	// canvas HTML element dimensions are separated from the canvas' context dimensions
+	// these context dimensions have to be set to the dimensions of the HTML canvas element
+	
+	canvas_horizontal_slider.value = num_of_horizontal_lines;
+	canvas_vertical_slider.value = num_of_vertical_lines;
+	
+	canvas_height = canvas_context.canvas.height = canvasH;
+	canvas_width = canvas_context.canvas.width = canvasW;
+		
+	horizontal_step = canvas_width / num_of_vertical_lines;
+	vertical_step = canvas_height / num_of_horizontal_lines;
+		
+	canvas_context.beginPath();
+	for(x = horizontal_step; x <= canvas_width; x += horizontal_step)
+	{
+		canvas_context.moveTo(x, 0);
+		canvas_context.lineTo(x, canvas_height);
+	}
+	for(y = vertical_step; y <= canvas_height; y += vertical_step)
+	{
+		canvas_context.moveTo(0, y);
+		canvas_context.lineTo(canvas_width, y);
+	}
+	
+	// paint the cells
+	/*var drawX = selected_cell_x * horizontal_step;
+	var drawY = selected_cell_y * vertical_step;
+	
+	// offsets in fillRect are there because white color will remove borders
+	canvas_context.beginPath();
+	canvas_context.fillStyle = canvas_drawing_color;
+	canvas_context.fillRect(drawX+1, drawY+1, horizontal_step-2, vertical_step-2);
+	canvas_context.stroke();*/
+	var layoutStringCounter = 0;
+	
+	var yCoord = 0;
+	for(y = 0; y < num_of_horizontal_lines; y++)
+	{
+		var xCoord = 0;
+		for(x = 0; x < num_of_vertical_lines; x++)
+		{
+			canvas_context.fillStyle = colorMap[layoutString[layoutStringCounter++]];
+			canvas_context.fillRect(xCoord+1, yCoord+1, horizontal_step-2, vertical_step-2);
+			
+			xCoord += horizontal_step;
+		}
+		yCoord += vertical_step;
+	}
+	
+    canvas_context.stroke();
 }
 
 async function admin_pregled_citaonica_click()
@@ -586,6 +647,9 @@ async function admin_pregled_citaonica_click()
 		{
 			adminSelect.innerHTML += '<option value="' + allAdmins[i].id + '">' + "ID: " + allAdmins[i].id + ", Ime: " + allAdmins[i].username + '</option>';
 		}
+		
+		// draw the library layout
+		drawLibrary(canvas_context, globalTempVariable3.ySize, globalTempVariable3.xSize, globalTempVariable3.insideAppearance);
 	});
 	
 	var deactivateButton = document.getElementById("admin_deactivate_library_btn");
@@ -625,6 +689,24 @@ async function admin_pregled_citaonica_click()
 			return;
 		}
 		alert("Izmjena informacija uspješna");
+	});
+	
+	var addAdminButton = document.getElementById("admin_library_overview_add_new_admin_button");
+	addAdminButton.addEventListener("click", async function()
+	{
+		var newAdminsUsername = document.getElementById("admin_library_overview_add_new_admin_input").value;
+		
+		// send a request
+		var requestJSON = {"username" : newAdminsUsername}
+		var requestURL = "http://localhost:8080/api/v1/reading-rooms/" + globalTempVariable3.id + "/administrators";
+		var response = await make_request(requestURL, "POST", JSON_headers, JSON.stringify(requestJSON));
+		
+		if(!response.ok)
+		{
+			alert("Dodavanje novog administratora neuspješno.");
+			return;
+		}
+		alert("Dodavanje novog administratora uspješno.");
 	});
 }
 
@@ -710,6 +792,7 @@ function canvas_draw_lines()
 {
 	var num_of_horizontal_lines = canvas_horizontal_slider.value;
 	var num_of_vertical_lines = canvas_vertical_slider.value;
+	console.log("horizontal: " + num_of_horizontal_lines + ", vertical: " + num_of_vertical_lines);
 	
 	// allocate a 2D array that will hold cell values
 	canvas_drawn_cells_array = new Array(num_of_horizontal_lines*num_of_vertical_lines);
@@ -722,7 +805,10 @@ function canvas_draw_lines()
 			canvas_drawn_cells_array[i][j] = empty_cell;
 	}*/
 	
-
+	// drawLibrary(canvasContext, numOfHorizontalLines, numOfVerticalLines, layoutString)
+	drawLibrary(canvas_context, num_of_horizontal_lines, num_of_vertical_lines, canvas_drawn_cells_array);
+	
+	/*
 	// canvas HTML element dimensions are separated from the canvas' context dimensions
 	// these context dimensions have to be set to the dimensions of the HTML canvas element
 	canvas_height = canvas_context.canvas.height = canvasH;
@@ -744,7 +830,7 @@ function canvas_draw_lines()
 		canvas_context.lineTo(canvas_width, y);
 	}
 	
-    canvas_context.stroke();
+    canvas_context.stroke();*/
 }
 
 
@@ -754,6 +840,8 @@ async function admin_obavjestenja_click()
 	// globalTempVariable2 holds all the announcements of a library
 	// globalTempVariable3 holds the currently selected library
 	// globalTempVariable4 holds the currently selected announcement
+	
+	// an empty announcement with ID = -1 is used to create a new announcement
 	
 	globalTempVariable3 = null;
 	globalTempVariable4 = null;
@@ -791,6 +879,7 @@ async function admin_obavjestenja_click()
 		
 		announcementsSelect.innerHTML = "";
 		announcementsSelect.innerHTML += '<option selected style="display:none;">' + "Spisak obavještenja" + '</option>';
+		announcementsSelect.innerHTML += '<option value="-1">' + "Dodaj novo" + '</option>';
 		//<option selected style="display:none;">Spisak obavještenja</option>
 		for(var i = 0; i < globalTempVariable2.length; i++)
 		{
@@ -802,6 +891,7 @@ async function admin_obavjestenja_click()
 	{
 		if(globalTempVariable3 == null) return;
 		var selectedAnnouncementID = event.target.value;
+		if(selectedAnnouncementID == -1) return;
 		globalTempVariable4 = globalTempVariable2.find(toFind => toFind.id == selectedAnnouncementID);
 		
 		var textarea = document.getElementById("admin_notification_textarea");
@@ -827,23 +917,32 @@ async function admin_obavjestenja_click()
 		var tmpUrl = "http://localhost:8080/api/v1/announcements";
 		var method = null;
 		
+		var addingNew = true;
 		
 		if(globalTempVariable4 != null)
 		{
 			body.id = globalTempVariable4.id;
 			tmpUrl += "/" + globalTempVariable4.id;
 			method = "PUT";
+			addingNew = false;
 		}
 		else
 		{
 			method = "POST";
 		}
 		var req = await make_request(tmpUrl, method, JSON_headers, JSON.stringify(body));
+		var reqJSON = await req.json();
 		if(req.ok == false)
 		{
 			console.log(await req.json());
 			alert("Dodavanje neuspješno");
 			return;
+		}
+		if(addingNew)
+		{
+			// add to select
+			announcementsSelect.innerHTML += '<option selected value="' + reqJSON.id + '">' + "ID: " + reqJSON.id + ", Naslov: " + reqJSON.title + '</option>';
+			globalTempVariable4 = reqJSON;
 		}
 		alert("Dodavanje uspješno");
 	});
@@ -1064,6 +1163,7 @@ async function user_login(response_object)
 	panel_header_name.innerHTML = "";
 	
 	ownID = json_response.id;
+	ownUsername = json_response.username;
 	
 	if(json_response.isAdministrator == true)
 	{
@@ -1193,6 +1293,7 @@ var globalTempVariable3 = null;
 var globalTempVariable4 = null;
 
 var ownID = null;
+var ownUsername = null;
 
 var admin = "admin";
 var supervisor = "supervisor";
@@ -1223,6 +1324,13 @@ var socket_seat = "P";
 var table = "T";
 var door = "D";
 
+
+var colorMap = {};
+colorMap[empty_cell] = "white";
+colorMap[standard_seat] = "orange";
+colorMap[socket_seat] = "blue";
+colorMap[table] = "brown";
+colorMap[door] = "black";
 
 const JSON_headers = 
 {
