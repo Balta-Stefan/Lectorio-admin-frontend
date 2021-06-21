@@ -364,7 +364,7 @@ async function pregled_administratora_click()
 		globalTempVariable2 = selectedAdmin;
 		
 		// get his reading rooms
-		var URL = "http://localhost:8080/api/v1/administrators/" + globalTempVariable2.id + "/reading-rooms";
+		var URL = URLprefix + "administrators/" + globalTempVariable2.id + "/reading-rooms";
 		var response = await make_request(URL, "GET", JSON_headers, null);
 		globalTempVariable3 = await response.json();
 		
