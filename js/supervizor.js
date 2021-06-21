@@ -23,6 +23,62 @@
 	
 */
 
+const URLprefix = "https://ps-projektni-lectorio.oa.r.appspot.com/api/v1/";
+
+var globalTempVariable = null;
+var globalTempVariable2 = null;
+var globalTempVariable3 = null;
+var globalTempVariable4 = null;
+
+var ownID = null;
+var ownUsername = null;
+
+var admin = "admin";
+var supervisor = "supervisor";
+
+var navigation_list = document.getElementById("navigation_list");
+var panel = document.getElementById("panel");
+var panel_children = document.getElementById("panel_content");
+var panel_header_name = document.getElementById("panel_header_name");
+
+var canvas = null;
+var canvas_context = null;
+var canvas_horizontal_slider = null;
+var canvas_vertical_slider = null;
+var canvasW = 0;
+var canvasH = 0;
+var canvas_drawing_color = "black";
+var canvas_height = null;
+var canvas_width = null;
+var horizontal_step = null;
+var vertical_step = null;
+var canvas_drawn_cells_array = null;
+var canvas_string_representation_character = null;
+
+
+var empty_cell = "_";
+var standard_seat = "S";
+var socket_seat = "P";
+var table = "T";
+var door = "D";
+
+
+var colorMap = {};
+colorMap[empty_cell] = "white";
+colorMap[standard_seat] = "orange";
+colorMap[socket_seat] = "blue";
+colorMap[table] = "brown";
+colorMap[door] = "black";
+
+const JSON_headers = 
+{
+	"Content-Type": "application/json",
+	"Accept": "application/json"
+};
+
+
+login_screen();
+
 function activate_template(destination, template_id)
 {
 	var template = document.getElementById(template_id);
@@ -38,7 +94,8 @@ function remove_panel_elements()
 
 async function updateRequest(requestJSONobject)
 {
-	var URL = "http://localhost:8080/api/v1/requests/" + requestJSONobject.id;
+	//var URL = "http://localhost:8080/api/v1/requests/" + requestJSONobject.id;
+	var URL = URLprefix + "requests/" + requestJSONobject.id;
 	
 	var response = await make_request(URL, "PUT", JSON_headers, JSON.stringify(requestJSONobject));
 	//const json_response = await response.json();
@@ -46,7 +103,8 @@ async function updateRequest(requestJSONobject)
 
 async function getAdmin(adminID)
 {
-	var answer = await make_request("http://localhost:8080/api/v1/administrators/" + adminID, "GET", JSON_headers, null);
+	var URL = URLprefix + "administrators/" + adminID;
+	var answer = await make_request(URL, "GET", JSON_headers, null);
 	var answer_JSON = await answer.json();
 	return answer_JSON;
 }
@@ -62,7 +120,8 @@ async function admin_requests_panel_activation()
 	
 	// get all requests
 	//make_request(URL, method, headers, body_content)
-	const answer = await make_request("http://localhost:8080/api/v1/requests", "GET", JSON_headers, null);
+	var URL1 = URLprefix + "requests";
+	const answer = await make_request(URL1, "GET", JSON_headers, null);
 	const answer_JSON = await answer.json();
 	globalTempVariable = answer_JSON;
 	
@@ -83,7 +142,7 @@ async function admin_requests_panel_activation()
 		var selectedRequest = globalTempVariable.find(toFind => toFind.id == selectedID);
 		globalTempVariable2 = selectedRequest;
 		
-		const URL = "http://localhost:8080/api/v1/administrators/" + selectedRequest.administratorId;
+		const URL2 = URLprefix + "administrators/" + selectedRequest.administratorId;
 		const method = "GET";
 		var response = await make_request(URL, method, JSON_headers, null);
 		var json_response = await response.json();
@@ -102,8 +161,8 @@ async function admin_requests_panel_activation()
 	{
 		// set the request to allowed...
 		globalTempVariable2.approved = allow;
-		var URL = "http://localhost:8080/api/v1/requests/" + globalTempVariable2.id;
-		var response = await make_request(URL, "PUT", JSON_headers, JSON.stringify(globalTempVariable2));
+		var URL3 = URLprefix + "requests/" + globalTempVariable2.id;
+		var response = await make_request(URL3, "PUT", JSON_headers, JSON.stringify(globalTempVariable2));
 		if(response.ok == false)
 		{
 			alert("Greška");
@@ -112,15 +171,15 @@ async function admin_requests_panel_activation()
 		// now actually activate the admin...
 		var adminJSON = await getAdmin(globalTempVariable2.administratorId);
 		adminJSON.activated = allow;
-		var URL = "http://localhost:8080/api/v1/administrators/" + adminJSON.id;
-		var response = await make_request(URL, "PUT", JSON_headers, JSON.stringify(adminJSON));
+		var URL4 = URLprefix + "administrators/" + adminJSON.id;
+		var response = await make_request(URL4, "PUT", JSON_headers, JSON.stringify(adminJSON));
 		if(response.ok == false)
 		{
 			alert("Greška");
 			return;
 		}
 		// delete the request
-		var tempURL = "http://localhost:8080/api/v1/requests/" + globalTempVariable2.id;
+		var tempURL = URLprefix + "requests/" + globalTempVariable2.id;
 		await make_request(tempURL, "DELETE", JSON_headers, null);
 		// remove the element from the select
 		var options = selectElement.options;
@@ -179,7 +238,8 @@ async function library_activations_panel_activation()
 	
 	// get all requests
 	//make_request(URL, method, headers, body_content)
-	const answer = await make_request("http://localhost:8080/api/v1/requests", "GET", JSON_headers, null);
+	var URL1 = URLprefix + "requests";
+	const answer = await make_request(URL1, "GET", JSON_headers, null);
 	const answer_JSON = await answer.json();
 	globalTempVariable = answer_JSON;
 	
@@ -202,8 +262,8 @@ async function library_activations_panel_activation()
 		var selectedRequest = globalTempVariable.find(toFind => toFind.id == selectedID);
 		globalTempVariable2 = selectedRequest;
 		
-		const URL = "http://localhost:8080/api/v1/reading-rooms/" + selectedRequest.readingRoomId;
-		const response = await make_request(URL, "GET", JSON_headers, null);
+		const URL2 = URLprefix + "reading-rooms/" + selectedRequest.readingRoomId;
+		const response = await make_request(URL2, "GET", JSON_headers, null);
 		const json_response = await response.json();
 		
 		if(!response.ok)
@@ -214,8 +274,8 @@ async function library_activations_panel_activation()
 		
 		// get the request sender
 		var senderAdminID = selectedRequest.administratorId;
-		const URL2 = "http://localhost:8080/api/v1/administrators/" + senderAdminID;
-		const response2 = await make_request(URL2, "GET", JSON_headers, null);
+		const URL3 = URLprefix + "administrators/" + senderAdminID;
+		const response2 = await make_request(URL3, "GET", JSON_headers, null);
 		const json_response2 = await response2.json();
 		requestSenderInput.value = "ID: "+ json_response2.id + ", username: " + json_response2.username;
 	});
@@ -226,7 +286,7 @@ async function library_activations_panel_activation()
 	async function processRequest(allow)
 	{	
 		// delete the request
-		var tempURL = "http://localhost:8080/api/v1/requests/" + globalTempVariable2.id;
+		var tempURL = URLprefix + "requests/" + globalTempVariable2.id;
 		await make_request(tempURL, "DELETE", JSON_headers, null);
 		// remove the element from the select
 		var options = selectElement.options;
@@ -287,7 +347,8 @@ async function pregled_administratora_click()
 	activate_template(panel_children, "supervisor_admin_overview");
 	
 	// populate the select with admins
-	const answer = await make_request("http://localhost:8080/api/v1/administrators", "GET", JSON_headers, null);
+	var URL1 = URLprefix + "administrators";
+	const answer = await make_request(URL1, "GET", JSON_headers, null);
 	const answer_JSON = await answer.json();
 	globalTempVariable = answer_JSON;
 	var selectElement = document.getElementById("supervisor_admin_select");
@@ -330,7 +391,7 @@ async function pregled_administratora_click()
 	
 	async function changeActivationStatus(activate)
 	{
-		var adminDeactivationURL = "http://localhost:8080/api/v1/administrators/" + globalTempVariable2.id;
+		var adminDeactivationURL = URLprefix + "administrators/" + globalTempVariable2.id;
 		globalTempVariable2.activated = activate;
 		
 		var response = await make_request(adminDeactivationURL, "PUT", JSON_headers, JSON.stringify(globalTempVariable2));
@@ -429,7 +490,7 @@ function admin_registracija_citaonica_click()
 		
 		
 		// create a reading room
-		const URL = "http://localhost:8080/api/v1/reading-rooms";
+		const URL = URLprefix + "reading-rooms";
 		const method = "POST";
 		const response = await make_request(URL, method, JSON_headers, JSON.stringify(formData_JSON));
 		const json_response = await response.json();
@@ -441,7 +502,7 @@ function admin_registracija_citaonica_click()
 		}
 		
 		// make a reading room registration request...
-		const newRequestURL = "http://localhost:8080/api/v1/requests";
+		const newRequestURL = URLprefix + "requests";
 		const requestJSON = make_activation_request("readingRoomActivationRequest", json_response.id);
 		requestJSON.administratorId = ownID
 		console.log("requestJSON");
@@ -460,7 +521,7 @@ function admin_registracija_citaonica_click()
 		
 		
 		// assign the reading room to the administrator...
-		var URL2 = "http://localhost:8080/api/v1/reading-rooms/" + json_response.id + "/administrators";
+		var URL2 = URLprefix + "reading-rooms/" + json_response.id + "/administrators";
 		var reqBody = {"username" : ownUsername};
 		/*var URL2 = "http://localhost:8080/api/v1/administrators/" + ownID + "/reading-rooms";
 		console.log(URL2);
@@ -489,7 +550,8 @@ async function supervisor_pregled_citaonica_click()
 	
 	activate_template(panel_children, "supervisor_library_overview");
 	
-	globalTempVariable = await make_request("http://localhost:8080/api/v1/reading-rooms", "GET", JSON_headers, null);
+	var URL1 = URLprefix + "reading-rooms";
+	globalTempVariable = await make_request(URL1, "GET", JSON_headers, null);
 	if(!globalTempVariable.ok)
 	{
 		alert("Greška");
@@ -509,7 +571,7 @@ async function supervisor_pregled_citaonica_click()
 		
 		// populate the administrators list
 		var addressInput = document.getElementById("admin_library_address");
-		var URL = "http://localhost:8080/api/v1/reading-rooms/" + globalTempVariable2.id + "/administrators";
+		var URL = URLprefix + "reading-rooms/" + globalTempVariable2.id + "/administrators";
 		var listOfAdmins = await make_request(URL, "GET", JSON_headers, null);
 		var adminsSelect = document.getElementById("admin_library_administrators");
 		
@@ -525,7 +587,7 @@ async function supervisor_pregled_citaonica_click()
 	var deactivateButton = document.getElementById("admin_deactivate_library_btn");
 	deactivateButton.addEventListener("click", async function()
 	{
-		var URL = "http://localhost:8080/api/v1/reading-rooms/" + globalTempVariable2.id;
+		var URL = URLprefix + "reading-rooms/" + globalTempVariable2.id;
 		globalTempVariable2.active = false;
 		await make_request(URL, "PUT", JSON_headers, JSON.stringify(globalTempVariable2));
 	});
@@ -610,7 +672,7 @@ async function admin_pregled_citaonica_click()
 	
 	// get the list of own all reading rooms
 	
-	const URL = "http://localhost:8080/api/v1/administrators/" + ownID + "/reading-rooms";
+	const URL = URLprefix + "administrators/" + ownID + "/reading-rooms";
 	const method = "GET";
 	const response = await make_request(URL, method, JSON_headers, null);
 	globalTempVariable = await response.json();
@@ -637,7 +699,7 @@ async function admin_pregled_citaonica_click()
 		name_input.value = globalTempVariable3.name;
 		
 		// get the administrators of the reading room
-		var tmpURL = "http://localhost:8080/api/v1/reading-rooms/" + globalTempVariable3.id + "/administrators";
+		var tmpURL = URLprefix + "reading-rooms/" + globalTempVariable3.id + "/administrators";
 		var allAdmins = await make_request(tmpURL, "GET", JSON_headers, null);
 		allAdmins = await allAdmins.json();
 		
@@ -655,7 +717,7 @@ async function admin_pregled_citaonica_click()
 	var deactivateButton = document.getElementById("admin_deactivate_library_btn");
 	deactivateButton.addEventListener("click", async function()
 	{
-		var URL = "http://localhost:8080/api/v1/reading-rooms/" + globalTempVariable3.id;
+		var URL = URLprefix + "reading-rooms/" + globalTempVariable3.id;
 		globalTempVariable3.active = false;
 		var response = await make_request(URL, "PUT", JSON_headers, JSON.stringify(globalTempVariable3));
 		if(response.ok == false)
@@ -680,7 +742,7 @@ async function admin_pregled_citaonica_click()
 		formData_JSON.xSize = globalTempVariable3.xSize;
 		formData_JSON.ySize = globalTempVariable3.ySize;
 		
-		var tmpURL = "http://localhost:8080/api/v1/reading-rooms/" + globalTempVariable3.id;
+		var tmpURL = URLprefix + "reading-rooms/" + globalTempVariable3.id;
 		var response = await make_request(tmpURL, "PUT", JSON_headers, JSON.stringify(formData_JSON));
 		
 		if(!response.ok)
@@ -698,7 +760,7 @@ async function admin_pregled_citaonica_click()
 		
 		// send a request
 		var requestJSON = {"username" : newAdminsUsername}
-		var requestURL = "http://localhost:8080/api/v1/reading-rooms/" + globalTempVariable3.id + "/administrators";
+		var requestURL = URLprefix + "reading-rooms/" + globalTempVariable3.id + "/administrators";
 		var response = await make_request(requestURL, "POST", JSON_headers, JSON.stringify(requestJSON));
 		
 		if(!response.ok)
@@ -853,7 +915,7 @@ async function admin_obavjestenja_click()
 	
 	// get the list of own all reading rooms
 	
-	const URL = "http://localhost:8080/api/v1/administrators/" + ownID + "/reading-rooms";
+	const URL = URLprefix + "administrators/" + ownID + "/reading-rooms";
 	const method = "GET";
 	const response = await make_request(URL, method, JSON_headers, null);
 	globalTempVariable = await response.json();
@@ -871,7 +933,7 @@ async function admin_obavjestenja_click()
 		globalTempVariable3 = globalTempVariable.find(toFind => toFind.id == selectedLibraryID);
 		
 		// get all the notifications
-		var tmpURL = "http://localhost:8080/api/v1/reading-rooms/" + selectedLibraryID + "/announcements";
+		var tmpURL = URLprefix + "reading-rooms/" + selectedLibraryID + "/announcements";
 		globalTempVariable2 = await make_request(tmpURL, "GET", JSON_headers, null);
 		if(!globalTempVariable2.ok)
 			return;
@@ -914,7 +976,7 @@ async function admin_obavjestenja_click()
 		var body = {"title": title, "content": content, "administratorId": ownID, "readingRoomId": globalTempVariable3.id}
 		var date = new Date();
 		body.creationDateTime = date.toISOString();
-		var tmpUrl = "http://localhost:8080/api/v1/announcements";
+		var tmpUrl = URLprefix + "announcements";
 		var method = null;
 		
 		var addingNew = true;
@@ -955,7 +1017,7 @@ async function admin_obavjestenja_click()
 			alert("Prvo odaberite obavještenje");
 			return;
 		}
-		var tmpURL = "http://localhost:8080/api/v1/announcements/" + globalTempVariable4.id;
+		var tmpURL = URLprefix + "announcements/" + globalTempVariable4.id;
 		var response = await make_request(tmpURL, "DELETE", JSON_headers, null);
 		if(response.ok == false)
 			alert("Brisanje neuspješno");
@@ -1061,7 +1123,7 @@ function registration_loginPanel_click()
 		}
 		
 		//make_request(URL, method, headers, body_content)
-		const URL = "http://localhost:8080/api/v1/administrators";
+		const URL = URLprefix + "administrators";
 		const method = "POST";
 		const response = await make_request(URL, method, JSON_headers, formData_JSON);
 		const json_response = await response.json();
@@ -1078,7 +1140,7 @@ function registration_loginPanel_click()
 		
 		const assignedID = json_response.id;
 		
-		const newRequestURL = "http://localhost:8080/api/v1/requests";
+		const newRequestURL = URLprefix + "requests";
 		const requestJSON = make_activation_request("administratorRegistrationRequest", null);
 		requestJSON.administratorId = assignedID
 		const response2 = await make_request(newRequestURL, method, JSON_headers, JSON.stringify(requestJSON));
@@ -1210,7 +1272,7 @@ function login_screen()
 		const formData_JSON = FormData_to_JSON(formData);
 		
 		//make_request(URL, method, headers, body_content)
-		const URL = "http://localhost:8080/api/v1/administrative-users/login";
+		const URL = URLprefix + "administrative-users/login";
 		const method = "POST";
 		const response = await make_request(URL, method, JSON_headers, formData_JSON);
 		//const json_response = await response.json();
@@ -1287,62 +1349,15 @@ function login_screen()
 	
 }
 
-var globalTempVariable = null;
-var globalTempVariable2 = null;
-var globalTempVariable3 = null;
-var globalTempVariable4 = null;
-
-var ownID = null;
-var ownUsername = null;
-
-var admin = "admin";
-var supervisor = "supervisor";
-
-var navigation_list = document.getElementById("navigation_list");
-var panel = document.getElementById("panel");
-var panel_children = document.getElementById("panel_content");
-var panel_header_name = document.getElementById("panel_header_name");
-
-var canvas = null;
-var canvas_context = null;
-var canvas_horizontal_slider = null;
-var canvas_vertical_slider = null;
-var canvasW = 0;
-var canvasH = 0;
-var canvas_drawing_color = "black";
-var canvas_height = null;
-var canvas_width = null;
-var horizontal_step = null;
-var vertical_step = null;
-var canvas_drawn_cells_array = null;
-var canvas_string_representation_character = null;
 
 
-var empty_cell = "_";
-var standard_seat = "S";
-var socket_seat = "P";
-var table = "T";
-var door = "D";
 
-
-var colorMap = {};
-colorMap[empty_cell] = "white";
-colorMap[standard_seat] = "orange";
-colorMap[socket_seat] = "blue";
-colorMap[table] = "brown";
-colorMap[door] = "black";
-
-const JSON_headers = 
-{
-	"Content-Type": "application/json",
-	"Accept": "application/json"
-};
 
 //https://stackoverflow.com/questions/42270928/cors-header-access-control-allow-origin-missing-when-making-a-request-to-diffe
 
 //https://developer.mozilla.org/en-US/docs/Learn/Forms/Sending_forms_through_JavaScript
 
-login_screen();
+
 //activate_template(panel_children, "supervisor_settings_template");
 //activate_template(panel_children, "library_overview");
 //activate_template(panel_children, "supervisor_admin_overview");
