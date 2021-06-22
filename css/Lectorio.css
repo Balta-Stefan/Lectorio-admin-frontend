@@ -44,7 +44,7 @@ nav li{
 	margin: 0;
 }
 
-nav a{
+nav p{
 	text-decoration: none;
 	color: white;
 	transition: .3s;
@@ -54,11 +54,12 @@ nav a{
 	padding: 1rem;
 }
 
-nav a:hover {
+nav p:hover {
 	background-color: #005f5f;
+	cursor: pointer;
 }
 
-nav a.active {
+nav p.active {
 	background-color: #fff;
 	color: #444;
 }
