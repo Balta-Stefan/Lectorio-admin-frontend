@@ -1,0 +1,82 @@
+div#library_activation_container{
+	display: flex;
+	width: 100%;
+	height: 60%;
+	padding-top: 15px;
+}
+
+select#libraries_to_activate_select{
+	padding-top: 0;
+	margin-top: 0;
+	margin-left: 15px;
+	width: 50%;
+	height: 100%;
+}
+
+div#library_to_activate_info{
+	padding-top: 0;
+	margin-top: 0;
+	margin-left: 10px;
+	
+	width: 50%;
+	height: 50%;
+	
+	display: flex;
+	flex-direction: column;
+}
+div#library_to_activate_info input{
+	width: 15rem;
+}
+
+div#library_activation_buttons{
+	height: 40%;
+	width: 100%;
+	
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+button#activate_library{
+	background-color: blue;
+	height: 35%;
+}
+button#reject_library_activation{
+	background-color: red;
+	height: 35%;
+}
+
+.registration_requests_buttons{
+	border: none;
+	color: white;
+	cursor: pointer;
+	height: 4rem;
+	width: 7rem;
+	border-radius: 10px;
+}
+
+.registration_requests_buttons:hover{
+	opacity: 0.5;
+}
+.registration_requests_buttons:active{
+	opacity: 0.5;
+}
+
+
+@media screen and (max-width: 860px){
+	div#library_activation_container{
+		flex-direction: column;
+	}
+	
+	select#libraries_to_activate_select{
+		width: 100%;
+		margin-left: 0;
+	}
+	div#library_to_activate_info{
+		margin-top: 25px;
+		width: 90%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}

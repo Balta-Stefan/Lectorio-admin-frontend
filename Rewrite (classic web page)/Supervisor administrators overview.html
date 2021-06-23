@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Lectorio</title>
+		
+		<meta charset="UTF-8">
+		<meta name="author" content="Balta Stefan">
+		<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- media queries don't work without this line-->
+
+		<link href="css/Lectorio.css" type="text/css" rel="stylesheet" />
+		<link href="css/Admin overview.css" type="text/css" rel="stylesheet" />
+		
+		<script type="text/javascript" src="js/Utilities.js" defer></script>
+		<script type="text/javascript" src="js/Supervisor admin overview.js" defer></script>
+		
+	</head>
+	
+	<body>
+		<header>
+			<!--<h3>Lectorio</h3>-->
+			<img id="header_logo" src="Resources/new logo.png"></img>
+			<nav id="navigation">
+				<ul id="navigation_list">
+					<li><a href="Supervisor requests.html" class="obrada_zahtjeva_btn">Obrada zahtjeva</a></li>
+					<li><a href="Supervisor administrators overview.html" class="pregled_administratora_btn">Pregled administratora</a></li>
+					<li><a href="Supervisor reading rooms overview.html" class="pregled_citaonica_btn">Pregled čitaonica</a></li>
+					<li><a href="" class="postavke_btn">Postavke</a></li>
+					<li><a href="Login.html" class="logout_btn">Odjava</a></li>
+				</ul>
+			</nav>
+		</header>
+	
+		<div id="content">
+			<div id="panel">
+				<div id="panel_header">
+					<h3 id="panel_header_name">Pregled administratora</h3>
+				</div>
+				
+				<div id="panel_content">
+					<div id="supervisor_admin_overview_container">
+						<select id="supervisor_admin_select" size="5">
+						
+						</select>
+						
+						<div id="supervisor_admin_overview_info">
+							<div id="supervisor_admin_overview_library_container">
+								<select id="admin_overview_library_list">
+									<option selected style="display:none;">Čitaonice u vlasništvu</option>
+								</select>
+								<button class="admin_overview_buttons" id="admin_overview_examine_library"><b>Pregled čitaonice</b></button>
+							</div>
+							<p>Datum registracije</p>
+							<input id="admin_registration_date" disabled></input>
+							
+							<p>Email</p>
+							<input id="admin_email" disabled></input>
+							
+							<p>Aktiviran</p>
+							<input id="admin_is_activated" disabled></input>
+							
+							<p></p>
+							<button class="admin_overview_buttons" id="deactivate_admin_account"><b>Deaktiviraj nalog</b></button>
+							<button class="admin_overview_buttons" id="activate_admin_account"><b>Aktiviraj nalog</b></button>
+						</div>
+					</div>
+					<div id="admin_overview_emptydiv"></div>
+				</div>
+			</div>
+		</div>
+		
+		<footer>
+			<p>Najjakija grupa &copy; </p>
+		</footer>
+	
+	</body>
+	
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Lectorio</title>
+		
+		<meta charset="UTF-8">
+		<meta name="author" content="Balta Stefan">
+		<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- media queries don't work without this line-->
+
+		<link href="css/Lectorio.css" type="text/css" rel="stylesheet" />
+		<link href="css/Admin library overview.css" type="text/css" rel="stylesheet" />
+		<link href="css/Canvas.css" type="text/css" rel="stylesheet" />
+		
+		<script type="text/javascript" src="js/Utilities.js" defer></script>
+		<script type="text/javascript" src="js/Admin library overview.js" defer></script>
+		
+	</head>
+	
+	<body>
+		<header>
+			<!--<h3>Lectorio</h3>-->
+			<img id="header_logo" src="Resources/new logo.png"></img>
+			<nav id="navigation">
+				<ul id="navigation_list">
+					<li><a href="Admin library registration.html" class="registracija_citaonice">Registracija čitaonice</a></li>
+					<li><a href="Admin library overview.html" class="admin_pregled_citaonica">Pregled čitaonica</a></li>
+					<li><a href="Admin reading room announcements.html" class="admin_obavjestenja">Obavještenja</a></li>
+					<li><a href="#" class="admin_postavke_btn">Postavke</a></li>
+					<li><a href="../Login.html" class="logout_btn">Odjava</a></li>
+				</ul>
+			</nav>
+		</header>
+	
+		<div id="content">
+			<div id="panel">
+				<div id="panel_header">
+					<h3 id="panel_header_name">Pregled čitaonica</h3>
+				</div>
+				
+				<div id="panel_content">
+					<div id="admin_library_overview_container">
+						<select id="admin_list_of_libraries">
+							<option selected style="display:none;">Spisak čitaonica</option>
+						</select>
+						<div id="admin_image_and_info">
+							<img id="admin_library_picture" src="Resources/New logo.png"></img>
+							<div id="admin_library_info">
+								<select id="admin_library_administrators">
+									<option selected style="display:none;">Administratori čitaonice</option>
+								</select>
+								
+								<div id="admin_add_new_admin_wrapper">
+									<input id="admin_library_overview_add_new_admin_input" placeholder="Dodaj administratora"></input>
+									<button id="admin_library_overview_add_new_admin_button">Dodaj</button>
+								</div>
+								
+								<form id="library_overview_form">
+									<label for="registered">Registrovana</label>
+									<input name="registered">
+									
+									<label for="name">Ime</label>
+									<input id="name_input" name="name">
+									
+									<label for="readingRoomType">Tip čitaonice:</label>
+									<select name="readingRoomType" id="type_of_reading_room">
+									  <option value="Tiha">Tiha</option>
+									  <option value="Grupna">Grupna</option>
+									</select> 
+									
+									<label for="number_of_seats">Broj mjesta</label>
+									<input name="number_of_seats">
+									
+									<label for="address">Adresa</label>
+									<input id="address_input" name="address">
+									
+									<label for="opening_time">Vrijeme otvaranja</label>
+									<input name="opening_time">
+									
+									<label for="closing_time">Vrijeme zatvaranja</label>
+									<input name="closing_time">
+									
+									<!--<label for="library_picture">Slika</label><br>
+									<input id="library_registration_picture" type="file" name="library_picture">-->
+									
+									<label>Lokaciju odaberite na Google maps servisu i uzmite 2 broja od te lokacije (primjer: 44.779997, 17.199400)</label>
+									<label for="latitude">Prvi broj (geografska širina)</label>
+									
+									<input id="latitude_input" name="latitude">
+									<label for="longitude">Drugi broj (geografska širina)</label>
+									
+									<input id="longitude_input" name="longitude">
+									<button type="submit" form="library_overview_form" class="admin_library_overview_button" id="admin_library_change_library_info"><b>Izmijeni informacije</b></button>		
+								</form>
+								<button class="admin_library_overview_button" id="admin_deactivate_library_btn"><b>Deaktiviraj</b></button>
+								<!--
+								<p>Registrovana</p>
+								<input id="admin_library_registration_date" disabled></input>
+								
+								<p>Broj mjesta</p>
+								<input id="admin_library_total_seats"></input>
+								<p>Adresa</p>
+								<input id="admin_library_address"></input>
+								<p>Vrijeme otvaranja</p>
+								<input id="admin_library_opening_time"></input>
+								<p>Vrijeme zatvaranja</p>
+								<input id="admin_library_closing_time"></input>
+								<br>
+								<button class="admin_library_overview_button" id="admin_library_change_library_info"><b>Izmijeni informacije</b></button>
+								<br>
+								<button id="admin_deactivate_library_btn"><b>Deaktiviraj</b></button>
+								<br> -->
+								<!--<label id="admin_library_overview_action_status_label">Status akcije:</label>-->
+							</div>
+						</div>
+						<div id="admin_library_layout_picture_container">
+							<div id="library_layout_wrapper">
+								<div id="layout_drawing_canvas_wrapper">
+									<canvas id="drawing_canvas"></canvas>
+								</div>
+								<div id="canvas_drawing_tools">
+									<p>Broj horizontalnih linija</p>
+									<input class="canvas_slider" id="canvas_num_of_horizontal_lines" type="range" min="10" max="50"></input>
+									<p>Broj vertikalnih linija</p>
+									<input class="canvas_slider" id="canvas_num_of_verticall_lines" type="range" min="10" max="50"></input>
+									
+									<div id="canvas_buttons_wrapper">
+										<button class="canvas_button" id="canvas_entry"><b>Ulaz</b></button>
+										<button class="canvas_button" id="canvas_standard_seat"><b>Standardno mjesto</b></button>
+										<button class="canvas_button" id="canvas_socket_seat"><b>Mjesto sa utičnicom</b></button>
+										<button class="canvas_button" id="canvas_table"><b>Sto</b></button>
+										<button class="canvas_button" id="canvas_remove_elements"><b>Brisanje elemenata</b></button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<footer>
+			<p>Najjakija grupa &copy; </p>
+		</footer>
+	
+	</body>
+	
+</html>

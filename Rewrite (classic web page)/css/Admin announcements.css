@@ -1,0 +1,82 @@
+div#library_notifications_panel_wrapper{
+	width: 100%;
+	height: 100%;
+}
+
+form#library_notifications_form{
+	width: 100%;
+	height: 100%;
+}
+
+select#admin_notifications_list_of_libraries{
+	width: 100%;
+	height: 5%;
+	text-align: center;
+}
+
+select#admin_notifications_select{
+	width: 100%;
+	text-align: center;
+	height: 5%;
+}
+
+textarea#admin_notification_textarea{
+	width: 100%;
+	height: 50%;
+	font-size: 1rem;
+	resize: none;
+}
+
+input#announcement_title_input{
+	width: 100%;
+	height: 1rem;
+	text-align: center;
+}
+
+
+div#notification_data_wrapper{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+div#notification_data_wrapper input{
+	width: 8rem;
+	height: 1.3rem;
+}
+
+.notifications_button{
+	border: none;
+	color: white;
+	cursor: pointer;
+	border-radius: 8px;
+	margin-top: 15px;
+	
+	height: 3rem;
+	width: 9rem;
+}
+
+.notifications_button:hover{
+	opacity: 0.5;
+}
+.notifications_button:active{
+	opacity: 0.5;
+}
+
+button#notifications_panel_send_notification{
+	background-color: blue;
+}
+button#notification_panel_remove_notification{
+	background-color: red;
+}
+
+div#notifications_panel_buttons_wrapper{
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+@media screen and (max-width: 860px){
+	div#notification_data_wrapper{
+		flex-direction: column;
+	}
+}

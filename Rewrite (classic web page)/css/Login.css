@@ -1,0 +1,29 @@
+.login_input{
+	width: 100%;
+	height: 10%;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	display: block;
+}
+
+button#login_button{
+	width: 100%;
+	background-color: #04AA6D;
+	margin-top: 25px;
+}
+
+button#register_button{
+	background-color: blue;
+	margin-top: 15px;
+	width: 100%;
+}
+
+.login_buttons{
+	border: none;
+	cursor: pointer;
+	color: white;
+	height: 15%;
+}
+.login_buttons:hover{
+	opacity: 0.8;
+}

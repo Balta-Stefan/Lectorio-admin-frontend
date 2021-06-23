@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Lectorio</title>
+		
+		<meta charset="UTF-8">
+		<meta name="author" content="Balta Stefan">
+		<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- media queries don't work without this line-->
+
+		<link href="css/Lectorio.css" type="text/css" rel="stylesheet" />
+		<link href="css/Admin library registration.css" type="text/css" rel="stylesheet" />
+		<link href="css/Canvas.css" type="text/css" rel="stylesheet" />
+
+		
+		<script type="text/javascript" src="js/Utilities.js" defer></script>
+		<script type="text/javascript" src="js/Admin library registration.js" defer></script>
+	</head>
+	
+	<body>
+		<header>
+			<!--<h3>Lectorio</h3>-->
+			<img id="header_logo" src="Resources/new logo.png"></img>
+			<nav id="navigation">
+				<ul id="navigation_list">
+					<li><a href="Admin library registration.html" class="registracija_citaonice">Registracija čitaonice</a></li>
+					<li><a href="Admin library overview.html" class="admin_pregled_citaonica">Pregled čitaonica</a></li>
+					<li><a href="Admin reading room announcements.html" class="admin_obavjestenja">Obavještenja</a></li>
+					<li><a href="#" class="admin_postavke_btn">Postavke</a></li>
+					<li><a href="Login.html" class="logout_btn">Odjava</a></li>
+				</ul>
+			</nav>
+		</header>
+	
+		<div id="content">
+			<div id="panel">
+				<div id="panel_header">
+					<h3 id="panel_header_name">Registracija čitaonice</h3>
+				</div>
+				
+				<div id="panel_content">
+					<div id="admin_library_registration_wrapper">
+						<form id="library_registration_form" enctype="application/x-www-form-urlencoded">
+							<label for="name">Naziv</label><br>
+							<input id="library_registration_name" type="text" name="name"><br>
+							
+							<label for="address">Adresa</label><br>
+							<input id="library_registration_address" type="text" name="address"><br>
+							<!--
+							<label for="number_of_seats">Broj mjesta</label><br>
+							<input id="library_registration_num_of_seats" name="number_of_seats"><br>
+							
+							<label for="opening_time">Vrijeme otvaranja</label><br>
+							<input id="library_registration_opening_time" name="opening_time"><br>
+							
+							<label for="closing_time">Vrijeme zatvaranja</label><br>
+							<input id="library_registration_closing_time" name="closing_time"><br>
+							-->
+							<label for="readingRoomType">Tip čitaonice:</label>
+
+							<select name="readingRoomType" id="type_of_reading_room">
+							  <option value="Tiha">Tiha</option>
+							  <option value="Grupna">Grupna</option>
+							</select> 
+							<!-- <label for="library_picture">Slika</label><br>
+							<input id="library_registration_picture" type="file" name="library_picture"> -->
+							<p>Lokaciju odaberite na Google maps servisu i uzmite 2 broja od te lokacije (primjer: 44.779997, 17.199400)</p>
+							<label for="latitude">Prvi broj (geografska širina)</label>
+							<input name="latitude">
+							<label for="longitude">Drugi broj (geografska širina)</label>
+							<input name="longitude">
+							<button id="library_registration_submit_button" type="submit" form="library_registration_form"><b>Registruj</b></button>
+						</form>
+						<div id="admin_library_registration_canvas_wrapper">
+							<div id="library_layout_wrapper">
+								<div id="layout_drawing_canvas_wrapper">
+									<canvas id="drawing_canvas"></canvas>
+								</div>
+								<div id="canvas_drawing_tools">
+									<p>Broj horizontalnih linija</p>
+									<input class="canvas_slider" id="canvas_num_of_horizontal_lines" type="range" min="10" max="50"></input>
+									<p>Broj vertikalnih linija</p>
+									<input class="canvas_slider" id="canvas_num_of_verticall_lines" type="range" min="10" max="50"></input>
+									
+									<div id="canvas_buttons_wrapper">
+										<button class="canvas_button" id="canvas_entry"><b>Ulaz</b></button>
+										<button class="canvas_button" id="canvas_standard_seat"><b>Standardno mjesto</b></button>
+										<button class="canvas_button" id="canvas_socket_seat"><b>Mjesto sa utičnicom</b></button>
+										<button class="canvas_button" id="canvas_table"><b>Sto</b></button>
+										<button class="canvas_button" id="canvas_remove_elements"><b>Brisanje elemenata</b></button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<footer>
+			<p>Najjakija grupa &copy; </p>
+		</footer>
+	
+	</body>
+	
+</html>

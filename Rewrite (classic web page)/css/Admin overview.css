@@ -1,0 +1,106 @@
+div#supervisor_admin_overview_container{
+	padding-top: 15px;
+	display: flex;
+	width: 100%;
+	height: 60%;
+}
+
+div#admin_overview_emptydiv{
+	/* This exists only because the panel_content flexbox centers everything */
+	height: 40%;
+}
+
+select#supervisor_admin_select{
+	padding-top: 0;
+	margin-top: 0;
+	margin-left: 15px;
+	width: 50%;
+	height: 100%;
+}
+
+div#supervisor_admin_overview_info{
+	width:  50%;
+	height: 100%;
+	margin-left: 15px;
+}
+
+select#admin_overview_library_list{
+	width: 50%;
+	height: 100%;
+}
+
+div#supervisor_admin_overview_container p{
+	margin: 0;
+}
+
+div#supervisor_admin_overview_library_container{
+	width: 100%;
+	height: 10%;
+	display: flex;
+	align-items: flex-end;
+}
+
+button#admin_overview_examine_library{
+	background-color: blue;
+	margin-left: 15px;
+	height: 100%;
+	display: none;
+}
+
+.admin_overview_buttons{
+	border: none;
+	color: white;
+	cursor: pointer;
+	height: 15%;
+	width: 25%;
+	margin-top: 15px;
+}
+.admin_overview_buttons:hover{
+	opacity: 0.5;
+}
+
+.admin_overview_buttons:active{
+	opacity: 0.5;
+}
+
+
+
+button#deactivate_admin_account{
+	background-color: red;
+}
+
+button#activate_admin_account{
+	background-color: blue;
+}
+
+
+
+@media screen and (max-width: 860px){
+	div#admin_overview_emptydiv{
+		height: 0%;
+	}
+	div#supervisor_admin_overview_container{
+		height: 100%;
+		flex-direction: column;
+	}
+	select#supervisor_admin_select{
+		width: 100%;
+		height: 50%;
+		margin: 0;
+	}
+	select#admin_overview_library_list{
+		width: 50%;
+		margin-top: 15px;
+		height: 100%;
+	}
+	div#supervisor_admin_overview_info{
+		margin-top: 15px;
+		width: 100%;
+	}
+	
+	button#deactivate_admin_account{
+		width: 35%;
+		height: 18%;
+	}
+
+}

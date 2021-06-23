@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Lectorio</title>
+		
+		<meta charset="UTF-8">
+		<meta name="author" content="Balta Stefan">
+		<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- media queries don't work without this line-->
+
+		<link href="css/Lectorio.css" type="text/css" rel="stylesheet" />
+		<link href="css/Admin registration requests.css" type="text/css" rel="stylesheet" />
+
+		
+		<script type="text/javascript" src="js/Utilities.js" defer></script>
+		<script type="text/javascript" src="js/Admin registration requests.js" defer></script>
+		
+	</head>
+	
+	<body>
+		<header>
+			<!--<h3>Lectorio</h3>-->
+			<img id="header_logo" src="Resources/new logo.png"></img>
+			<nav id="navigation">
+				<ul id="navigation_list">
+					<li><a href="Supervisor requests.html" class="obrada_zahtjeva_btn">Obrada zahtjeva</a></li>
+					<li><a href="Supervisor administrators overview.html" class="pregled_administratora_btn">Pregled administratora</a></li>
+					<li><a href="Supervisor reading rooms overview.html" class="pregled_citaonica_btn">Pregled čitaonica</a></li>
+					<li><a href="" class="postavke_btn">Postavke</a></li>
+					<li><a href="Login.html" class="logout_btn">Odjava</a></li>
+				</ul>
+			</nav>
+		</header>
+	
+		<div id="content">
+			<div id="panel">
+				<div id="panel_header">
+					<h3 id="panel_header_name">Pregled zahtjeva za registraciju administratorskih naloga</h3>
+				</div>
+				
+				<div id="panel_content">
+					<div id="admin_requests_container">
+						<select id="admin_registration_requests_select" size="5">
+							<!-- <option>First</option>
+							<option>Second</option>
+							<option>Third</option> -->
+						</select>
+						
+						<div id="admin_registration_request_info">
+							<label>Ime</label>
+							<input class="request_input" id="request_name" disabled></input>
+							
+							<label>Email</label>
+							<input class="request_input" id="request_email" disabled></input>
+							
+							<label>Datum registracije</label>
+							<input class="request_input" id="request_date" disabled></input>
+						</div>
+					</div>
+					<div id="admin_request_buttons">
+						<button class="registration_requests_buttons" id="allow_registration_btn"><b>Odobri</b></button>
+						<button class="registration_requests_buttons" id="reject_administration_btn"><b>Odbij</b></button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<footer>
+			<p>Najjakija grupa &copy; </p>
+		</footer>
+	
+	</body>
+	
+</html>

@@ -1,0 +1,118 @@
+div#admin_library_overview_container{
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	overflow: auto;
+	overflow-x: hidden;
+}
+
+form#library_overview_form{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: auto;
+}
+form#library_overview_form input{
+	width: 15rem;
+}
+
+div#admin_add_new_admin_wrapper{
+	display: flex;
+	width: 100%;
+}
+
+canvas#admin_library_overview_layout_canvas{
+	background-color: white;
+	width: 100%;
+	height: 100%;
+}
+
+select#admin_list_of_libraries{
+	width: 100%;
+	height: 5%;
+	text-align: center;
+	text-align-last: center;
+}
+
+
+div#admin_image_and_info{
+	width: 100%;
+	/*height: 25rem;*/
+	height: auto;
+	display: flex;
+	margin-bottom: 5px;
+}
+
+img#admin_library_picture{
+	width: 30%;
+	height: auto;
+}
+
+div#admin_library_info{
+	width: 70%;
+	height: auto;
+	padding-left: 15px;
+}
+
+div#admin_library_info p{
+	margin: 0;
+}
+
+
+select#admin_library_administrators{
+	width: 100%;
+	height: 5%;
+}
+
+
+div#admin_library_layout_picture_container{
+	height: 30rem;
+	width: 100%;
+}
+
+.admin_library_overview_button{
+	border: none;
+	color: white;
+	cursor: pointer;
+	border-radius: 8px;
+	margin-top: 15px;
+	
+	height: 2.3rem;
+	width: 5.5rem;
+}
+
+.admin_library_overview_button:hover{
+	opacity: 0.5;
+}
+.admin_library_overview_button:active{
+	opacity: 0.5;
+}
+
+button#admin_library_change_library_info{
+	background-color: blue;
+}
+
+button#admin_deactivate_library_btn{
+	background-color: red;
+}
+
+@media screen and (max-width: 860px){
+	div#admin_image_and_info{
+		flex-direction: column;
+		height: 15rem;
+	}
+	
+	img#admin_library_picture{
+		width: 100%;
+		height: 15rem;
+	}
+	
+	select#admin_library_administrators{
+		width: 100%;
+		height: 15%;
+	}
+	div#admin_library_info{
+		width: 100%;
+		padding: 0;
+	}
+}

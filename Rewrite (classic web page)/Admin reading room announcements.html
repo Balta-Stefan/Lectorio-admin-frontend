@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Lectorio</title>
+		
+		<meta charset="UTF-8">
+		<meta name="author" content="Balta Stefan">
+		<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- media queries don't work without this line-->
+
+		<link href="css/Lectorio.css" type="text/css" rel="stylesheet" />
+		<link href="css/Admin announcements.css" type="text/css" rel="stylesheet" />
+
+		
+		<script type="text/javascript" src="js/Utilities.js" defer></script>
+		<script type="text/javascript" src="js/Admin announcements.js" defer></script>
+		
+	</head>
+	
+	<body>
+		<header>
+			<!--<h3>Lectorio</h3>-->
+			<img id="header_logo" src="Resources/new logo.png"></img>
+			<nav id="navigation">
+				<ul id="navigation_list">
+					<li><a href="Admin library registration.html" class="registracija_citaonice">Registracija čitaonice</a></li>
+					<li><a href="Admin library overview.html" class="admin_pregled_citaonica">Pregled čitaonica</a></li>
+					<li><a href="Admin reading room announcements.html" class="admin_obavjestenja">Obavještenja</a></li>
+					<li><a href="#" class="admin_postavke_btn">Postavke</a></li>
+					<li><a href="Login.html" class="logout_btn">Odjava</a></li>
+				</ul>
+			</nav>
+		</header>
+	
+		<div id="content">
+			<div id="panel">
+				<div id="panel_header">
+					<h3 id="panel_header_name">Obavještenja</h3>
+				</div>
+				
+				<div id="panel_content">
+					<div id="library_notifications_panel_wrapper">
+						<select id="admin_notifications_list_of_libraries">
+							<option selected style="display:none;">Spisak čitaonica</option>
+						</select>
+						<form id="library_notifications_form">
+							<select id="admin_notifications_select">
+								<option selected style="display:none;">Spisak obavještenja</option>
+							</select>
+							<input id="announcement_title_input" name="announcement_title" placeholder="Naslov obavještenja"></input>
+							<textarea name="notification" id="admin_notification_textarea"></textarea>
+							<div id="notification_data_wrapper">
+								<input name="notification_from_date" type="date"></input>
+								<input name="notification_to_date" type="date"></input>
+								<input name="notification_from_time" placeholder="Od (vrijeme)"></input>
+								<input name="notification_to_time" placeholder="Do (vrijeme)"></input>
+							</div>
+						</form>
+						<div id="notifications_panel_buttons_wrapper">
+							<button id="notifications_panel_send_notification" class="notifications_button"><b>Pošalji obavijest</b></button>
+							<button id="notification_panel_remove_notification" class="notifications_button"><b>Ukloni obavijest</b></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<footer>
+			<p>Najjakija grupa &copy; </p>
+		</footer>
+	
+	</body>
+	
+</html>
