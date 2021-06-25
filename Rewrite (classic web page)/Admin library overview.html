@@ -26,7 +26,7 @@
 					<li><a href="Admin library overview.html" class="admin_pregled_citaonica">Pregled čitaonica</a></li>
 					<li><a href="Admin reading room announcements.html" class="admin_obavjestenja">Obavještenja</a></li>
 					<li><a href="#" class="admin_postavke_btn">Postavke</a></li>
-					<li><a href="../Login.html" class="logout_btn">Odjava</a></li>
+					<li><a href="Login.html" class="logout_btn">Odjava</a></li>
 				</ul>
 			</nav>
 		</header>
@@ -50,13 +50,13 @@
 								</select>
 								
 								<div id="admin_add_new_admin_wrapper">
-									<input id="admin_library_overview_add_new_admin_input" placeholder="Dodaj administratora"></input>
+									<input id="admin_library_overview_add_new_admin_input" placeholder="Ime novog administratora"></input>
 									<button id="admin_library_overview_add_new_admin_button">Dodaj</button>
 								</div>
 								
 								<form id="library_overview_form">
-									<label for="registered">Registrovana</label>
-									<input name="registered">
+									<!--<label for="registered">Registrovana</label>
+									<input disabled name="registered"> -->
 									
 									<label for="name">Ime</label>
 									<input id="name_input" name="name">
@@ -66,9 +66,6 @@
 									  <option value="Tiha">Tiha</option>
 									  <option value="Grupna">Grupna</option>
 									</select> 
-									
-									<label for="number_of_seats">Broj mjesta</label>
-									<input name="number_of_seats">
 									
 									<label for="address">Adresa</label>
 									<input id="address_input" name="address">
@@ -80,15 +77,31 @@
 									<input name="closing_time">
 									
 									<!--<label for="library_picture">Slika</label><br>
-									<input id="library_registration_picture" type="file" name="library_picture">-->
+									<input id="library_registration_picture" type="file" name="library_picture">
 									
-									<label>Lokaciju odaberite na Google maps servisu i uzmite 2 broja od te lokacije (primjer: 44.779997, 17.199400)</label>
-									<label for="latitude">Prvi broj (geografska širina)</label>
-									
+									<label for="latitude">Geografska širina</label>
 									<input id="latitude_input" name="latitude">
-									<label for="longitude">Drugi broj (geografska širina)</label>
 									
+									<label for="longitude">Geografska dužina</label>
 									<input id="longitude_input" name="longitude">
+									
+									<label for="numberOfSeats">Broj mjesta</label>
+									<input disabled name="numberOfSeats" id="number_of_seats_input">-->
+									
+									<label for="readingRoomListImage">URL naslovne slike</label>
+									<input id="thumbnail_input" name="readingRoomListImage">
+									
+									<label for="images">URL-ovi ostalih slika</label>
+									<input id="other_images_input" name="images">
+									
+
+									
+									<label for="openingTime">Vrijeme otvaranja</label>
+									<input id="opening_time_input" type="text" name="openingTime">
+									
+									<label for="closingTime">Vrijeme zatvaranja</label>
+									<input id="closing_time_input" type="text" name="closingTime">
+									
 									<button type="submit" form="library_overview_form" class="admin_library_overview_button" id="admin_library_change_library_info"><b>Izmijeni informacije</b></button>		
 								</form>
 								<button class="admin_library_overview_button" id="admin_deactivate_library_btn"><b>Deaktiviraj</b></button>
@@ -139,7 +152,7 @@
 		</div>
 		
 		<footer>
-			<p>Najjakija grupa &copy; </p>
+			<p></p>
 		</footer>
 	
 	</body>

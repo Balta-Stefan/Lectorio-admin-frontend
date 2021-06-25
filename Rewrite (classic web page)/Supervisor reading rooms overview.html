@@ -33,7 +33,7 @@
 		<div id="content">
 			<div id="panel">
 				<div id="panel_header">
-					<h3 id="panel_header_name"></h3>
+					<h3 id="panel_header_name">Pregled čitaonica</h3>
 				</div>
 				
 				<div id="panel_content">
@@ -48,30 +48,55 @@
 									<option selected style="display:none;">Administratori čitaonice</option>
 								</select>
 								<!--<button id="admin_examine_administrator">Provjera administratora</button>-->
-								
-								<p>Registrovana</p>
-								<input id="admin_library_registration_date" disabled></input>
-								
-								<p>Broj mjesta</p>
-								<input id="admin_library_total_seats" disabled></input>
-								<p>Adresa</p>
-								<input id="admin_library_address" disabled></input>
-								<p>Vrijeme otvaranja</p>
-								<input id="admin_library_opening_time" disabled></input>
-								<p>Vrijeme zatvaranja</p>
-								<input id="admin_library_closing_time" disabled></input>
+								<form id="library_overview_form">
+									<!--<label for="registered">Registrovana</label>
+									<input disabled name="registered">-->
+									
+									<label for="name">Ime</label>
+									<input disabled id="name_input" name="name">
+									
+									<label for="readingRoomType">Tip čitaonice:</label>
+									<input disabled id="type_of_reading_room" name="name">
+									
+									<label for="address">Adresa</label>
+									<input disabled id="address_input" name="address">
+									
+									<!--<label for="opening_time">Vrijeme otvaranja</label>
+									<input disabled name="opening_time">
+									
+									<label for="closing_time">Vrijeme zatvaranja</label>
+									<input disabled name="closing_time">-->
+									
+									<!--<label for="library_picture">Slika</label><br>
+									<input id="library_registration_picture" type="file" name="library_picture">-->
+									
+									<label for="latitude">Geografska širina</label>
+									<input disabled id="latitude_input" name="latitude">
+									
+									<label for="longitude">Geografska dužina</label>
+									<input disabled id="longitude_input" name="longitude">
+									
+									<label for="readingRoomListImage">URL naslovne slike</label>
+									<input disabled id="thumbnail_input" name="readingRoomListImage">
+									
+									<label for="images">URL-ovi ostalih slika</label>
+									<input disabled id="other_images_input" name="images">
+									
+									<label for="numberOfSeats">Broj mjesta</label>
+									<input disabled name="numberOfSeats" id="number_of_seats_input">
+								</form>
 								<br>
 								<button id="admin_deactivate_library_btn"><b>Deaktiviraj</b></button>
 							</div>
 						</div>
-						<div id="supervisor_library_layout_picture_container"></div>
+						<!--<div id="supervisor_library_layout_picture_container"></div>-->
 					</div>
 				</div>
 			</div>
 		</div>
 		
 		<footer>
-			<p>Najjakija grupa &copy; </p>
+			<p></p>
 		</footer>
 	
 	</body>

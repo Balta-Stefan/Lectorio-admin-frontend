@@ -5,20 +5,15 @@ div#library_notifications_panel_wrapper{
 
 form#library_notifications_form{
 	width: 100%;
-	height: 100%;
+	border: solid;
 }
 
-select#admin_notifications_list_of_libraries{
+.reading_room_announcements_select{
 	width: 100%;
-	height: 5%;
 	text-align: center;
+	height: 2rem;
 }
 
-select#admin_notifications_select{
-	width: 100%;
-	text-align: center;
-	height: 5%;
-}
 
 textarea#admin_notification_textarea{
 	width: 100%;
@@ -49,7 +44,6 @@ div#notification_data_wrapper input{
 	color: white;
 	cursor: pointer;
 	border-radius: 8px;
-	margin-top: 15px;
 	
 	height: 3rem;
 	width: 9rem;

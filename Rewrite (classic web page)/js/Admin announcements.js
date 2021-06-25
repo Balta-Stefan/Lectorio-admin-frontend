@@ -41,19 +41,30 @@ async function admin_obavjestenja_click()
 		//<option selected style="display:none;">Spisak obavještenja</option>
 		for(var i = 0; i < globalTempVariable2.length; i++)
 		{
-			announcementsSelect.innerHTML += '<option value="' + globalTempVariable2[i].id + '">' + "ID: " + globalTempVariable2[i].id + ", Naslov: " + globalTempVariable2[i].title + '</option>';
+			announcementsSelect.innerHTML += '<option ID="' + globalTempVariable2[i].id + '-option' + '"value="' + globalTempVariable2[i].id + '">' + "ID: " + globalTempVariable2[i].id + ", Naslov: " + globalTempVariable2[i].title + '</option>';
 		}
 	});
 	
 	announcementsSelect.addEventListener("change", async function(event)
 	{
-		if(globalTempVariable3 == null) return;
-		var selectedAnnouncementID = event.target.value;
-		if(selectedAnnouncementID == -1) return;
-		globalTempVariable4 = globalTempVariable2.find(toFind => toFind.id == selectedAnnouncementID);
+		if(globalTempVariable3 == null)		
+			return;
 		
+
+		var selectedAnnouncementID = event.target.value;
 		var textarea = document.getElementById("admin_notification_textarea");
 		var title = document.getElementById("announcement_title_input");
+		
+		if(selectedAnnouncementID == -1) 
+		{
+			// chosen add new announcement option
+			globalTempVariable4 = null;
+			textarea.value = "";
+			title.value = "";
+			return;
+		}
+		globalTempVariable4 = globalTempVariable2.find(toFind => toFind.id == selectedAnnouncementID);
+		
 		textarea.value = globalTempVariable4.content;
 		title.value = globalTempVariable4.title;
 	});
@@ -92,7 +103,6 @@ async function admin_obavjestenja_click()
 		var reqJSON = await req.json();
 		if(req.ok == false)
 		{
-			console.log(await req.json());
 			alert("Dodavanje neuspješno");
 			return;
 		}
@@ -118,7 +128,21 @@ async function admin_obavjestenja_click()
 		if(response.ok == false)
 			alert("Brisanje neuspješno");
 		else 
+		{
+			// remove the item from select and clear the title and text area
+			var textarea = document.getElementById("admin_notification_textarea");
+			var title = document.getElementById("announcement_title_input");
+			
+			textarea.value = "";
+			title.value = "";
+			
+			var optionToRemove = document.getElementById(globalTempVariable4.id + '-option');
+			optionToRemove.parentNode.removeChild(optionToRemove);
+			
+			globalTempVariable4 = null;
+			
 			alert("Brisanje uspješno");
+		}
 		
 	});
 }

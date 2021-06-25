@@ -13,6 +13,15 @@ select#admin_list_of_libraries{
 	text-align-last: center;
 }
 
+form#library_overview_form{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: auto;
+}
+form#library_overview_form input{
+	width: 15rem;
+}
 
 div#admin_image_and_info{
 	width: 100%;
@@ -56,8 +65,8 @@ button#admin_deactivate_library_btn{
 	border-radius: 8px;
 	margin-top: 15px;
 	
-	height: 2.3rem;
-	width: 5.5rem;
+	height: 3rem;
+	width: 8rem;
 }
 
 button#admin_deactivate_library_btn:hover{

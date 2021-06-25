@@ -12,13 +12,34 @@ form#library_overview_form{
 	width: 100%;
 	height: auto;
 }
-form#library_overview_form input{
+/*form#library_overview_form input{
 	width: 15rem;
+}*/
+
+input#admin_library_overview_add_new_admin_input{
+	max-height: 1rem;
+}
+
+button#admin_library_overview_add_new_admin_button{
+	margin-left: 15px;
+	border: none;
+	background-color: orange;
+	color: white;
+	font-weight: bold;
+	
+	width: 5rem;
+	height: 3rem;
+}
+button#admin_library_overview_add_new_admin_button:hover{
+	opacity: 0.5;
 }
 
 div#admin_add_new_admin_wrapper{
+	margin-top: 20px;
+	margin-bottom: 20px;
 	display: flex;
 	width: 100%;
+	align-items: baseline;
 }
 
 canvas#admin_library_overview_layout_canvas{
@@ -34,6 +55,11 @@ select#admin_list_of_libraries{
 	text-align-last: center;
 }
 
+select#type_of_reading_room{
+	width: 15.5rem;
+}
+
+
 
 div#admin_image_and_info{
 	width: 100%;
@@ -41,6 +67,10 @@ div#admin_image_and_info{
 	height: auto;
 	display: flex;
 	margin-bottom: 5px;
+}
+
+div#admin_image_and_info input{
+	width: 15rem;
 }
 
 img#admin_library_picture{
@@ -94,6 +124,7 @@ button#admin_library_change_library_info{
 
 button#admin_deactivate_library_btn{
 	background-color: red;
+	margin-bottom: 25px;
 }
 
 @media screen and (max-width: 860px){

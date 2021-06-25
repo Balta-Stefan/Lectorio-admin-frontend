@@ -11,9 +11,18 @@
 		<link href="css/Admin library registration.css" type="text/css" rel="stylesheet" />
 		<link href="css/Canvas.css" type="text/css" rel="stylesheet" />
 
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" 
+		integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+	    crossorigin=""/>
+		
+		<script defer src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+		integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+		crossorigin=""></script>
 		
 		<script type="text/javascript" src="js/Utilities.js" defer></script>
 		<script type="text/javascript" src="js/Admin library registration.js" defer></script>
+		
+		
 	</head>
 	
 	<body>
@@ -63,11 +72,29 @@
 							</select> 
 							<!-- <label for="library_picture">Slika</label><br>
 							<input id="library_registration_picture" type="file" name="library_picture"> -->
-							<p>Lokaciju odaberite na Google maps servisu i uzmite 2 broja od te lokacije (primjer: 44.779997, 17.199400)</p>
+							<!--<p>Lokaciju odaberite na Google maps servisu i uzmite 2 broja od te lokacije (primjer: 44.779997, 17.199400)</p>
 							<label for="latitude">Prvi broj (geografska širina)</label>
 							<input name="latitude">
 							<label for="longitude">Drugi broj (geografska širina)</label>
-							<input name="longitude">
+							<input name="longitude">-->
+							
+							<div id="map"></div>
+							
+							<label for="readingRoomListImage">URL naslovne slike</label>
+							<input name="readingRoomListImage">
+							
+							<label for="images">URL-ovi ostalih slika razdvojeni zarezima</label>
+							<input name="images">
+							
+							<label for="openingTime">Vrijeme otvaranja</label>
+							<input type="text" name="openingTime">
+							
+							<label for="closingTime">Vrijeme zatvaranja</label>
+							<input type="text" name="closingTime">
+							
+							<!--<label for="numberOfSeats">Broj mjesta</label>
+							<input name="numberOfSeats"> -->
+							
 							<button id="library_registration_submit_button" type="submit" form="library_registration_form"><b>Registruj</b></button>
 						</form>
 						<div id="admin_library_registration_canvas_wrapper">
@@ -97,7 +124,7 @@
 		</div>
 		
 		<footer>
-			<p>Najjakija grupa &copy; </p>
+			<p></p>
 		</footer>
 	
 	</body>

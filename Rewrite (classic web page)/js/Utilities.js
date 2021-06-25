@@ -1,6 +1,9 @@
 const URLprefix = "https://ps-projektni-lectorio.oa.r.appspot.com/api/v1/";
 const reading_room_registration_form_ID = "library_registration_form";
 
+const validateTimeRegexPattern = "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"; // format HH:mm
+const validateTimeRegex = new RegExp(validateTimeRegexPattern);
+
 var globalTempVariable = null;
 var globalTempVariable2 = null;
 var globalTempVariable3 = null;
@@ -50,6 +53,9 @@ colorMap[standard_seat] = "orange";
 colorMap[socket_seat] = "blue";
 colorMap[table] = "brown";
 colorMap[door] = "black";
+
+var latitude = null;
+var longitude = null;
 
 
 var logout_button = document.getElementsByClassName("logout_btn");
@@ -251,24 +257,56 @@ function canvas_reset_button_clicked()
 	canvas_string_representation_character = empty_cell;
 }
 
+function validateTimeFormat(timeString)
+{
+	// validates if the time is in HH:mm format
+	return validateTimeRegex.test(timeString);
+}
+
 async function submit_reading_room_registration_data()
 {
 	event.preventDefault();
+	
+	
+	
 	const formData = new FormData(document.getElementById(reading_room_registration_form_ID));
 	const formData_JSON_string = FormData_to_JSON(formData);
-	console.log(formData_JSON_string);
 	
+
 	const formData_JSON = JSON.parse(formData_JSON_string);
+	if(validateTimeFormat(formData_JSON.openingTime) == false || validateTimeFormat(formData_JSON.closingTime) == false)
+	{
+		alert("Unesite vrijeme u formatu HH:mm");
+		return;
+	}
+	
+	
 	var libraryHeight = canvas_horizontal_slider.value;
 	var libraryWidth = canvas_vertical_slider.value;
 	formData_JSON.xSize = libraryWidth;
 	formData_JSON.ySize = libraryHeight;
+	
+	if(latitude == null || longitude == null)
+	{
+		alert("Odaberite lokaciju.");
+		return;
+	}
+	
+	formData_JSON.latitude = latitude;
+	formData_JSON.longitude = longitude;
+	
 	
 	// convert array to a string
 	var tmpString = canvas_drawn_cells_array.join("");
 	formData_JSON.insideAppearance = tmpString;
 	//formData_JSON.active = "true";
 	
+	formData_JSON.images = formData_JSON.images.split(",");
+	for(var i = 0; i < formData_JSON.images.length; i++)
+		formData_JSON.images[i] = formData_JSON.images[i].trimStart();
+	
+	
+	console.log(JSON.stringify(formData_JSON));
 	
 	// create a reading room
 	const URL = URLprefix + "reading-rooms";
@@ -301,10 +339,7 @@ async function submit_reading_room_registration_data()
 	// assign the reading room to the administrator...
 	var URL2 = URLprefix + "reading-rooms/" + json_response.id + "/administrators";
 	var reqBody = {"username" : ownUsername};
-	/*var URL2 = "http://localhost:8080/api/v1/administrators/" + ownID + "/reading-rooms";
-	console.log(URL2);
-	var reqBody = {"id" : response2.readingRoomId}
-	console.log(reqBody);*/
+	
 	var response3 = await make_request(URL2, "POST", JSON_headers, JSON.stringify(reqBody));
 	
 	if(!response3.ok)

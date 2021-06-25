@@ -1,5 +1,8 @@
 async function activate_administrator_library_overview_panel()
 {
+	// globalTempVariable3 holds the selected library
+	
+	globalTempVariable3 = null;
 	// draw on the canvas
 	canvas_setup();
 	canvas_draw_lines();
@@ -13,6 +16,7 @@ async function activate_administrator_library_overview_panel()
 	const URL = URLprefix + "administrators/" + ownID + "/reading-rooms";
 	const response = await make_request(URL, "GET", JSON_headers, null);
 	globalTempVariable = await response.json();
+	console.log(globalTempVariable[0]);
 	
 	var librariesSelect = document.getElementById("admin_list_of_libraries");
 	
@@ -29,11 +33,26 @@ async function activate_administrator_library_overview_panel()
 		var longitude_input = document.getElementById("longitude_input");
 		var address_input = document.getElementById("address_input");
 		var name_input = document.getElementById("name_input");
+		var thumbnail_input = document.getElementById("thumbnail_input");
+		var other_images_input = document.getElementById("other_images_input");
+		var opening_time_input = document.getElementById("opening_time_input");
+		var closing_time_input = document.getElementById("closing_time_input");
+		//var number_of_seats_input = document.getElementById("number_of_seats_input");
+		
+		
+		var reading_room_thumbnail = document.getElementById("admin_library_picture");
+		reading_room_thumbnail.src = globalTempVariable3.readingRoomListImage;
+		
 		
 		latitude_input.value = globalTempVariable3.latitude;
 		longitude_input.value = globalTempVariable3.longitude;
 		address_input.value = globalTempVariable3.address;
 		name_input.value = globalTempVariable3.name;
+		thumbnail_input.value = globalTempVariable3.readingRoomListImage;
+		other_images_input.value = globalTempVariable3.images;
+		opening_time_input.value = globalTempVariable3.openingTime;
+		closing_time_input.value = globalTempVariable3.closingTime
+		//number_of_seats_input.value = globalTempVariable3.numberOfSeats;
 		
 		// get the administrators of the reading room
 		var tmpURL = URLprefix + "reading-rooms/" + globalTempVariable3.id + "/administrators";
@@ -69,16 +88,35 @@ async function activate_administrator_library_overview_panel()
 	overviewForm.addEventListener("submit", async function(event)
 	{
 		event.preventDefault();
+		if(globalTempVariable3 == null)
+		{
+			alert("Prvo odaberite čitaonicu!");
+			return;
+		}
+		
 		var formData = new FormData(this);
 		var formData_JSON_string = FormData_to_JSON(formData);
 		var formData_JSON = JSON.parse(formData_JSON_string);
 		
+		if(validateTimeFormat(formData_JSON.openingTime) == false || validateTimeFormat(formData_JSON.closingTime) == false)
+		{
+			alert("Unesite vrijeme u formatu HH:mm");
+			return;
+		}
+		
 		formData_JSON.id = globalTempVariable3.id;
 		formData_JSON.active = globalTempVariable3.active;
-		formData_JSON.insideAppearance = globalTempVariable3.insideAppearance;
+		//formData_JSON.insideAppearance = globalTempVariable3.insideAppearance;
 		formData_JSON.xSize = globalTempVariable3.xSize;
 		formData_JSON.ySize = globalTempVariable3.ySize;
 		
+		formData_JSON.images = formData_JSON.images.split(",");
+		for(var i = 0; i < formData_JSON.images.length; i++)
+			formData_JSON.images[i] = formData_JSON.images[i].trimStart();
+		
+		
+		console.log("server receives: ");
+		console.log(JSON.stringify(formData_JSON));
 		var tmpURL = URLprefix + "reading-rooms/" + globalTempVariable3.id;
 		var response = await make_request(tmpURL, "PUT", JSON_headers, JSON.stringify(formData_JSON));
 		
@@ -94,6 +132,17 @@ async function activate_administrator_library_overview_panel()
 	addAdminButton.addEventListener("click", async function()
 	{
 		var newAdminsUsername = document.getElementById("admin_library_overview_add_new_admin_input").value;
+		console.log(newAdminsUsername);
+		if(newAdminsUsername === "")
+		{
+			alert("Prvo unesite ime administratora!");
+			return;
+		}
+		if(globalTempVariable3 == null)
+		{
+			alert("Prvo odaberite čitaonicu!");
+			return;
+		}
 		
 		// send a request
 		var requestJSON = {"username" : newAdminsUsername}

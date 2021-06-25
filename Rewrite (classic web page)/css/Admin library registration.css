@@ -5,6 +5,11 @@ div#admin_library_registration_wrapper{
 	overflow-x: hidden;
 }
 
+#map{ 
+	height: 500px; 
+	width: 500px;
+	margin-top: 25px;
+}
 
 
 form#library_registration_form{
