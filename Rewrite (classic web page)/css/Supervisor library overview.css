@@ -3,12 +3,15 @@ div#supervisor_library_overview_container{
 	height: 100%;
 	padding: 0;
 	margin: 0;
-	display: inline;
+	display: flex;
+	flex-direction: column;
+	overflow: auto;
+	overflow-x: hidden;
 }
 
 select#admin_list_of_libraries{
 	width: 100%;
-	height: 5%;
+	height: 15rem;
 	text-align: center;
 	text-align-last: center;
 }
@@ -25,14 +28,28 @@ form#library_overview_form input{
 
 div#admin_image_and_info{
 	width: 100%;
-	height: 25rem;
+	/*height: 25rem;*/
 	display: flex;
 	margin-bottom: 5px;
 }
 
+div#thumbnail_and_map{
+	border: solid;
+	display: flex;
+	flex-direction: column;
+	width: 30rem;
+	height: 30rem;
+	margin-bottom: 25px;
+}
+
 img#admin_library_picture{
-	width: 30%;
-	height: 100%;
+	width: 100%;
+	height: 50%;
+}
+
+#map{ 
+	height: 50%; 
+	width: 100%;
 }
 
 div#supervisor_library_info{
@@ -48,33 +65,40 @@ div#supervisor_library_info p{
 
 select#admin_library_administrators{
 	width: 100%;
-	height: 5%;
+	height: 1.5rem;
 }
+
 
 
 div#supervisor_library_layout_picture_container{
 	height: 30rem;
 	width: 100%;
+	margin-top: 15px;
 }
 
-button#admin_deactivate_library_btn{
-	background-color: red;
+.admin_library_overview_activation_button{
 	border: none;
 	color: white;
 	cursor: pointer;
 	border-radius: 8px;
 	margin-top: 15px;
+
 	
 	height: 3rem;
 	width: 8rem;
 }
 
-button#admin_deactivate_library_btn:hover{
+.admin_library_overview_activation_button:hover, active{
 	opacity: 0.5;
 }
-button#admin_deactivate_library_btn:active{
-	opacity: 0.5;
+
+button#admin_deactivate_library_btn{
+	background-color: red;
 }
+button#admin_activate_library_btn{
+	background-color: blue;
+}
+
 
 
 @media screen and (max-width: 860px){

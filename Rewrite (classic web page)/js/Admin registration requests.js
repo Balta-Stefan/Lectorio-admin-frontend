@@ -43,6 +43,12 @@ async function admin_requests_panel_activation()
 	
 	async function processRequest(allow)
 	{
+		if(globalTempVariable2 == null)
+		{
+			alert("Prvo odaberite zahtjev");
+			return;
+		}
+		
 		// set the request to allowed...
 		globalTempVariable2.approved = allow;
 		var URL3 = URLprefix + "requests/" + globalTempVariable2.id;
@@ -62,6 +68,7 @@ async function admin_requests_panel_activation()
 			alert("Greška");
 			return;
 		}
+		
 		// delete the request
 		var tempURL = URLprefix + "requests/" + globalTempVariable2.id;
 		await make_request(tempURL, "DELETE", JSON_headers, null);
@@ -77,6 +84,7 @@ async function admin_requests_panel_activation()
 				break; 
 			}
 		}
+		globalTempVariable2 = null;
 	}
 	
 	allowRegistrationButton.addEventListener("click", async function()

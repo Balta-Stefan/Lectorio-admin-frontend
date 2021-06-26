@@ -9,6 +9,7 @@ var globalTempVariable2 = null;
 var globalTempVariable3 = null;
 var globalTempVariable4 = null;
 
+var disableCanvasEvents = false;
 
 const ownID = localStorage.getItem("ownID");
 const ownUsername = localStorage.getItem("ownUsername");
@@ -70,6 +71,7 @@ if(logout_button.length == 1)
 		localStorage.removeItem("ownUsername"); 
 	});
 }
+
 
 async function getAdmin(adminID)
 {
@@ -163,6 +165,11 @@ function drawLibrary(canvasContext, num_of_horizontal_lines, num_of_vertical_lin
 {
 	// canvas HTML element dimensions are separated from the canvas' context dimensions
 	// these context dimensions have to be set to the dimensions of the HTML canvas element
+	if(layoutString == null)
+	{
+		canvas_draw_lines();
+		return;
+	}
 	
 	canvas_horizontal_slider.value = num_of_horizontal_lines;
 	canvas_vertical_slider.value = num_of_vertical_lines;
@@ -207,6 +214,9 @@ function drawLibrary(canvasContext, num_of_horizontal_lines, num_of_vertical_lin
 
 function canvas_click_event(event)
 {
+	if(disableCanvasEvents == true)
+		return;
+	
     const rect = canvas.getBoundingClientRect()
     const x = event.clientX - rect.left
     const y = event.clientY - rect.top
@@ -274,11 +284,11 @@ async function submit_reading_room_registration_data()
 	
 
 	const formData_JSON = JSON.parse(formData_JSON_string);
-	if(validateTimeFormat(formData_JSON.openingTime) == false || validateTimeFormat(formData_JSON.closingTime) == false)
+	/*if(validateTimeFormat(formData_JSON.openingTime) == false || validateTimeFormat(formData_JSON.closingTime) == false)
 	{
 		alert("Unesite vrijeme u formatu HH:mm");
 		return;
-	}
+	}*/
 	
 	
 	var libraryHeight = canvas_horizontal_slider.value;

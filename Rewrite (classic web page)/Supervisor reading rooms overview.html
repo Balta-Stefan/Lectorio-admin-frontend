@@ -8,7 +8,16 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- media queries don't work without this line-->
 
 		<link href="css/Lectorio.css" type="text/css" rel="stylesheet" />
+		<link href="css/Canvas.css" type="text/css" rel="stylesheet" />
 		<link href="css/Supervisor library overview.css" type="text/css" rel="stylesheet" />
+		
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" 
+		integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+	    crossorigin=""/>
+		
+		<script defer src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+		integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+		crossorigin=""></script>
 		
 		<script type="text/javascript" src="js/Utilities.js" defer></script>
 		<script type="text/javascript" src="js/Supervisor library overview.js" defer></script>
@@ -24,7 +33,7 @@
 					<li><a href="Supervisor requests.html" class="obrada_zahtjeva_btn">Obrada zahtjeva</a></li>
 					<li><a href="Supervisor administrators overview.html" class="pregled_administratora_btn">Pregled administratora</a></li>
 					<li><a href="Supervisor reading rooms overview.html" class="pregled_citaonica_btn">Pregled čitaonica</a></li>
-					<li><a href="" class="postavke_btn">Postavke</a></li>
+					<!-- <li><a href="" class="postavke_btn">Postavke</a></li> -->
 					<li><a href="Login.html" class="logout_btn">Odjava</a></li>
 				</ul>
 			</nav>
@@ -42,12 +51,16 @@
 							<option selected style="display:none;">Spisak čitaonica</option>
 						</select>
 						<div id="admin_image_and_info">
-							<img id="admin_library_picture" src="Resources/New logo.png"></img>
+							<div id="thumbnail_and_map">
+								<img id="admin_library_picture" src="Resources/New logo.png"></img>
+								<div id="map"></div>
+							</div>
 							<div id="supervisor_library_info">
 								<select id="admin_library_administrators">
 									<option selected style="display:none;">Administratori čitaonice</option>
 								</select>
 								<!--<button id="admin_examine_administrator">Provjera administratora</button>-->
+								
 								<form id="library_overview_form">
 									<!--<label for="registered">Registrovana</label>
 									<input disabled name="registered">-->
@@ -84,12 +97,36 @@
 									
 									<label for="numberOfSeats">Broj mjesta</label>
 									<input disabled name="numberOfSeats" id="number_of_seats_input">
+									
+									<label for="activation_status">Aktivna</label>
+									<input disabled name="activation_status" id="activation_status_input">
 								</form>
 								<br>
-								<button id="admin_deactivate_library_btn"><b>Deaktiviraj</b></button>
+								<button class="admin_library_overview_activation_button" id="admin_deactivate_library_btn"><b>Deaktiviraj</b></button>
+								<button class="admin_library_overview_activation_button" id="admin_activate_library_btn"><b>Aktiviraj</b></button>
 							</div>
 						</div>
-						<!--<div id="supervisor_library_layout_picture_container"></div>-->
+						<div id="supervisor_library_layout_picture_container">
+							<div id="library_layout_wrapper">
+								<div id="layout_drawing_canvas_wrapper">
+									<canvas id="drawing_canvas"></canvas>
+								</div>
+								<div id="canvas_drawing_tools">
+									<p>Broj horizontalnih linija</p>
+									<input disabled class="canvas_slider" id="canvas_num_of_horizontal_lines" type="range" min="10" max="50"></input>
+									<p>Broj vertikalnih linija</p>
+									<input disabled class="canvas_slider" id="canvas_num_of_verticall_lines" type="range" min="10" max="50"></input>
+									
+									<div id="canvas_buttons_wrapper">
+										<button disabled class="canvas_button" id="canvas_entry"><b>Ulaz</b></button>
+										<button disabled class="canvas_button" id="canvas_standard_seat"><b>Standardno mjesto</b></button>
+										<button disabled class="canvas_button" id="canvas_socket_seat"><b>Mjesto sa utičnicom</b></button>
+										<button disabled class="canvas_button" id="canvas_table"><b>Sto</b></button>
+										<button disabled class="canvas_button" id="canvas_remove_elements"><b>Brisanje elemenata</b></button>
+									</div> 
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

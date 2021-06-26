@@ -74,6 +74,7 @@ div#admin_image_and_info input{
 }
 
 img#admin_library_picture{
+	margin-top: 15px;
 	width: 30%;
 	height: auto;
 }

@@ -26,7 +26,7 @@
 					<li><a href="Supervisor requests.html" class="obrada_zahtjeva_btn">Obrada zahtjeva</a></li>
 					<li><a href="Supervisor administrators overview.html" class="pregled_administratora_btn">Pregled administratora</a></li>
 					<li><a href="Supervisor reading rooms overview.html" class="pregled_citaonica_btn">Pregled čitaonica</a></li>
-					<li><a href="" class="postavke_btn">Postavke</a></li>
+					<!-- <li><a href="" class="postavke_btn">Postavke</a></li> -->
 					<li><a href="Login.html" class="logout_btn">Odjava</a></li>
 				</ul>
 			</nav>
@@ -46,15 +46,22 @@
 							<label>Podnosilac zahtjeva</label>
 							<input class="request_input" id="activation_library_request_sender" disabled></input>
 							
-							<label>Lokacija čitaonice</label>
-							<input class="request_input" id="activation_library_location" disabled></input>
-							
 							<label>Naziv čitaonice</label>
-							<input class="request_input" id="activation_library_name" disabled></input>
+							<input disabled class="request_input" id="activation_library_name"></input>
+							
+							<label for="address">Adresa</label><br>
+							<input class="request_input" disabled id="library_address" type="text" name="address"><br>
+							
+							<label for="readingRoomType">Tip čitaonice:</label>
+							<input class="request_input" disabled id="reading_room_type" type="text" name="address"><br>
+							
+							<label  for="images">URL-ovi ostalih slika razdvojeni zarezima</label>
+							<input class="request_input" id="reading_room_images_input" disabled name="images">
 							
 							<!--<label>Aktivacija ili registracija</label>
 							<input class="request_input" id="d" disabled></input>-->
 						</div>
+						<img id="reading_room_thumbnail" src="Resources/book logo.png"></img>
 					</div>
 					
 					<div id="library_activation_buttons">

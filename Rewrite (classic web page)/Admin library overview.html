@@ -25,7 +25,7 @@
 					<li><a href="Admin library registration.html" class="registracija_citaonice">Registracija čitaonice</a></li>
 					<li><a href="Admin library overview.html" class="admin_pregled_citaonica">Pregled čitaonica</a></li>
 					<li><a href="Admin reading room announcements.html" class="admin_obavjestenja">Obavještenja</a></li>
-					<li><a href="#" class="admin_postavke_btn">Postavke</a></li>
+					<!-- <li><a href="#" class="admin_postavke_btn">Postavke</a></li> -->
 					<li><a href="Login.html" class="logout_btn">Odjava</a></li>
 				</ul>
 			</nav>
@@ -43,7 +43,7 @@
 							<option selected style="display:none;">Spisak čitaonica</option>
 						</select>
 						<div id="admin_image_and_info">
-							<img id="admin_library_picture" src="Resources/New logo.png"></img>
+							<img id="admin_library_picture" src="Resources/book logo.png"></img>
 							<div id="admin_library_info">
 								<select id="admin_library_administrators">
 									<option selected style="display:none;">Administratori čitaonice</option>
@@ -63,21 +63,17 @@
 									
 									<label for="readingRoomType">Tip čitaonice:</label>
 									<select name="readingRoomType" id="type_of_reading_room">
-									  <option value="Tiha">Tiha</option>
-									  <option value="Grupna">Grupna</option>
+									  <option value="tiha">Tiha</option>
+									  <option value="grupna">Grupna</option>
 									</select> 
 									
 									<label for="address">Adresa</label>
 									<input id="address_input" name="address">
 									
-									<label for="opening_time">Vrijeme otvaranja</label>
-									<input name="opening_time">
 									
-									<label for="closing_time">Vrijeme zatvaranja</label>
-									<input name="closing_time">
 									
 									<!--<label for="library_picture">Slika</label><br>
-									<input id="library_registration_picture" type="file" name="library_picture">
+									<input id="library_registration_picture" type="file" name="library_picture"> -->
 									
 									<label for="latitude">Geografska širina</label>
 									<input id="latitude_input" name="latitude">
@@ -85,7 +81,7 @@
 									<label for="longitude">Geografska dužina</label>
 									<input id="longitude_input" name="longitude">
 									
-									<label for="numberOfSeats">Broj mjesta</label>
+									<!--<label for="numberOfSeats">Broj mjesta</label>
 									<input disabled name="numberOfSeats" id="number_of_seats_input">-->
 									
 									<label for="readingRoomListImage">URL naslovne slike</label>
@@ -96,11 +92,14 @@
 									
 
 									
-									<label for="openingTime">Vrijeme otvaranja</label>
+									<!-- <label for="openingTime">Vrijeme otvaranja</label>
 									<input id="opening_time_input" type="text" name="openingTime">
 									
 									<label for="closingTime">Vrijeme zatvaranja</label>
-									<input id="closing_time_input" type="text" name="closingTime">
+									<input id="closing_time_input" type="text" name="closingTime"> -->
+									
+									<label for="reading_room_active">Aktivna</label>
+									<input id="activation_status_input" disabled name="reading_room_active"/>
 									
 									<button type="submit" form="library_overview_form" class="admin_library_overview_button" id="admin_library_change_library_info"><b>Izmijeni informacije</b></button>		
 								</form>
@@ -132,17 +131,17 @@
 								</div>
 								<div id="canvas_drawing_tools">
 									<p>Broj horizontalnih linija</p>
-									<input class="canvas_slider" id="canvas_num_of_horizontal_lines" type="range" min="10" max="50"></input>
+									<input disabled class="canvas_slider" id="canvas_num_of_horizontal_lines" type="range" min="10" max="50"></input>
 									<p>Broj vertikalnih linija</p>
-									<input class="canvas_slider" id="canvas_num_of_verticall_lines" type="range" min="10" max="50"></input>
+									<input disabled class="canvas_slider" id="canvas_num_of_verticall_lines" type="range" min="10" max="50"></input>
 									
 									<div id="canvas_buttons_wrapper">
-										<button class="canvas_button" id="canvas_entry"><b>Ulaz</b></button>
-										<button class="canvas_button" id="canvas_standard_seat"><b>Standardno mjesto</b></button>
-										<button class="canvas_button" id="canvas_socket_seat"><b>Mjesto sa utičnicom</b></button>
-										<button class="canvas_button" id="canvas_table"><b>Sto</b></button>
-										<button class="canvas_button" id="canvas_remove_elements"><b>Brisanje elemenata</b></button>
-									</div>
+										<button disabled class="canvas_button" id="canvas_entry"><b>Ulaz</b></button>
+										<button disabled class="canvas_button" id="canvas_standard_seat"><b>Standardno mjesto</b></button>
+										<button disabled class="canvas_button" id="canvas_socket_seat"><b>Mjesto sa utičnicom</b></button>
+										<button disabled class="canvas_button" id="canvas_table"><b>Sto</b></button>
+										<button disabled class="canvas_button" id="canvas_remove_elements"><b>Brisanje elemenata</b></button>
+									</div> 
 								</div>
 							</div>
 						</div>

@@ -25,7 +25,7 @@ async function pregled_administratora_click()
 		// populate the listview of reading rooms
 		var selectElement = document.getElementById("admin_overview_library_list");
 		selectElement.innerHTML = "";
-		selectElement.innerHTML += '<option selected style="display:none;">' + "Spisak čitaonica" + '</option>';
+		selectElement.innerHTML += '<option selected style="display:none;">' + "Čitaonice u vlasništvu" + '</option>';
 		for(var i = 0; i < globalTempVariable3.length; i++)
 			selectElement.innerHTML = selectElement.innerHTML + "<option>" + "ID: " + globalTempVariable3[i].id + ", Ime: "+ globalTempVariable3[i].name + "</option>";
 		

@@ -16,16 +16,16 @@ async function activate_administrator_library_overview_panel()
 	const URL = URLprefix + "administrators/" + ownID + "/reading-rooms";
 	const response = await make_request(URL, "GET", JSON_headers, null);
 	globalTempVariable = await response.json();
-	console.log(globalTempVariable[0]);
 	
 	var librariesSelect = document.getElementById("admin_list_of_libraries");
 	
 	for(var i = 0; i < globalTempVariable.length; i++)
 		librariesSelect.innerHTML += '<option value="' + globalTempVariable[i].id + '">' + "ID: " + globalTempVariable[i].id + ", Ime: " + globalTempVariable[i].name + '</option>';
 	
-	
+	var adminSelect = document.getElementById("admin_library_administrators");
 	librariesSelect.addEventListener("change", async function(event)
 	{
+		
 		var selectedID = event.target.value;
 		globalTempVariable3 = globalTempVariable.find(toFind => toFind.id == selectedID);
 		
@@ -35,9 +35,12 @@ async function activate_administrator_library_overview_panel()
 		var name_input = document.getElementById("name_input");
 		var thumbnail_input = document.getElementById("thumbnail_input");
 		var other_images_input = document.getElementById("other_images_input");
-		var opening_time_input = document.getElementById("opening_time_input");
-		var closing_time_input = document.getElementById("closing_time_input");
+		//var opening_time_input = document.getElementById("opening_time_input");
+		//var closing_time_input = document.getElementById("closing_time_input");
+		var activation_status_input = document.getElementById("activation_status_input");
 		//var number_of_seats_input = document.getElementById("number_of_seats_input");
+		var type_of_reading_room = document.getElementById("type_of_reading_room");
+		
 		
 		
 		var reading_room_thumbnail = document.getElementById("admin_library_picture");
@@ -50,16 +53,18 @@ async function activate_administrator_library_overview_panel()
 		name_input.value = globalTempVariable3.name;
 		thumbnail_input.value = globalTempVariable3.readingRoomListImage;
 		other_images_input.value = globalTempVariable3.images;
-		opening_time_input.value = globalTempVariable3.openingTime;
-		closing_time_input.value = globalTempVariable3.closingTime
+		//opening_time_input.value = globalTempVariable3.openingTime;
+		//closing_time_input.value = globalTempVariable3.closingTime
+		activation_status_input.value = globalTempVariable3.active === true ? "Aktivna" : "Neaktivna";
 		//number_of_seats_input.value = globalTempVariable3.numberOfSeats;
+		type_of_reading_room.value = globalTempVariable3.readingRoomType;
 		
 		// get the administrators of the reading room
 		var tmpURL = URLprefix + "reading-rooms/" + globalTempVariable3.id + "/administrators";
 		var allAdmins = await make_request(tmpURL, "GET", JSON_headers, null);
 		allAdmins = await allAdmins.json();
 		
-		var adminSelect = document.getElementById("admin_library_administrators");
+		
 		adminSelect.innerHTML = "";
 		for(var i = 0; i < allAdmins.length; i++)
 		{
@@ -81,6 +86,7 @@ async function activate_administrator_library_overview_panel()
 			alert("Deaktivacija neuspješna");
 			return;
 		}
+		activation_status_input.value = globalTempVariable3.active === true ? "Aktivna" : "Neaktivna";
 		alert("Deaktivacija uspješna");
 	});
 	
@@ -98,11 +104,11 @@ async function activate_administrator_library_overview_panel()
 		var formData_JSON_string = FormData_to_JSON(formData);
 		var formData_JSON = JSON.parse(formData_JSON_string);
 		
-		if(validateTimeFormat(formData_JSON.openingTime) == false || validateTimeFormat(formData_JSON.closingTime) == false)
+		/*if(validateTimeFormat(formData_JSON.openingTime) == false || validateTimeFormat(formData_JSON.closingTime) == false)
 		{
 			alert("Unesite vrijeme u formatu HH:mm");
 			return;
-		}
+		}*/
 		
 		formData_JSON.id = globalTempVariable3.id;
 		formData_JSON.active = globalTempVariable3.active;
@@ -132,7 +138,7 @@ async function activate_administrator_library_overview_panel()
 	addAdminButton.addEventListener("click", async function()
 	{
 		var newAdminsUsername = document.getElementById("admin_library_overview_add_new_admin_input").value;
-		console.log(newAdminsUsername);
+		
 		if(newAdminsUsername === "")
 		{
 			alert("Prvo unesite ime administratora!");
@@ -154,7 +160,14 @@ async function activate_administrator_library_overview_panel()
 			alert("Dodavanje novog administratora neuspješno.");
 			return;
 		}
+		
+		var newAdmin = await response.json();
+		// add the new admin to the select element
+		
+		adminSelect.innerHTML += '<option value="' + newAdmin.id + '">' + "ID: " + newAdmin.id + ", Ime: " + newAdminsUsername + '</option>';
+		
 		alert("Dodavanje novog administratora uspješno.");
 	});
 }
+disableCanvasEvents = true;
 activate_administrator_library_overview_panel();

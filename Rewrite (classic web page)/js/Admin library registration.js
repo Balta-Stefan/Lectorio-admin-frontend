@@ -1,3 +1,5 @@
+disableCanvasEvents = false;
+
 canvas_setup();
 canvas_draw_lines();
 
@@ -37,5 +39,5 @@ function onMapClick(e) {
 	
 
 }
-
+disableCanvasEvents = false;
 mymap.on('click', onMapClick);

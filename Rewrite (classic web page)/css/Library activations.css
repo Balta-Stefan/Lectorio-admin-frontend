@@ -13,6 +13,12 @@ select#libraries_to_activate_select{
 	height: 100%;
 }
 
+img#reading_room_thumbnail{
+	width: 520px;
+	height: 390px;
+	margin-right: 25px;
+}
+
 div#library_to_activate_info{
 	padding-top: 0;
 	margin-top: 0;
@@ -23,6 +29,7 @@ div#library_to_activate_info{
 	
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 }
 div#library_to_activate_info input{
 	width: 15rem;
