@@ -29,8 +29,8 @@ async function activate_administrator_library_overview_panel()
 		var selectedID = event.target.value;
 		globalTempVariable3 = globalTempVariable.find(toFind => toFind.id == selectedID);
 		
-		var latitude_input = document.getElementById("latitude_input");
-		var longitude_input = document.getElementById("longitude_input");
+		//var latitude_input = document.getElementById("latitude_input");
+		//var longitude_input = document.getElementById("longitude_input");
 		var address_input = document.getElementById("address_input");
 		var name_input = document.getElementById("name_input");
 		var thumbnail_input = document.getElementById("thumbnail_input");
@@ -47,8 +47,8 @@ async function activate_administrator_library_overview_panel()
 		reading_room_thumbnail.src = globalTempVariable3.readingRoomListImage;
 		
 		
-		latitude_input.value = globalTempVariable3.latitude;
-		longitude_input.value = globalTempVariable3.longitude;
+		//latitude_input.value = globalTempVariable3.latitude;
+		//longitude_input.value = globalTempVariable3.longitude;
 		address_input.value = globalTempVariable3.address;
 		name_input.value = globalTempVariable3.name;
 		thumbnail_input.value = globalTempVariable3.readingRoomListImage;
