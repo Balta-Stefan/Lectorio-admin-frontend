@@ -9,7 +9,15 @@
 
 		<link href="css/Lectorio.css" type="text/css" rel="stylesheet" />
 		<link href="css/Library activations.css" type="text/css" rel="stylesheet" />
+		<link href="css/Canvas.css" type="text/css" rel="stylesheet" />
 		
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" 
+		integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+	    crossorigin=""/>
+		
+		<script defer src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+		integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+		crossorigin=""></script>
 
 		<script type="text/javascript" src="js/Utilities.js" defer></script>
 		<script type="text/javascript" src="js/Reading room registration requests.js" defer></script>
@@ -40,33 +48,57 @@
 				
 				<div id="panel_content">
 					<div id="library_activation_container">
-						<select id="libraries_to_activate_select" size="5"></select>
-						
-						<div id="library_to_activate_info">
-							<label>Podnosilac zahtjeva</label>
-							<input class="request_input" id="activation_library_request_sender" disabled></input>
-							
-							<label>Naziv čitaonice</label>
-							<input disabled class="request_input" id="activation_library_name"></input>
-							
-							<label for="address">Adresa</label><br>
-							<input class="request_input" disabled id="library_address" type="text" name="address"><br>
-							
-							<label for="readingRoomType">Tip čitaonice:</label>
-							<input class="request_input" disabled id="reading_room_type" type="text" name="address"><br>
-							
-							<label  for="images">URL-ovi ostalih slika razdvojeni zarezima</label>
-							<input class="request_input" id="reading_room_images_input" disabled name="images">
-							
-							<!--<label>Aktivacija ili registracija</label>
-							<input class="request_input" id="d" disabled></input>-->
+						<div id="reading_room_activation_info_wrapper">
+							<select id="libraries_to_activate_select" size="5"></select>
+							<div id="library_to_activate_info">
+								<label>Podnosilac zahtjeva</label>
+								<input class="request_input" id="activation_library_request_sender" disabled></input>
+								
+								<label>Naziv čitaonice</label>
+								<input disabled class="request_input" id="activation_library_name"></input>
+								
+								<label for="address">Adresa</label><br>
+								<input class="request_input" disabled id="library_address" type="text" name="address"><br>
+								
+								<label for="readingRoomType">Tip čitaonice:</label>
+								<input class="request_input" disabled id="reading_room_type" type="text" name="address"><br>
+								
+								<label for="images">URL-ovi ostalih slika razdvojeni zarezima</label>
+								<input class="request_input" id="reading_room_images_input" disabled name="images">
+								
+								<!--<label>Aktivacija ili registracija</label>
+								<input class="request_input" id="d" disabled></input>-->
+							</div>
+							<div id="thumbnail_and_map">
+								<img id="reading_room_thumbnail" src="Resources/book logo.png"></img>
+								<div id="map"></div>
+							</div>
 						</div>
-						<img id="reading_room_thumbnail" src="Resources/book logo.png"></img>
-					</div>
-					
-					<div id="library_activation_buttons">
-						<button class="registration_requests_buttons" id="activate_library"><b>Odobri</b></button>
-						<button class="registration_requests_buttons" id="reject_library_activation"><b>Odbij</b></button>
+						<div id="supervisor_library_layout_picture_container">
+							<div id="library_layout_wrapper">
+								<div id="layout_drawing_canvas_wrapper">
+									<canvas id="drawing_canvas"></canvas>
+								</div>
+								<div id="canvas_drawing_tools">
+									<p>Broj horizontalnih linija</p>
+									<input disabled class="canvas_slider" id="canvas_num_of_horizontal_lines" type="range" min="10" max="50"></input>
+									<p>Broj vertikalnih linija</p>
+									<input disabled class="canvas_slider" id="canvas_num_of_verticall_lines" type="range" min="10" max="50"></input>
+									
+									<div id="canvas_buttons_wrapper">
+										<button disabled class="canvas_button" id="canvas_entry"><b>Ulaz</b></button>
+										<button disabled class="canvas_button" id="canvas_standard_seat"><b>Standardno mjesto</b></button>
+										<button disabled class="canvas_button" id="canvas_socket_seat"><b>Mjesto sa utičnicom</b></button>
+										<button disabled class="canvas_button" id="canvas_table"><b>Sto</b></button>
+										<button disabled class="canvas_button" id="canvas_remove_elements"><b>Brisanje elemenata</b></button>
+									</div> 
+								</div>
+							</div>
+						</div>
+						<div id="library_activation_buttons">
+							<button class="registration_requests_buttons" id="activate_library"><b>Odobri</b></button>
+							<button class="registration_requests_buttons" id="reject_library_activation"><b>Odbij</b></button>
+						</div>
 					</div>
 				</div>
 			</div>

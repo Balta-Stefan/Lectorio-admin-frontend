@@ -1,22 +1,25 @@
 div#library_activation_container{
-	display: flex;
 	width: 100%;
-	height: 60%;
-	padding-top: 15px;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	overflow: auto;
+	overflow-x: hidden;
 }
 
 select#libraries_to_activate_select{
-	padding-top: 0;
-	margin-top: 0;
-	margin-left: 15px;
-	width: 50%;
+	width: 30%;
 	height: 100%;
+	text-align: center;
+	text-align-last: center;
 }
 
-img#reading_room_thumbnail{
-	width: 520px;
-	height: 390px;
-	margin-right: 25px;
+div#reading_room_activation_info_wrapper{
+	width: 100%;
+	display: flex;
+	margin-bottom: 5px;
 }
 
 div#library_to_activate_info{
@@ -24,20 +27,51 @@ div#library_to_activate_info{
 	margin-top: 0;
 	margin-left: 10px;
 	
-	width: 50%;
+	width: 40%;
 	height: 50%;
+	
 	
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
+
+div#thumbnail_and_map{
+	/*border: solid;
+	display: flex;
+	flex-direction: column;
+	width: 30%;
+	height: 100%;*/
+	
+	border: solid;
+	display: flex;
+	flex-direction: column;
+	width: 30rem;
+	height: 30rem;
+	margin-bottom: 25px;
+}
+
+img#reading_room_thumbnail{
+	max-width: 100%;
+	max-height: 50%;
+}
+
+#map{ 
+	height: 50%; 
+	width: 100%;
+	margin-top: 15px;
+}
+
+
 div#library_to_activate_info input{
 	width: 15rem;
 }
 
 div#library_activation_buttons{
-	height: 40%;
 	width: 100%;
+	height: 20%;
+	
+	padding-bottom: 25px;
 	
 	display: flex;
 	justify-content: space-around;
@@ -46,19 +80,22 @@ div#library_activation_buttons{
 
 button#activate_library{
 	background-color: blue;
-	height: 35%;
 }
 button#reject_library_activation{
 	background-color: red;
-	height: 35%;
 }
 
 .registration_requests_buttons{
+	/*margin-top: 25px;
+	margin-bottom: 25px;*/
+	margin-top: 25px;
+	
 	border: none;
 	color: white;
 	cursor: pointer;
 	height: 4rem;
 	width: 7rem;
+	
 	border-radius: 10px;
 }
 
@@ -67,6 +104,10 @@ button#reject_library_activation{
 }
 .registration_requests_buttons:active{
 	opacity: 0.5;
+}
+
+div#supervisor_library_layout_picture_container{
+	width: 100%;
 }
 
 

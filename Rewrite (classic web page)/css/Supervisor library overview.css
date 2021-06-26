@@ -50,6 +50,7 @@ img#admin_library_picture{
 #map{ 
 	height: 50%; 
 	width: 100%;
+	margin-top: 15px;
 }
 
 div#supervisor_library_info{

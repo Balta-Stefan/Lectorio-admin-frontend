@@ -29,8 +29,8 @@ async function supervisor_pregled_citaonica_click()
 		globalTempVariable2 = globalTempVariable.find(toFind => toFind.id == selectedReadingroomID);
 		console.log(globalTempVariable2);
 		// populate the input elements
-		var latitude_input = document.getElementById("latitude_input");
-		var longitude_input = document.getElementById("longitude_input");
+		//var latitude_input = document.getElementById("latitude_input");
+		//var longitude_input = document.getElementById("longitude_input");
 		var address_input = document.getElementById("address_input");
 		var name_input = document.getElementById("name_input");
 		var thumbnail_input = document.getElementById("thumbnail_input");
@@ -44,8 +44,8 @@ async function supervisor_pregled_citaonica_click()
 		reading_room_thumbnail.src = globalTempVariable2.readingRoomListImage;
 		
 		reading_room_type.value = globalTempVariable2.readingRoomType;
-		latitude_input.value = globalTempVariable2.latitude;
-		longitude_input.value = globalTempVariable2.longitude;
+		//latitude_input.value = globalTempVariable2.latitude;
+		//longitude_input.value = globalTempVariable2.longitude;
 		address_input.value = globalTempVariable2.address;
 		name_input.value = globalTempVariable2.name;
 		thumbnail_input.value = globalTempVariable2.readingRoomListImage;
