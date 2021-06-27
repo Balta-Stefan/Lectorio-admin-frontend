@@ -6,6 +6,8 @@ canvas_draw_lines();
 var submit_registration_form_button = document.getElementById("library_registration_submit_button");
 submit_registration_form_button.onclick = submit_reading_room_registration_data;
 
+latitude = null;
+longitude = null;
 
 
 var mymap = L.map('map').setView([44.779666, 17.202873], 13);

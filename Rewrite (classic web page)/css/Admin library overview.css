@@ -28,7 +28,7 @@ button#admin_library_overview_add_new_admin_button{
 	font-weight: bold;
 	
 	width: 5rem;
-	height: 3rem;
+	height: 1.5rem;
 }
 button#admin_library_overview_add_new_admin_button:hover{
 	opacity: 0.5;
@@ -66,7 +66,14 @@ div#admin_image_and_info{
 	/*height: 25rem;*/
 	height: auto;
 	display: flex;
+	justify-content: space-between;
+	margin-top: 0px;
 	margin-bottom: 5px;
+}
+
+#map{ 
+	height: 30rem; 
+	width: 25%;
 }
 
 div#admin_image_and_info input{
@@ -74,15 +81,14 @@ div#admin_image_and_info input{
 }
 
 img#admin_library_picture{
-	margin-top: 15px;
 	width: 30%;
 	height: auto;
 }
 
 div#admin_library_info{
-	width: 70%;
 	height: auto;
 	padding-left: 15px;
+	margin-right: 25px;
 }
 
 div#admin_library_info p{
@@ -91,7 +97,7 @@ div#admin_library_info p{
 
 
 select#admin_library_administrators{
-	width: 100%;
+	width: 15rem;
 	height: 5%;
 }
 

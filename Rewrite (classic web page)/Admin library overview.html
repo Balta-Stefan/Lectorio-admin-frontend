@@ -10,6 +10,13 @@
 		<link href="css/Lectorio.css" type="text/css" rel="stylesheet" />
 		<link href="css/Admin library overview.css" type="text/css" rel="stylesheet" />
 		<link href="css/Canvas.css" type="text/css" rel="stylesheet" />
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" 
+		integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+	    crossorigin=""/>
+		
+		<script defer src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+		integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+		crossorigin=""></script>
 		
 		<script type="text/javascript" src="js/Utilities.js" defer></script>
 		<script type="text/javascript" src="js/Admin library overview.js" defer></script>
@@ -42,6 +49,7 @@
 						<select id="admin_list_of_libraries">
 							<option selected style="display:none;">Spisak čitaonica</option>
 						</select>
+						
 						<div id="admin_image_and_info">
 							<img id="admin_library_picture" src="Resources/book logo.png"></img>
 							<div id="admin_library_info">
@@ -70,8 +78,6 @@
 									<label for="address">Adresa</label>
 									<input id="address_input" name="address">
 									
-									
-									
 									<!--<label for="library_picture">Slika</label><br>
 									<input id="library_registration_picture" type="file" name="library_picture"> -->
 									
@@ -90,8 +96,6 @@
 									<label for="images">URL-ovi ostalih slika</label>
 									<input id="other_images_input" name="images">
 									
-
-									
 									<!-- <label for="openingTime">Vrijeme otvaranja</label>
 									<input id="opening_time_input" type="text" name="openingTime">
 									
@@ -104,6 +108,7 @@
 									<button type="submit" form="library_overview_form" class="admin_library_overview_button" id="admin_library_change_library_info"><b>Izmijeni informacije</b></button>		
 								</form>
 								<button class="admin_library_overview_button" id="admin_deactivate_library_btn"><b>Deaktiviraj</b></button>
+								
 								<!--
 								<p>Registrovana</p>
 								<input id="admin_library_registration_date" disabled></input>
@@ -123,6 +128,7 @@
 								<br> -->
 								<!--<label id="admin_library_overview_action_status_label">Status akcije:</label>-->
 							</div>
+							<div id="map"></div>
 						</div>
 						<div id="admin_library_layout_picture_container">
 							<div id="library_layout_wrapper">

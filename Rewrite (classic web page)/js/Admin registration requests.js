@@ -49,7 +49,7 @@ async function admin_requests_panel_activation()
 			return;
 		}
 		
-		// set the request to allowed...
+		// set the status
 		globalTempVariable2.approved = allow;
 		var URL3 = URLprefix + "requests/" + globalTempVariable2.id;
 		var response = await make_request(URL3, "PUT", JSON_headers, JSON.stringify(globalTempVariable2));

@@ -1,6 +1,9 @@
 async function library_activations_panel_activation()
 {	
+	// globalTempVariable1 holds the selected reading room
 	// globalTempVariable2 holds the selected request
+	
+	globalTempVariable1 = null;
 	
 	canvas_setup();
 	canvas_draw_lines();
@@ -37,6 +40,7 @@ async function library_activations_panel_activation()
 		const URL2 = URLprefix + "reading-rooms/" + selectedRequest.readingRoomId;
 		const response = await make_request(URL2, "GET", JSON_headers, null);
 		const json_response = await response.json();
+		globalTempVariable1 = json_response;
 		
 		if(!response.ok)
 			return;
@@ -80,20 +84,32 @@ async function library_activations_panel_activation()
 			return;
 		}
 		
+		// set the status
+		globalTempVariable1.active = allow;
+		var updateDataURL = URLprefix + "reading-rooms/" + globalTempVariable1.id;
+		var updateResponse = await make_request(updateDataURL, "PUT", JSON_headers, JSON.stringify(globalTempVariable1));
+		if(!updateResponse.ok)
+		{
+			alert("Greška");
+			return;
+		}
+		
+		
 		// remove the element from the select
 		var options = selectElement.options;
 		for (var i = 0; i < options.length; i++)
 		{
 			if (options[i].value == globalTempVariable2.id)
 			{
-				locationInput.value = "";
 				libraryNameInput.value = "";
 				requestSenderInput.value = "";
 				selectElement.removeChild(options[i]);
 				break; 
 			}
 		}	
-		globalTempVariable2 = null;		
+		globalTempVariable2 = null;	
+			
+		alert("Operacija uspješna");
 	}
 	
 	allowRegistrationButton.addEventListener("click", function()

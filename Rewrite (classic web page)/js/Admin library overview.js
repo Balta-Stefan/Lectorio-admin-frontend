@@ -42,6 +42,8 @@ async function activate_administrator_library_overview_panel()
 		var type_of_reading_room = document.getElementById("type_of_reading_room");
 		
 		
+		mymap.setView([globalTempVariable3.latitude, globalTempVariable3.longitude], 13);
+		add_marker_to_map(globalTempVariable3.latitude, globalTempVariable3.longitude);
 		
 		var reading_room_thumbnail = document.getElementById("admin_library_picture");
 		reading_room_thumbnail.src = globalTempVariable3.readingRoomListImage;
@@ -66,6 +68,7 @@ async function activate_administrator_library_overview_panel()
 		
 		
 		adminSelect.innerHTML = "";
+		adminSelect.innerHTML += '<option selected style="display:none;">Administratori čitaonice</option>';
 		for(var i = 0; i < allAdmins.length; i++)
 		{
 			adminSelect.innerHTML += '<option value="' + allAdmins[i].id + '">' + "ID: " + allAdmins[i].id + ", Ime: " + allAdmins[i].username + '</option>';
@@ -115,6 +118,9 @@ async function activate_administrator_library_overview_panel()
 		//formData_JSON.insideAppearance = globalTempVariable3.insideAppearance;
 		formData_JSON.xSize = globalTempVariable3.xSize;
 		formData_JSON.ySize = globalTempVariable3.ySize;
+		formData_JSON.insideAppearance = globalTempVariable3.insideAppearance;
+		formData_JSON.latitude = globalTempVariable3.latitude;
+		formData_JSON.longitude = globalTempVariable3.longitude;
 		
 		formData_JSON.images = formData_JSON.images.split(",");
 		for(var i = 0; i < formData_JSON.images.length; i++)
@@ -169,5 +175,35 @@ async function activate_administrator_library_overview_panel()
 		alert("Dodavanje novog administratora uspješno.");
 	});
 }
+var mymap = L.map('map').setView([44.779666, 17.202873], 13);
+
+var map_pin = L.icon({
+    iconUrl: 'Resources/map pin.png',
+    iconSize:     [24, 36], // size of the icon
+    iconAnchor:   [12, 36], // point of the icon which will correspond to marker's location
+});
+
+var marker = null;
+
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+		maxZoom: 18,
+		id: 'mapbox/streets-v11', //satellite-v9
+		tileSize: 512,
+		zoomOffset: -1
+	}).addTo(mymap);
+	
+
+	
+var popup = L.popup();
+
+function add_marker_to_map(latitude, longitude)
+{
+	if(marker != null)
+		mymap.removeLayer(marker);
+	
+	marker = L.marker([latitude, longitude], {icon: map_pin}).addTo(mymap);
+}
+
+
 disableCanvasEvents = true;
 activate_administrator_library_overview_panel();

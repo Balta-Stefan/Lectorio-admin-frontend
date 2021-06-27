@@ -11,7 +11,7 @@ div#supervisor_library_overview_container{
 
 select#admin_list_of_libraries{
 	width: 100%;
-	height: 15rem;
+	height: 20rem;
 	text-align: center;
 	text-align-last: center;
 }
@@ -27,36 +27,50 @@ form#library_overview_form input{
 }
 
 div#admin_image_and_info{
-	width: 100%;
+	/*width: 100%;*/
 	/*height: 25rem;*/
+	/*display: flex;
+	margin-bottom: 5px;*/
+	
+	width: 100%;
+	height: auto;
 	display: flex;
-	margin-bottom: 5px;
+	justify-content: space-between;
+	margin-top: 0px;
 }
 
-div#thumbnail_and_map{
+/*div#thumbnail_and_map{
 	border: solid;
 	display: flex;
 	flex-direction: column;
 	width: 30rem;
 	height: 30rem;
 	margin-bottom: 25px;
-}
+}*/
 
 img#admin_library_picture{
-	width: 100%;
-	height: 50%;
+	/*width: 100%;
+	height: 50%;*/
+	width: 30rem;
+	height: 30rem;
 }
 
 #map{ 
-	height: 50%; 
+	/*height: 50%; 
 	width: 100%;
-	margin-top: 15px;
+	margin-top: 15px;*/
+	
+	height: 30rem; 
+	width: 25%;
 }
 
 div#supervisor_library_info{
-	width: 70%;
+	/*width: 70%;
 	height: 100%;
+	padding-left: 15px;*/
+	height: auto;
 	padding-left: 15px;
+	margin-right: 25px;
 }
 
 div#supervisor_library_info p{
@@ -74,7 +88,7 @@ select#admin_library_administrators{
 div#supervisor_library_layout_picture_container{
 	height: 30rem;
 	width: 100%;
-	margin-top: 15px;
+	margin-top: 5px;
 }
 
 .admin_library_overview_activation_button{
